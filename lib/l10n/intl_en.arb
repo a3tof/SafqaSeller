@@ -1,0 +1,38 @@
+{
+  "fieldRequired": "This field is required",
+  "@fieldRequired": {
+    "description": "Validation message when a required field is empty"
+  },
+  "logIn": "Log In",
+  "@logIn": {
+    "description": "Log in button label"
+  },
+  "signUp": "Sign Up",
+  "@signUp": {
+    "description": "Sign up button label"
+  },
+  "onBoardingTitle1": "Stop wasting time!",
+  "@onBoardingTitle1": {
+    "description": "Onboarding page 1 title"
+  },
+  "onBoardingSubtitle1": "Safqa transforms the long auction process into a fast, guaranteed digital experience, manage your auctions wherever you are.",
+  "@onBoardingSubtitle1": {
+    "description": "Onboarding page 1 subtitle"
+  },
+  "onBoardingTitle2": "Smart Bidding",
+  "@onBoardingTitle2": {
+    "description": "Onboarding page 2 title"
+  },
+  "onBoardingSubtitle2": "Participate in real-time bidding, or let the Proxy Bidding (Auto-Bid) system win automatically within your defined limit.",
+  "@onBoardingSubtitle2": {
+    "description": "Onboarding page 2 subtitle"
+  },
+  "onBoardingTitle3": "Experience Designed For You",
+  "@onBoardingTitle3": {
+    "description": "Onboarding page 3 title"
+  },
+  "onBoardingSubtitle3": "A modern, bilingual (Arabic/English) design that allows you to navigate and bid seamlessly from any device.",
+  "@onBoardingSubtitle3": {
+    "description": "Onboarding page 3 subtitle"
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "fieldRequired": "هذا الحقل مطلوب",
+  "@fieldRequired": {
+    "description": "Validation message when a required field is empty"
+  },
+  "logIn": "تسجيل الدخول",
+  "@logIn": {
+    "description": "Log in button label"
+  },
+  "signUp": "إنشاء حساب",
+  "@signUp": {
+    "description": "Sign up button label"
+  },
+  "onBoardingTitle1": "توقف عن إضاعة الوقت!",
+  "@onBoardingTitle1": {
+    "description": "Onboarding page 1 title"
+  },
+  "onBoardingSubtitle1": "صفقة تحوّل عملية المزادات الطويلة إلى تجربة رقمية سريعة ومضمونة، أدر مزاداتك من أي مكان.",
+  "@onBoardingSubtitle1": {
+    "description": "Onboarding page 1 subtitle"
+  },
+  "onBoardingTitle2": "مزايدة ذكية",
+  "@onBoardingTitle2": {
+    "description": "Onboarding page 2 title"
+  },
+  "onBoardingSubtitle2": "شارك في المزايدة الفورية، أو دع نظام المزايدة التلقائية يفوز نيابةً عنك ضمن حدك المحدد.",
+  "@onBoardingSubtitle2": {
+    "description": "Onboarding page 2 subtitle"
+  },
+  "onBoardingTitle3": "تجربة مصمّمة لك",
+  "@onBoardingTitle3": {
+    "description": "Onboarding page 3 title"
+  },
+  "onBoardingSubtitle3": "تصميم عصري ثنائي اللغة (عربي/إنجليزي) يتيح لك التنقل والمزايدة بسلاسة من أي جهاز.",
+  "@onBoardingSubtitle3": {
+    "description": "Onboarding page 3 subtitle"
+  }
+}

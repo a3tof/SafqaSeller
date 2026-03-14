@@ -1,0 +1,55 @@
+---
+description: Localization rules for Arabic and English in every screen
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Localization — Always Support AR & EN
+
+Every screen built in this project must be fully localized in **both Arabic and English**.
+
+## Required Steps for Every New String
+
+1. **Add to `lib/l10n/intl_en.arb`** — English value
+2. **Add to `lib/l10n/intl_ar.arb`** — Arabic value
+3. **Add getter to `lib/generated/l10n.dart`** inside the `S` class
+4. **Add to `lib/generated/intl/messages_en.dart`** — inside `_notInlinedMessages`
+5. **Add to `lib/generated/intl/messages_ar.dart`** — inside `_notInlinedMessages`
+
+## Usage in Widgets
+
+```dart
+// ✅ GOOD — always use S.of(context)
+Text(S.of(context).logIn)
+
+// ❌ BAD — never hardcode strings
+Text('Log In')
+```
+
+## ARB Format
+
+```json
+{
+  "myKey": "My Value",
+  "@myKey": { "description": "Short description" }
+}
+```
+
+## Generated Getter Format (`l10n.dart`)
+
+```dart
+String get myKey {
+  return Intl.message('My Value', name: 'myKey', desc: 'Short description');
+}
+```
+
+## Message Lookup Format (`messages_en.dart` / `messages_ar.dart`)
+
+```dart
+'myKey': MessageLookupByLibrary.simpleMessage('My Value'),
+```
+
+## Supported Locales
+
+- `en` — English (LTR)
+- `ar` — Arabic (RTL) — Flutter handles RTL layout automatically when `locale: Locale('ar')` is set
