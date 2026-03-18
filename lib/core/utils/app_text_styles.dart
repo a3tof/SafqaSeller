@@ -2,87 +2,103 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 abstract class TextStyles {
-  static TextStyle regular11(context) {
+  static TextStyle regular11(BuildContext context) {
     return TextStyle(fontSize: 11.sp, fontWeight: FontWeight.normal);
   }
 
-  static TextStyle semiBold11(context) {
+  static TextStyle semiBold11(BuildContext context) {
     return TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w600);
   }
 
-  static TextStyle regular13(context) {
-    return TextStyle(fontSize: 13.sp, fontWeight: FontWeight.normal);
-  }
-
-  static TextStyle regular12(context) {
+  static TextStyle regular12(BuildContext context) {
     return TextStyle(fontSize: 12.sp, fontWeight: FontWeight.normal);
   }
 
-  static TextStyle bold13(context) {
+  static TextStyle regular13(BuildContext context) {
+    return TextStyle(fontSize: 13.sp, fontWeight: FontWeight.normal);
+  }
+
+  static TextStyle bold13(BuildContext context) {
     return TextStyle(fontSize: 13.sp, fontWeight: FontWeight.bold);
   }
 
-  static TextStyle semiBold13(context) {
+  static TextStyle semiBold13(BuildContext context) {
     return TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w600);
   }
 
-  static TextStyle regular14(context) {
+  static TextStyle regular14(BuildContext context) {
     return TextStyle(fontSize: 14.sp, fontWeight: FontWeight.normal);
   }
 
-  static TextStyle semiBold14(context) {
+  static TextStyle semiBold14(BuildContext context) {
     return TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600);
   }
 
-  static TextStyle semiBold15(context) {
-    return TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600);
-  }
-
-  static TextStyle medium15(context) {
+  static TextStyle medium15(BuildContext context) {
     return TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500);
   }
 
-  static TextStyle regular16(context) {
+  static TextStyle semiBold15(BuildContext context) {
+    return TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w600);
+  }
+
+  static TextStyle regular16(BuildContext context) {
     return TextStyle(fontSize: 16.sp, fontWeight: FontWeight.normal);
   }
 
-  static TextStyle regular20(context) {
-    return TextStyle(fontSize: 20.sp, fontWeight: FontWeight.normal);
-  }
-
-  static TextStyle bold16(context) {
+  static TextStyle bold16(BuildContext context) {
     return TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold);
   }
 
-  static TextStyle semiBold16(context) {
+  static TextStyle semiBold16(BuildContext context) {
     return TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600);
   }
 
-  static TextStyle bold19(context) {
-    return TextStyle(fontSize: 19.sp, fontWeight: FontWeight.bold);
+  static TextStyle regular18(BuildContext context) {
+    return TextStyle(fontSize: 18.sp, fontWeight: FontWeight.normal);
   }
 
-  static TextStyle semiBold19(context) {
-    return TextStyle(fontSize: 19.sp, fontWeight: FontWeight.w600);
+  static TextStyle medium18(BuildContext context) {
+    return TextStyle(fontSize: 18.sp, fontWeight: FontWeight.w500);
   }
 
-  static TextStyle regular22(context) {
+  static TextStyle bold18(BuildContext context) {
+    return TextStyle(fontSize: 18.sp, fontWeight: FontWeight.bold);
+  }
+
+  static TextStyle regular20(BuildContext context) {
+    return TextStyle(fontSize: 20.sp, fontWeight: FontWeight.normal);
+  }
+
+  static TextStyle regular22(BuildContext context) {
     return TextStyle(fontSize: 22.sp, fontWeight: FontWeight.normal);
   }
 
-  static TextStyle bold23(context) {
+  static TextStyle bold22(BuildContext context) {
+    return TextStyle(fontSize: 22.sp, fontWeight: FontWeight.bold);
+  }
+
+  static TextStyle bold23(BuildContext context) {
     return TextStyle(fontSize: 23.sp, fontWeight: FontWeight.bold);
   }
 
-  static TextStyle semiBold24(context) {
+  static TextStyle semiBold24(BuildContext context) {
     return TextStyle(fontSize: 24.sp, fontWeight: FontWeight.w600);
   }
 
-  static TextStyle bold28(context) {
+  static TextStyle regular26(BuildContext context) {
+    return TextStyle(fontSize: 26.sp, fontWeight: FontWeight.normal);
+  }
+
+  static TextStyle bold28(BuildContext context) {
     return TextStyle(fontSize: 28.sp, fontWeight: FontWeight.bold);
   }
 
-  static TextStyle regular26(context) {
-    return TextStyle(fontSize: 26.sp, fontWeight: FontWeight.normal);
+  static TextStyle semiBold19(BuildContext context) {
+    return TextStyle(fontSize: 19.sp, fontWeight: FontWeight.w600);
+  }
+
+  static TextStyle bold19(BuildContext context) {
+    return TextStyle(fontSize: 19.sp, fontWeight: FontWeight.bold);
   }
 }

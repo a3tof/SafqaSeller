@@ -23,7 +23,7 @@ SliverAppBar buildHomeAppBar({
         fontSize: 32.sp,
         fontWeight: FontWeight.w500,
         color: AppColors.primaryColor,
-        fontFamily: 'Alegreya SC',
+        fontFamily: 'AlegreyaSC',
       ),
     ),
   );
