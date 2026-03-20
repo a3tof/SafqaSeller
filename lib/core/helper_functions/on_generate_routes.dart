@@ -13,6 +13,7 @@ import 'package:safqaseller/features/home/view/home_screen_view.dart';
 import 'package:safqaseller/features/on_boarding/view/on_boarding_view.dart';
 import 'package:safqaseller/features/profile/view/profile_view.dart';
 import 'package:safqaseller/features/splash/view/splash_screen_view.dart';
+import 'package:safqaseller/features/subscription/view/subscription_view.dart';
 import 'package:safqaseller/features/terms_and_conditions/view/terms_and_conditions_view.dart';
 import 'package:safqaseller/features/wallet/view/add_card_view.dart';
 import 'package:safqaseller/features/wallet/view/deposit_view.dart';
@@ -43,11 +44,11 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case VerificationCodeView.routeName:
       final args = settings.arguments as VerificationCodeArgs;
       return MaterialPageRoute(
-          builder: (_) => VerificationCodeView(args: args));
+        builder: (_) => VerificationCodeView(args: args),
+      );
     case CreatePasswordView.routeName:
       final args = settings.arguments as CreatePasswordArgs;
-      return MaterialPageRoute(
-          builder: (_) => CreatePasswordView(args: args));
+      return MaterialPageRoute(builder: (_) => CreatePasswordView(args: args));
 
     // ── Core screens ───────────────────────────────────────────────────────
     case SplashView.routeName:
@@ -57,8 +58,7 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case HomeScreenView.routeName:
       return MaterialPageRoute(builder: (_) => const HomeScreenView());
     case TermsAndConditionsView.routeName:
-      return MaterialPageRoute(
-          builder: (_) => const TermsAndConditionsView());
+      return MaterialPageRoute(builder: (_) => const TermsAndConditionsView());
 
     // ── Profile ────────────────────────────────────────────────────────────
     case ProfileView.routeName:
@@ -73,11 +73,12 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const AddCardView());
     case DepositView.routeName:
       return MaterialPageRoute(builder: (_) => const DepositView());
+    case SubscriptionView.routeName:
+      return MaterialPageRoute(builder: (_) => const SubscriptionView());
     case WithdrawalView.routeName:
       return MaterialPageRoute(builder: (_) => const WithdrawalView());
     case TransactionHistoryView.routeName:
-      return MaterialPageRoute(
-          builder: (_) => const TransactionHistoryView());
+      return MaterialPageRoute(builder: (_) => const TransactionHistoryView());
 
     default:
       return MaterialPageRoute(builder: (_) => const SplashView());

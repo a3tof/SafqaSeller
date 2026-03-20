@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
+import 'package:safqaseller/features/subscription/view/subscription_view.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
   const ProfileHeaderSection({super.key});
@@ -24,7 +25,9 @@ class ProfileHeaderSection extends StatelessWidget {
               _ActionButton(
                 label: 'Upgrade',
                 backgroundColor: AppColors.secondaryColor,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, SubscriptionView.routeName);
+                },
               ),
               SizedBox(height: 8.h),
               _ActionButton(
@@ -49,10 +52,7 @@ class ProfileHeaderSection extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: AppColors.secondaryColor,
-            border: Border.all(
-              color: const Color(0xFFCCDDEE),
-              width: 2,
-            ),
+            border: Border.all(color: const Color(0xFFCCDDEE), width: 2),
             image: const DecorationImage(
               image: AssetImage('assets/images/SAFQA.png'),
               fit: BoxFit.cover,
@@ -78,11 +78,7 @@ class ProfileHeaderSection extends StatelessWidget {
               color: AppColors.primaryColor,
               border: Border.all(color: Colors.white, width: 2),
             ),
-            child: Icon(
-              Icons.check,
-              color: Colors.white,
-              size: 14.sp,
-            ),
+            child: Icon(Icons.check, color: Colors.white, size: 14.sp),
           ),
         ),
       ],
@@ -115,9 +111,9 @@ class _ActionButton extends StatelessWidget {
         child: Center(
           child: Text(
             label,
-            style: TextStyles.semiBold13(context).copyWith(
-              color: AppColors.primaryColor,
-            ),
+            style: TextStyles.semiBold13(
+              context,
+            ).copyWith(color: AppColors.primaryColor),
           ),
         ),
       ),
