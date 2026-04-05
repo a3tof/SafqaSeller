@@ -120,7 +120,9 @@ class SellerViewModel extends Cubit<SellerViewModelState> {
         selfieWithId: selfieWithId,
       );
 
-      if (response.isSuccess) {
+      final isMessageSuccess = response.message?.toLowerCase().contains('documents already uploaded') == true;
+
+      if (response.isSuccess || isMessageSuccess) {
         emit(PersonalVerificationSuccess());
       } else {
         final errorMsg = response.errors.isNotEmpty
@@ -129,7 +131,12 @@ class SellerViewModel extends Cubit<SellerViewModelState> {
         emit(SellerError(errorMsg));
       }
     } catch (e) {
-      emit(SellerError(_clean(e)));
+      final errorMsg = _clean(e);
+      if (errorMsg.toLowerCase().contains('documents already uploaded')) {
+        emit(PersonalVerificationSuccess());
+      } else {
+        emit(SellerError(errorMsg));
+      }
     }
   }
 
