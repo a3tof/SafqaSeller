@@ -79,7 +79,7 @@ class _IdentityVerificationViewState extends State<IdentityVerificationView> {
     return BlocProvider(
       create: (_) => getIt<SellerViewModel>(),
       child: BlocConsumer<SellerViewModel, SellerViewModelState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is PersonalVerificationSuccess) {
             if (widget.isBusinessFlow) {
               // Business flow: continue to Store Information
@@ -88,9 +88,11 @@ class _IdentityVerificationViewState extends State<IdentityVerificationView> {
                 StoreInformationView.routeName,
               );
             } else {
-              // Personal flow: mark profile complete and go home
-              getIt<ProfileViewModel>().completeProfile();
-              getIt<AuthViewModel>().setRole('Seller');
+              // Personal flow: mark profile complete and update role before navigating
+              await getIt<ProfileViewModel>().completeProfile();
+              await getIt<AuthViewModel>().setRole('Seller');
+
+              if (!context.mounted) return;
 
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
