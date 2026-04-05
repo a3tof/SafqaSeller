@@ -44,13 +44,17 @@ class SellerViewModel extends Cubit<SellerViewModelState> {
         logo: logo,
       );
 
-      if (response.isSuccess && response.sellerId != null) {
-        _sellerId = response.sellerId;
-        await cacheHelper.saveData(
-          key: CacheKeys.sellerId,
-          value: response.sellerId!,
-        );
-        emit(SellerCreated(sellerId: response.sellerId!));
+      final isMessageSuccess = response.message?.toLowerCase().contains('seller created successfully') == true;
+
+      if ((response.isSuccess && response.sellerId != null) || isMessageSuccess) {
+        if (response.sellerId != null) {
+          _sellerId = response.sellerId;
+          await cacheHelper.saveData(
+            key: CacheKeys.sellerId,
+            value: response.sellerId!,
+          );
+        }
+        emit(SellerCreated(sellerId: response.sellerId ?? 0));
       } else {
         final errorMsg = response.errors.isNotEmpty
             ? response.errors.join(', ')
@@ -70,16 +74,9 @@ class SellerViewModel extends Cubit<SellerViewModelState> {
     required MultipartFile nationalIdBack,
     required MultipartFile selfieWithId,
   }) async {
-    final id = sellerId;
-    if (id == null) {
-      emit(const SellerError('Seller ID not found. Please create seller first.'));
-      return;
-    }
-
     emit(SellerLoading());
     try {
       final response = await sellerRepository.personalVerification(
-        sellerId: id,
         nationalIdFront: nationalIdFront,
         nationalIdBack: nationalIdBack,
         selfieWithId: selfieWithId,

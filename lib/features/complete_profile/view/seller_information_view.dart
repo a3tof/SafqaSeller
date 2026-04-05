@@ -13,6 +13,9 @@ import 'package:safqaseller/core/widgets/custom_button.dart';
 import 'package:safqaseller/features/complete_profile/view/identity_verification_view.dart';
 import 'package:safqaseller/features/seller/view_model/seller_view_model.dart';
 import 'package:safqaseller/features/seller/view_model/seller_view_model_state.dart';
+import 'package:safqaseller/features/auth/model/models/location_model.dart';
+import 'package:safqaseller/features/auth/model/repositories/auth_repository.dart';
+import 'package:safqaseller/core/widgets/location_picker_field.dart';
 
 class SellerInformationView extends StatefulWidget {
   const SellerInformationView({super.key, this.accountType});
@@ -30,9 +33,7 @@ class _SellerInformationViewState extends State<SellerInformationView> {
   final _phoneController = TextEditingController();
   final _descController = TextEditingController();
 
-  String _selectedCity = 'Cairo';
   String _selectedPhoneCode = '+20';
-  int _selectedCityId = 1;
   int _selectedBusinessType = 0; // 0 = Personal, 1 = Business
 
   File? _logoFile;
@@ -45,23 +46,37 @@ class _SellerInformationViewState extends State<SellerInformationView> {
     {'name': 'Kuwait', 'code': '+965', 'flag': '🇰🇼'},
   ];
 
-  static const List<Map<String, dynamic>> _cities = [
-    {'name': 'Cairo', 'id': 1},
-    {'name': 'Alexandria', 'id': 2},
-    {'name': 'Giza', 'id': 3},
-    {'name': 'Luxor', 'id': 4},
-    {'name': 'Aswan', 'id': 5},
-    {'name': 'Sharm El Sheikh', 'id': 6},
-  ];
+  List<LocationModel> _apiCountries = [];
+  List<LocationModel> _apiCities = [];
+  LocationModel? _selectedLocationCountry;
+  LocationModel? _selectedLocationCity;
+  bool _isLoadingLocations = false;
 
   @override
   void initState() {
     super.initState();
-    // Determine business type from account type argument
-    // Personal = 0, Business = 1
     if (widget.accountType.toString().toLowerCase().contains('business')) {
       _selectedBusinessType = 1;
     }
+    _loadApiCountries();
+  }
+
+  Future<void> _loadApiCountries() async {
+    setState(() => _isLoadingLocations = true);
+    try {
+      _apiCountries = await getIt<AuthRepository>().getCountries();
+    } catch (_) {}
+    if (mounted) setState(() => _isLoadingLocations = false);
+  }
+
+  Future<void> _loadApiCities(int countryId) async {
+    setState(() => _isLoadingLocations = true);
+    _selectedLocationCity = null;
+    _apiCities = [];
+    try {
+      _apiCities = await getIt<AuthRepository>().getCities(countryId);
+    } catch (_) {}
+    if (mounted) setState(() => _isLoadingLocations = false);
   }
 
   @override
@@ -86,6 +101,16 @@ class _SellerInformationViewState extends State<SellerInformationView> {
   Future<void> _submit(SellerViewModel viewModel) async {
     if (!_formKey.currentState!.validate()) return;
 
+    if (_selectedLocationCity == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please select a country and a city'),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     MultipartFile? logo;
     if (_logoFile != null) {
       logo = await MultipartFile.fromFile(
@@ -99,7 +124,7 @@ class _SellerInformationViewState extends State<SellerInformationView> {
     await viewModel.createSeller(
       storeName: _nameController.text.trim(),
       phoneNumber: phoneNumber,
-      cityId: _selectedCityId,
+      cityId: _selectedLocationCity!.id,
       businessType: _selectedBusinessType,
       description: _descController.text.trim(),
       logo: logo,
@@ -171,18 +196,30 @@ class _SellerInformationViewState extends State<SellerInformationView> {
                       ),
                       SizedBox(height: 16.h),
 
+                      // Country
+                      _FieldLabel(label: 'Country'),
+                      SizedBox(height: 6.h),
+                      LocationPickerField(
+                        enabled: !_isLoadingLocations && _apiCountries.isNotEmpty,
+                        hintText: 'Select Country',
+                        locations: _apiCountries,
+                        selectedLocation: _selectedLocationCountry,
+                        onChanged: (location) {
+                          setState(() => _selectedLocationCountry = location);
+                          if (location != null) _loadApiCities(location.id);
+                        },
+                      ),
+                      SizedBox(height: 16.h),
+
                       // City
                       _FieldLabel(label: 'City'),
                       SizedBox(height: 6.h),
-                      _CityDropdown(
-                        value: _selectedCity,
-                        cities: _cities,
-                        onChanged: (name, id) {
-                          setState(() {
-                            _selectedCity = name;
-                            _selectedCityId = id;
-                          });
-                        },
+                      LocationPickerField(
+                        enabled: !_isLoadingLocations && _apiCities.isNotEmpty,
+                        hintText: 'Select City',
+                        locations: _apiCities,
+                        selectedLocation: _selectedLocationCity,
+                        onChanged: (location) => setState(() => _selectedLocationCity = location),
                       ),
                       SizedBox(height: 16.h),
 
@@ -347,53 +384,7 @@ class _PhoneField extends StatelessWidget {
   }
 }
 
-class _CityDropdown extends StatelessWidget {
-  const _CityDropdown({
-    required this.value,
-    required this.cities,
-    required this.onChanged,
-  });
 
-  final String value;
-  final List<Map<String, dynamic>> cities;
-  final void Function(String name, int id) onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 48.h,
-      padding: EdgeInsets.symmetric(horizontal: 12.w),
-      decoration: BoxDecoration(
-        border: Border.all(color: const Color(0xFFDDE3EE)),
-        borderRadius: BorderRadius.circular(8.r),
-        color: Colors.white,
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-          isExpanded: true,
-          icon:
-              Icon(Icons.arrow_drop_down, size: 20.sp, color: Colors.grey),
-          style:
-              TextStyles.regular14(context).copyWith(color: Colors.black87),
-          items: cities
-              .map((c) => DropdownMenuItem(
-                    value: c['name'] as String,
-                    child: Text(c['name'] as String),
-                  ))
-              .toList(),
-          onChanged: (v) {
-            if (v != null) {
-              final city =
-                  cities.firstWhere((c) => c['name'] == v);
-              onChanged(v, city['id'] as int);
-            }
-          },
-        ),
-      ),
-    );
-  }
-}
 
 class _ImagePickerBox extends StatelessWidget {
   const _ImagePickerBox({this.file, required this.onTap});

@@ -49,7 +49,6 @@ class SellerRepository {
   // Authorization: Bearer {token}
 
   Future<ApiResponse> personalVerification({
-    required int sellerId,
     required MultipartFile nationalIdFront,
     required MultipartFile nationalIdBack,
     required MultipartFile selfieWithId,
@@ -61,7 +60,7 @@ class SellerRepository {
     });
 
     final response = await dioHelper.postFormData(
-      endPoint: 'seller/$sellerId/personal-verification',
+      endPoint: 'seller/personal-verification',
       data: formData,
       requiresAuth: true,
     );
