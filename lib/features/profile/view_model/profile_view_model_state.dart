@@ -19,6 +19,9 @@ class ProfileLoaded extends ProfileViewModelState {
   final String? phoneNumber;
   /// Decoded logo bytes ready for `Image.memory`. Null when not yet loaded.
   final Uint8List? logoBytes;
+  final String? rating;
+  final String? followersCount;
+  final String? auctionsCount;
 
   const ProfileLoaded({
     required this.isProfileCompleted,
@@ -26,6 +29,9 @@ class ProfileLoaded extends ProfileViewModelState {
     this.email,
     this.phoneNumber,
     this.logoBytes,
+    this.rating,
+    this.followersCount,
+    this.auctionsCount,
   });
 
   @override
@@ -35,6 +41,9 @@ class ProfileLoaded extends ProfileViewModelState {
         email,
         phoneNumber,
         logoBytes,
+        rating,
+        followersCount,
+        auctionsCount,
       ];
 }
 

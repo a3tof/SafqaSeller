@@ -34,6 +34,14 @@ class ProfileViewBody extends StatelessWidget {
               : '—';
           final logoBytes =
               profileState is ProfileLoaded ? profileState.logoBytes : null;
+          final rating =
+              profileState is ProfileLoaded ? (profileState.rating ?? '0') : '0';
+          final followersCount = profileState is ProfileLoaded
+              ? (profileState.followersCount ?? '0')
+              : '0';
+          final auctionsCount = profileState is ProfileLoaded
+              ? (profileState.auctionsCount ?? '0')
+              : '0';
 
           return SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
@@ -44,7 +52,11 @@ class ProfileViewBody extends StatelessWidget {
             SizedBox(height: 20.h),
 
             // ── Metrics Row (Rating, Users, Deliveries) ──
-            const ProfileMetricsRow(),
+            ProfileMetricsRow(
+              rating: rating,
+              followersCount: followersCount,
+              auctionsCount: auctionsCount,
+            ),
             SizedBox(height: 24.h),
 
             // ── User Info Fields — data from GET Auth/profile ──

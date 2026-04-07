@@ -4,7 +4,16 @@ import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 
 class ProfileMetricsRow extends StatelessWidget {
-  const ProfileMetricsRow({super.key});
+  const ProfileMetricsRow({
+    super.key,
+    required this.rating,
+    required this.followersCount,
+    required this.auctionsCount,
+  });
+
+  final String rating;
+  final String followersCount;
+  final String auctionsCount;
 
   @override
   Widget build(BuildContext context) {
@@ -16,19 +25,19 @@ class ProfileMetricsRow extends StatelessWidget {
           _MetricItem(
             icon: Icons.star_outline,
             iconColor: const Color(0xFFFFC107),
-            value: '4.9',
+            value: rating,
           ),
           SizedBox(width: 32.w),
           _MetricItem(
             icon: Icons.groups_outlined,
             iconColor: AppColors.primaryColor,
-            value: '100',
+            value: followersCount,
           ),
           SizedBox(width: 32.w),
           _MetricItem(
-            icon: Icons.local_shipping_outlined,
+            icon: Icons.gavel_outlined,
             iconColor: AppColors.primaryColor,
-            value: '4.9',
+            value: auctionsCount,
           ),
         ],
       ),

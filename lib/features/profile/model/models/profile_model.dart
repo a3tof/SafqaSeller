@@ -7,12 +7,18 @@ class ProfileModel {
   final String? phoneNumber;
   /// Raw base64-encoded image string returned by the API.
   final String? storeLogo;
+  final String rating;
+  final String followersCount;
+  final String auctionsCount;
 
   ProfileModel({
     this.fullName,
     this.email,
     this.phoneNumber,
     this.storeLogo,
+    this.rating = '0',
+    this.followersCount = '0',
+    this.auctionsCount = '0',
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -27,6 +33,29 @@ class ProfileModel {
               json['logo'] ?? json['Logo'] ??
               json['profileImage'] ?? json['ProfileImage'] ??
               json['image'] ?? json['Image']) as String?,
+      rating: _stringifyMetric(
+            json['sellerRating'] ??
+                json['SellerRating'] ??
+                json['rating'] ??
+                json['Rating'],
+          ) ??
+          '0',
+      followersCount: _stringifyMetric(
+            json['followers'] ??
+                json['Followers'] ??
+                json['followersCount'] ??
+                json['FollowersCount'],
+          ) ??
+          '0',
+      auctionsCount: _stringifyMetric(
+            json['auctionsCount'] ??
+                json['AuctionsCount'] ??
+                json['auctionCount'] ??
+                json['AuctionCount'] ??
+                json['totalAuctions'] ??
+                json['TotalAuctions'],
+          ) ??
+          '0',
     );
   }
 
@@ -39,4 +68,16 @@ class ProfileModel {
       return null;
     }
   }
+}
+
+String? _stringifyMetric(dynamic value) {
+  if (value == null) return null;
+  if (value is String) return value;
+  if (value is int) return value.toString();
+  if (value is double) {
+    return value == value.roundToDouble()
+        ? value.toInt().toString()
+        : value.toStringAsFixed(1);
+  }
+  return value.toString();
 }

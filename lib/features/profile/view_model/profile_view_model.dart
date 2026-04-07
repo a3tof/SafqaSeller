@@ -26,6 +26,9 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
       email: current is ProfileLoaded ? current.email : null,
       phoneNumber: current is ProfileLoaded ? current.phoneNumber : null,
       logoBytes: current is ProfileLoaded ? current.logoBytes : null,
+      rating: current is ProfileLoaded ? current.rating : null,
+      followersCount: current is ProfileLoaded ? current.followersCount : null,
+      auctionsCount: current is ProfileLoaded ? current.auctionsCount : null,
     ));
   }
 
@@ -43,6 +46,9 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
         email: profile.email,
         phoneNumber: profile.phoneNumber,
         logoBytes: profile.logoBytes,
+        rating: profile.rating,
+        followersCount: profile.followersCount,
+        auctionsCount: profile.auctionsCount,
       ));
     } catch (e) {
       emit(ProfileError(e.toString().replaceFirst('Exception: ', '')));
@@ -69,6 +75,9 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
       email: current is ProfileLoaded ? current.email : null,
       phoneNumber: current is ProfileLoaded ? current.phoneNumber : null,
       logoBytes: current is ProfileLoaded ? current.logoBytes : null,
+      rating: current is ProfileLoaded ? current.rating : null,
+      followersCount: current is ProfileLoaded ? current.followersCount : null,
+      auctionsCount: current is ProfileLoaded ? current.auctionsCount : null,
     ));
   }
 
