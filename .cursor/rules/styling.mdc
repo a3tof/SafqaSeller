@@ -1,0 +1,81 @@
+---
+description: Colors, typography, fonts, sizing, and UI styling conventions
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Styling Conventions
+
+## Colors — `AppColors`
+
+Always use `AppColors` constants. Never use raw `Color(0x...)` inline.
+
+```dart
+// ✅ GOOD
+color: AppColors.primaryColor
+
+// ❌ BAD
+color: Color(0xFF023E8A)
+```
+
+| Constant | Hex | Use |
+|---|---|---|
+| `primaryColor` | `#023E8A` | Primary actions, active states |
+| `lightPrimaryColor` | `#023E8A` | Same as primary (alias) |
+| `secondaryColor` | `#E6F1FF` | Backgrounds, chips, badges |
+| `lightsecondaryColor` | `#FFFFFF` | White surfaces |
+
+## Typography — `TextStyles`
+
+All text styles are in `lib/core/utils/app_text_styles.dart`. Always call them with `BuildContext`.
+
+```dart
+// ✅ GOOD
+Text('Hello', style: TextStyles.semiBold16(context))
+
+// ❌ BAD
+Text('Hello', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600))
+```
+
+Available styles (format: `{weight}{size}`):
+
+- `regular11`, `semiBold11`
+- `regular12`, `regular13`, `bold13`, `semiBold13`
+- `regular14`, `medium14`, `semiBold14`
+- `medium15`, `semiBold15`
+- `regular16`, `medium16`, `semiBold16`, `bold16`
+- `regular18`, `medium18`, `bold18`
+- `semiBold19`, `bold19`
+- `regular20`, `medium20`, `semiBold20`
+- `regular22`, `bold22`, `bold23`
+- `semiBold24`, `regular26`, `bold28`
+
+To tint: `.copyWith(color: AppColors.primaryColor)`.
+
+## Sizing — `flutter_screenutil`
+
+Design size is **375×812**. Always use `.w`, `.h`, `.r`, `.sp` — never raw doubles for layout.
+
+```dart
+// ✅ GOOD
+SizedBox(width: 24.w, height: 8.h)
+BorderRadius.circular(12.r)
+
+// ❌ BAD
+SizedBox(width: 24, height: 8)
+```
+
+## Fonts
+
+| Locale | Font Family |
+|--------|-------------|
+| `ar` | `Cairo` (400/500/600/700) |
+| `en` | `Inter` (400/500/600/700) |
+
+The font family is set globally in `MaterialApp` based on locale. Never override `fontFamily` in individual `TextStyle`.
+
+## Assets
+
+Images are in `assets/images/` and `assets/images/vuesax/bold|outline/`. Reference via the generated `AppImages` class in `lib/core/utils/app_images.dart`.
+
+SVGs use `flutter_svg`; rasters use standard `Image.asset`.

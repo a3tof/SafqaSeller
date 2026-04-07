@@ -11,9 +11,21 @@ import 'package:safqaseller/features/profile/view_model/profile_view_model_state
 import 'package:safqaseller/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-class ProfileView extends StatelessWidget {
+class ProfileView extends StatefulWidget {
   const ProfileView({super.key});
   static const String routeName = 'profile';
+
+  @override
+  State<ProfileView> createState() => _ProfileViewState();
+}
+
+class _ProfileViewState extends State<ProfileView> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch fresh profile data every time the screen is opened.
+    context.read<ProfileViewModel>().fetchProfile();
+  }
 
   @override
   Widget build(BuildContext context) {

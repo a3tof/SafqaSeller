@@ -11,9 +11,11 @@ import 'package:safqaseller/features/auth/view_model/logout/logout_view_model.da
 import 'package:safqaseller/features/auth/view_model/register/register_view_model.dart';
 import 'package:safqaseller/features/forgot_password/model/repositories/forgot_password_repository.dart';
 import 'package:safqaseller/features/forgot_password/view_model/forgot_password_view_model.dart';
+import 'package:safqaseller/features/profile/model/repositories/profile_repository.dart';
 import 'package:safqaseller/features/profile/view_model/profile_view_model.dart';
 import 'package:safqaseller/features/seller/model/repositories/seller_repository.dart';
 import 'package:safqaseller/features/seller/view_model/seller_view_model.dart';
+import 'package:safqaseller/features/home/view_model/home_view_model.dart';
 import 'package:safqaseller/features/notifications/model/repositories/notifications_repository.dart';
 import 'package:safqaseller/features/notifications/view_model/notifications/notifications_view_model.dart';
 import 'package:safqaseller/features/wallet/model/repositories/wallet_repository.dart';
@@ -57,10 +59,18 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton(
     () => NotificationsRepository(dioHelper: getIt()),
   );
+  getIt.registerLazySingleton(
+    () => ProfileRepository(dioHelper: getIt()),
+  );
 
   // 4. Global ViewModels (singletons — live for the app lifetime)
   getIt.registerLazySingleton(() => AuthViewModel(getIt()));
-  getIt.registerLazySingleton(() => ProfileViewModel(getIt()));
+  getIt.registerLazySingleton(
+    () => ProfileViewModel(
+      cacheHelper: getIt(),
+      profileRepository: getIt(),
+    ),
+  );
 
   // 5. ViewModels (factory = new instance per call)
   getIt.registerFactory(() => RegisterViewModel(getIt()));
@@ -76,6 +86,7 @@ Future<void> setupServiceLocator() async {
     () => SellerViewModel(sellerRepository: getIt(), cacheHelper: getIt()),
   );
   getIt.registerFactory(() => NotificationsViewModel(getIt()));
+  getIt.registerFactory(() => HomeViewModel(getIt()));
 }
 
 String _generateDeviceId() {

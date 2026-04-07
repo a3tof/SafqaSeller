@@ -7,9 +7,11 @@ import 'package:safqaseller/core/storage/cache_keys.dart';
 
 class DioHelper {
   final Dio dio;
+  final CacheHelper _cacheHelper;
 
   DioHelper({required CacheHelper cacheHelper})
-      : dio = Dio(
+      : _cacheHelper = cacheHelper,
+        dio = Dio(
           BaseOptions(
             baseUrl: AppConfig.baseUrl,
             receiveDataWhenStatusError: true,
@@ -21,16 +23,18 @@ class DioHelper {
             },
           ),
         ) {
-    // ── Header injection ────────────────────────────────────────────────────
+    // ── Header injection + token refresh ────────────────────────────────────
     dio.interceptors.add(
       InterceptorsWrapper(
-        onRequest: (options, handler) {
-          final deviceId = cacheHelper.getData(key: CacheKeys.deviceId);
+        onRequest: (options, handler) async {
+          final deviceId = _cacheHelper.getData(key: CacheKeys.deviceId);
           if (deviceId != null) {
             options.headers['DeviceId'] = deviceId;
           }
-          if (options.extra['requiresAuth'] == true) {
-            final token = cacheHelper.getData(key: CacheKeys.token);
+          // Skip refresh logic on the refresh call itself to prevent loops.
+          if (options.extra['requiresAuth'] == true &&
+              options.extra['_refreshing'] != true) {
+            final token = await _getValidToken();
             if (token != null) {
               options.headers['Authorization'] = 'Bearer $token';
             }
@@ -44,6 +48,77 @@ class DioHelper {
     if (kDebugMode) {
       dio.interceptors.add(_ApiLogger());
     }
+  }
+
+  // ── Token expiry + refresh ───────────────────────────────────────────────
+
+  /// Returns a valid token, refreshing it first if it is older than 5 hours.
+  Future<String?> _getValidToken() async {
+    final token = _cacheHelper.getData(key: CacheKeys.token) as String?;
+    if (token == null || token.isEmpty) return null;
+
+    final tokenTimeStr =
+        _cacheHelper.getData(key: CacheKeys.tokenTime) as String?;
+    if (tokenTimeStr != null) {
+      final tokenTime = DateTime.tryParse(tokenTimeStr);
+      if (tokenTime != null &&
+          DateTime.now().difference(tokenTime).inHours >= 5) {
+        return await _refreshAccessToken(token);
+      }
+    }
+    return token;
+  }
+
+  /// Calls Auth/refresh-token with the expired token sent as a JSON string body.
+  /// Returns the new token on success, or falls back to the expired token.
+  Future<String?> _refreshAccessToken(String expiredToken) async {
+    try {
+      final storedRefresh =
+          _cacheHelper.getData(key: CacheKeys.refreshToken) as String?;
+      final tokenToSend =
+          (storedRefresh != null && storedRefresh.isNotEmpty)
+              ? storedRefresh
+              : expiredToken;
+
+      final response = await dio.post<dynamic>(
+        'Auth/refresh-token',
+        // Refresh expects a raw JSON string body, preferring the cached
+        // refresh token and falling back to the expired access token.
+        data: jsonEncode(tokenToSend),
+        options: Options(
+          extra: {'_refreshing': true},
+          contentType: 'application/json',
+        ),
+      );
+
+      if (response.statusCode != null &&
+          response.statusCode! >= 200 &&
+          response.statusCode! < 300) {
+        final body = _decodeIfString(response.data);
+        if (body is Map) {
+          final newToken = (body['Token'] ?? body['token']) as String?;
+          if (newToken != null && newToken.isNotEmpty) {
+            await _cacheHelper.saveData(
+                key: CacheKeys.token, value: newToken);
+            await _cacheHelper.saveData(
+              key: CacheKeys.tokenTime,
+              value: DateTime.now().toIso8601String(),
+            );
+            final newRefresh =
+                (body['RefreshToken'] ?? body['refreshToken']) as String?;
+            if (newRefresh != null) {
+              await _cacheHelper.saveData(
+                  key: CacheKeys.refreshToken, value: newRefresh);
+            }
+            return newToken;
+          }
+        }
+      }
+    } catch (e) {
+      if (kDebugMode) debugPrint('Token refresh failed: $e');
+    }
+    // Fall back — let the server decide what to do with the expired token.
+    return expiredToken;
   }
 
   Future<Response<dynamic>> postData({

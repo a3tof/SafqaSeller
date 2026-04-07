@@ -61,12 +61,13 @@ class _SigninViewBodyState extends State<SigninViewBody> {
               (route) => false,
             );
           } else {
-            // ── User: go to HomeScreen and show complete-profile dialog
-            //    only if the profile has NOT been completed yet ────────────
+            // ── "Login successful As User": navigate with an explicit flag
+            //    so the home screen can show the complete-profile dialog. ──
             Navigator.pushNamedAndRemoveUntil(
               context,
               HomeScreenView.routeName,
               (route) => false,
+              arguments: {'showCompleteProfile': true},
             );
           }
         } else if (state is LoginError) {

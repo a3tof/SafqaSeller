@@ -9,6 +9,8 @@ import 'package:safqaseller/features/profile/view/widgets/profile_header_section
 import 'package:safqaseller/features/profile/view/widgets/profile_info_field.dart';
 import 'package:safqaseller/features/profile/view/widgets/profile_menu_item.dart';
 import 'package:safqaseller/features/profile/view/widgets/profile_metrics_row.dart';
+import 'package:safqaseller/features/profile/view_model/profile_view_model.dart';
+import 'package:safqaseller/features/profile/view_model/profile_view_model_state.dart';
 import 'package:safqaseller/features/wallet/view/wallet_view.dart';
 import 'package:safqaseller/main.dart';
 import 'package:safqaseller/generated/l10n.dart';
@@ -19,32 +21,46 @@ class ProfileViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: SingleChildScrollView(
+      child: BlocBuilder<ProfileViewModel, ProfileViewModelState>(
+        builder: (context, profileState) {
+          final fullName = profileState is ProfileLoaded
+              ? (profileState.fullName ?? '—')
+              : '—';
+          final email = profileState is ProfileLoaded
+              ? (profileState.email ?? '—')
+              : '—';
+          final phoneNumber = profileState is ProfileLoaded
+              ? (profileState.phoneNumber ?? '—')
+              : '—';
+          final logoBytes =
+              profileState is ProfileLoaded ? profileState.logoBytes : null;
+
+          return SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         child: Column(
           children: [
             // ── Profile Header (Avatar + Buttons) ──
-            const ProfileHeaderSection(),
+            ProfileHeaderSection(logoBytes: logoBytes),
             SizedBox(height: 20.h),
 
             // ── Metrics Row (Rating, Users, Deliveries) ──
             const ProfileMetricsRow(),
             SizedBox(height: 24.h),
 
-            // ── User Info Fields ──
-            const ProfileInfoField(
+            // ── User Info Fields — data from GET Auth/profile ──
+            ProfileInfoField(
               icon: Icons.person_outline,
-              value: 'Saeed Ahmed',
+              value: fullName,
             ),
             SizedBox(height: 12.h),
-            const ProfileInfoField(
+            ProfileInfoField(
               icon: Icons.email_outlined,
-              value: 'saeed.ahmed@gmail.com',
+              value: email,
             ),
             SizedBox(height: 12.h),
-            const ProfileInfoField(
+            ProfileInfoField(
               icon: Icons.phone_outlined,
-              value: '01000000000',
+              value: phoneNumber,
             ),
             SizedBox(height: 12.h),
 
@@ -102,6 +118,8 @@ class ProfileViewBody extends StatelessWidget {
             SizedBox(height: 24.h),
           ],
         ),
+      );
+        },
       ),
     );
   }

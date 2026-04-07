@@ -1,0 +1,65 @@
+---
+description: Project architecture, folder structure, routing, and DI conventions
+alwaysApply: true
+---
+
+# safqaSeller — Project Structure
+
+## Architecture
+
+Feature-first layout with **MVVM naming** + **Cubit** state management. No standalone domain/use-case layer.
+
+```
+lib/
+├── core/
+│   ├── config/        # AppConfig — base URL, API key, OAuth IDs
+│   ├── helper_functions/on_generate_routes.dart  # Named-route switch
+│   ├── network/dio_client.dart   # DioHelper (single HTTP client)
+│   ├── service_locator.dart      # GetIt registrations
+│   ├── storage/                  # CacheHelper (SharedPreferences) + CacheKeys
+│   ├── utils/                    # AppColors, TextStyles, AppImages, AppConstants
+│   └── widgets/                  # Shared reusable widgets
+└── features/<feature>/
+    ├── view/
+    │   ├── <feature>_view.dart
+    │   └── widgets/              # Local widgets (never in core/)
+    ├── view_model/
+    │   └── <flow>/
+    │       ├── <flow>_view_model.dart   # Cubit
+    │       └── <flow>_view_model_state.dart
+    └── model/
+        ├── repositories/<feature>_repository.dart
+        └── models/
+```
+
+## Feature List
+
+`adaptive_layout`, `auth`, `complete_profile`, `forgot_password`, `home`, `notifications`, `on_boarding`, `profile`, `seller`, `splash`, `subscription`, `terms_and_conditions`, `wallet`
+
+## Adding a New Feature
+
+1. Create folder `lib/features/<name>/` with `view/`, `view_model/`, `model/` sub-folders.
+2. Add screen routes to `on_generate_routes.dart` using a string constant `routeName` on the view class.
+3. Register repository as `registerLazySingleton` and Cubit as `registerFactory` in `service_locator.dart`.
+4. Add route args class to `view/` if the route needs parameters.
+
+## Routing
+
+- All routes live in `lib/core/helper_functions/on_generate_routes.dart` (named-route switch).
+- Every screen exposes `static const String routeName = '/my-route';`.
+- Pass arguments via `RouteSettings.arguments`; create a typed args class in the feature's `view/` folder.
+
+## Dependency Injection (GetIt)
+
+```dart
+// ✅ Repositories → lazySingleton
+getIt.registerLazySingleton<MyRepository>(() => MyRepository(getIt()));
+
+// ✅ Cubits → factory (new instance per screen)
+getIt.registerFactory<MyCubit>(() => MyCubit(getIt()));
+
+// ✅ App-wide singletons (e.g. AuthViewModel, ProfileViewModel) → registerSingleton
+getIt.registerSingleton<AuthViewModel>(AuthViewModel(getIt()));
+```
+
+Retrieve with `getIt<T>()`. Never use `context.read` to create a Cubit — always from `getIt`.

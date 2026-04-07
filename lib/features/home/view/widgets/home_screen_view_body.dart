@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,16 +10,22 @@ import 'package:safqaseller/features/auth/view_model/auth/auth_view_model.dart';
 import 'package:safqaseller/features/auth/view_model/auth/auth_view_model_state.dart';
 import 'package:safqaseller/features/home/view/widgets/complete_profile_dialog.dart';
 import 'package:safqaseller/features/home/view/widgets/home_action_card.dart';
+import 'package:safqaseller/features/home/view_model/home_view_model.dart';
+import 'package:safqaseller/features/home/view_model/home_view_model_state.dart';
+import 'package:safqaseller/features/notifications/view/notifications_view.dart';
 import 'package:safqaseller/features/profile/view/profile_view.dart';
 import 'package:safqaseller/features/profile/view_model/profile_view_model.dart';
-import 'package:safqaseller/features/profile/view_model/profile_view_model_state.dart';
-import 'package:safqaseller/features/notifications/view/notifications_view.dart';
 import 'package:safqaseller/features/wallet/view/wallet_view.dart';
 import 'package:safqaseller/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HomeScreenViewBody extends StatefulWidget {
-  const HomeScreenViewBody({super.key});
+  const HomeScreenViewBody({
+    super.key,
+    this.showCompleteProfile = false,
+  });
+
+  final bool showCompleteProfile;
 
   @override
   State<HomeScreenViewBody> createState() => _HomeScreenViewBodyState();
@@ -33,18 +41,20 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
   void _maybeShowDialog() {
     if (!mounted) return;
 
-    // Only show dialog if role == "User" AND profile is NOT completed
+    final showFromLogin = widget.showCompleteProfile;
     final authState = context.read<AuthViewModel>().state;
     final profileVM = context.read<ProfileViewModel>();
+    final showFromRole =
+        authState is AuthAuthenticated &&
+        authState.role == 'User' &&
+        !profileVM.isProfileCompleted;
 
-    if (authState is AuthAuthenticated && authState.role == 'User') {
-      if (!profileVM.isProfileCompleted) {
-        showDialog<void>(
-          context: context,
-          barrierDismissible: false,
-          builder: (_) => CompleteProfileDialog(onComplete: () {}),
-        );
-      }
+    if (showFromLogin || showFromRole) {
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => CompleteProfileDialog(onComplete: () {}),
+      );
     }
   }
 
@@ -53,13 +63,14 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: BlocConsumer<ProfileViewModel, ProfileViewModelState>(
-          listener: (context, state) {
-            // If profile just became completed, no further action needed
-            // The dialog will not show again since isProfileCompleted is true
-          },
+        child: BlocBuilder<HomeViewModel, HomeViewModelState>(
           builder: (context, state) {
-            final isLoading = state is ProfileInitial;
+            final isLoading = state is HomeLoading || state is HomeInitial;
+            final storeName =
+                state is HomeSuccess ? state.data.storeName : 'Seller';
+            final logoBytes =
+                state is HomeSuccess ? state.data.logoBytes : null;
+
             return Skeletonizer(
               enabled: isLoading,
               child: Column(
@@ -70,8 +81,37 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
                   SizedBox(height: 24.h),
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: const _GreetingRow(),
+                    child: _GreetingRow(
+                      storeName: storeName,
+                      logoBytes: logoBytes,
+                    ),
                   ),
+                  if (state is HomeFailure) ...[
+                    SizedBox(height: 8.h),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.w),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              state.error,
+                              style: TextStyles.regular13(context)
+                                  .copyWith(color: Colors.red),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () =>
+                                context.read<HomeViewModel>().loadHomeData(),
+                            child: Text(
+                              'Retry',
+                              style: TextStyles.semiBold13(context)
+                                  .copyWith(color: AppColors.primaryColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                   SizedBox(height: 32.h),
                   Expanded(
                     child: SingleChildScrollView(
@@ -172,7 +212,10 @@ class _SafqaBusinessLogo extends StatelessWidget {
 }
 
 class _GreetingRow extends StatelessWidget {
-  const _GreetingRow();
+  const _GreetingRow({required this.storeName, this.logoBytes});
+
+  final String storeName;
+  final Uint8List? logoBytes;
 
   @override
   Widget build(BuildContext context) {
@@ -183,25 +226,27 @@ class _GreetingRow extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                width: 70.w,
-                height: 70.w,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.secondaryColor,
-                  border: Border.all(
-                    color: const Color(0xFFCCDDEE),
-                    width: 1.5,
+              GestureDetector(
+                onTap: () => Navigator.pushNamed(context, ProfileView.routeName),
+                child: Container(
+                  width: 70.w,
+                  height: 70.w,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: AppColors.secondaryColor,
+                    border: Border.all(
+                      color: const Color(0xFFCCDDEE),
+                      width: 1.5,
+                    ),
                   ),
-                ),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, ProfileView.routeName);
-                  },
-                  icon: Icon(
-                    Icons.person_rounded,
-                    color: AppColors.primaryColor,
-                    size: 38.sp,
+                  child: ClipOval(
+                    child: logoBytes != null
+                        ? Image.memory(logoBytes!, fit: BoxFit.cover)
+                        : Icon(
+                            Icons.store_rounded,
+                            color: AppColors.primaryColor,
+                            size: 38.sp,
+                          ),
                   ),
                 ),
               ),
@@ -215,17 +260,15 @@ class _GreetingRow extends StatelessWidget {
                     children: [
                       Text(
                         'Welcome!',
-                        style: TextStyles.regular18(
-                          context,
-                        ).copyWith(color: const Color(0xFF808080)),
+                        style: TextStyles.regular18(context)
+                            .copyWith(color: const Color(0xFF808080)),
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 2.h),
                       Text(
-                        'Hello, Seller!',
-                        style: TextStyles.medium18(
-                          context,
-                        ).copyWith(color: AppColors.primaryColor),
+                        storeName,
+                        style: TextStyles.medium18(context)
+                            .copyWith(color: AppColors.primaryColor),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],

@@ -56,6 +56,7 @@ class AuthViewModel extends Cubit<AuthViewModelState> {
   /// Clears all stored data on logout.
   Future<void> logout() async {
     await cacheHelper.removeData(key: CacheKeys.token);
+    await cacheHelper.removeData(key: CacheKeys.tokenTime);
     await cacheHelper.removeData(key: CacheKeys.refreshToken);
     await cacheHelper.removeData(key: CacheKeys.userId);
     await cacheHelper.removeData(key: CacheKeys.role);

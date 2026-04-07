@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safqaseller/core/utils/app_color.dart';
@@ -6,7 +8,11 @@ import 'package:safqaseller/features/subscription/view/subscription_view.dart';
 import 'package:safqaseller/generated/l10n.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
-  const ProfileHeaderSection({super.key});
+  const ProfileHeaderSection({super.key, this.logoBytes});
+
+  /// Decoded logo bytes from GET seller/business-account.
+  /// Displays a store icon placeholder when null.
+  final Uint8List? logoBytes;
 
   @override
   Widget build(BuildContext context) {
@@ -54,17 +60,15 @@ class ProfileHeaderSection extends StatelessWidget {
             shape: BoxShape.circle,
             color: AppColors.secondaryColor,
             border: Border.all(color: const Color(0xFFCCDDEE), width: 2),
-            image: const DecorationImage(
-              image: AssetImage('assets/images/SAFQA.png'),
-              fit: BoxFit.cover,
-            ),
           ),
           child: ClipOval(
-            child: Icon(
-              Icons.person_rounded,
-              color: AppColors.primaryColor,
-              size: 50.sp,
-            ),
+            child: logoBytes != null
+                ? Image.memory(logoBytes!, fit: BoxFit.cover)
+                : Icon(
+                    Icons.store_rounded,
+                    color: AppColors.primaryColor,
+                    size: 50.sp,
+                  ),
           ),
         ),
         // Verified badge

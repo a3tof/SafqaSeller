@@ -1,0 +1,88 @@
+---
+description: How auth tokens are saved to, read from, and refreshed in cache
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# Token Management
+
+## Single Source of Truth — `CacheHelper`
+
+**Always** read and write tokens via `CacheHelper`. Never store a token in a plain variable, a Cubit state field that is used for API calls, or any other place.
+
+```dart
+// ✅ GOOD — read from cache
+final token = cacheHelper.getData(key: CacheKeys.token) as String?;
+
+// ❌ BAD — relying on an in-memory copy
+final token = authViewModel.state.token; // may be stale after a refresh
+```
+
+## Cache Keys
+
+| Key | Type | Stores |
+|-----|------|--------|
+| `CacheKeys.token` | `String` | JWT access token |
+| `CacheKeys.tokenTime` | `String` | ISO-8601 timestamp of when the token was saved |
+| `CacheKeys.refreshToken` | `String` | Refresh token returned by the login API |
+| `CacheKeys.isLoggedIn` | `bool` | Whether the user is currently logged in |
+
+## Saving a Token (login / social auth)
+
+Call `AuthRepository._saveSession(auth)`. It is the **only** place that saves a new session:
+
+```dart
+await cacheHelper.saveData(key: CacheKeys.token,       value: auth.token);
+await cacheHelper.saveData(key: CacheKeys.tokenTime,   value: DateTime.now().toIso8601String());
+await cacheHelper.saveData(key: CacheKeys.refreshToken, value: auth.refreshToken);
+await cacheHelper.saveData(key: CacheKeys.isLoggedIn,  value: true);
+```
+
+**Never** save a token outside of `_saveSession`. If a new flow needs to persist a session, call `_saveSession` instead of duplicating the code.
+
+## Reading the Token for API Calls
+
+`DioHelper` handles this automatically. All repositories that call a protected endpoint must pass `requiresAuth: true`:
+
+```dart
+// ✅ GOOD
+final response = await dioHelper.getData(
+  endPoint: 'seller/Home',
+  requiresAuth: true,   // ← DioHelper injects the token from cache
+);
+
+// ❌ BAD — never attach Authorization manually in a repository
+options.headers['Authorization'] = 'Bearer $hardcodedToken';
+```
+
+## Automatic Token Refresh (5-hour expiry)
+
+`DioHelper._getValidToken()` is called before every authenticated request:
+
+1. Reads `CacheKeys.token` and `CacheKeys.tokenTime` from cache.
+2. If `DateTime.now() − tokenTime ≥ 5 hours`, calls `_refreshAccessToken(expiredToken)`.
+3. `_refreshAccessToken` sends `POST Auth/refresh-token` with the **expired access token as a JSON string body**.
+4. On success, **overwrites** `CacheKeys.token`, `CacheKeys.tokenTime`, and (if returned) `CacheKeys.refreshToken` in cache.
+5. Returns the new token for immediate use in the current request.
+
+```dart
+// Cache is updated automatically — nothing extra needed in a repository.
+// The next authenticated request will already use the fresh token.
+```
+
+## Clearing the Token (logout)
+
+Call `AuthRepository.logout()` or `AuthViewModel.logout()`. Both clear every token key:
+
+```dart
+await cacheHelper.removeData(key: CacheKeys.token);
+await cacheHelper.removeData(key: CacheKeys.tokenTime);
+await cacheHelper.removeData(key: CacheKeys.refreshToken);
+await cacheHelper.saveData(key: CacheKeys.isLoggedIn, value: false);
+```
+
+Never remove token keys individually in feature code — always go through the logout method.
+
+## Restoring Auth State on App Start
+
+`AuthViewModel.loadFromCache()` is called in `main()` before `runApp`. It reads `CacheKeys.token` and `CacheKeys.isLoggedIn` from cache and emits the correct initial state. Do not call it anywhere else.

@@ -64,7 +64,14 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
     case OnBoardingView.routeName:
       return MaterialPageRoute(builder: (_) => const OnBoardingView());
     case HomeScreenView.routeName:
-      return MaterialPageRoute(builder: (_) => const HomeScreenView());
+      final args = settings.arguments;
+      final showCompleteProfile =
+          args is Map && args['showCompleteProfile'] == true;
+      return MaterialPageRoute(
+        builder: (_) => HomeScreenView(
+          showCompleteProfile: showCompleteProfile,
+        ),
+      );
     case TermsAndConditionsView.routeName:
       return MaterialPageRoute(builder: (_) => const TermsAndConditionsView());
 

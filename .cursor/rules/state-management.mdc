@@ -1,0 +1,98 @@
+---
+description: Cubit/BLoC patterns, repository conventions, and networking rules
+globs: lib/**/*.dart
+alwaysApply: false
+---
+
+# State Management & Data Layer
+
+## Cubit (ViewModel) Pattern
+
+Every feature flow has a paired Cubit + state file. Use **`Cubit`** only — never `Bloc<Event, State>`.
+
+```
+features/<feature>/view_model/<flow>/
+├── <flow>_view_model.dart        # extends Cubit<FlowState>
+└── <flow>_view_model_state.dart  # sealed/abstract state classes
+```
+
+```dart
+// ✅ State file
+abstract class LoginState extends Equatable {}
+class LoginInitial extends LoginState { @override List<Object> get props => []; }
+class LoginLoading extends LoginState { @override List<Object> get props => []; }
+class LoginSuccess extends LoginState { ... }
+class LoginFailure extends LoginState { final String error; ... }
+
+// ✅ ViewModel
+class LoginViewModel extends Cubit<LoginState> {
+  final AuthRepository _repo;
+  LoginViewModel(this._repo) : super(LoginInitial());
+
+  Future<void> login(String email, String password) async {
+    emit(LoginLoading());
+    final result = await _repo.login(email, password);
+    result.fold(
+      (error) => emit(LoginFailure(error)),
+      (data)  => emit(LoginSuccess(data)),
+    );
+  }
+}
+```
+
+## BlocBuilder / BlocConsumer in Views
+
+```dart
+// ✅ GOOD — get Cubit from getIt, provide to tree
+BlocProvider(
+  create: (_) => getIt<LoginViewModel>(),
+  child: BlocConsumer<LoginViewModel, LoginState>(
+    listener: (context, state) {
+      if (state is LoginFailure) showErrorSnackbar(context, state.error);
+    },
+    builder: (context, state) {
+      if (state is LoginLoading) return const CircularProgressIndicator();
+      return LoginForm();
+    },
+  ),
+)
+```
+
+## Repository Pattern
+
+Repositories live in `model/repositories/`. They call `DioHelper` and return either typed models or error strings.
+
+```dart
+class AuthRepository {
+  final DioHelper _dio;
+  AuthRepository(this._dio);
+
+  Future<LoginResponse?> login(Map<String, dynamic> body) async {
+    final response = await _dio.postData(endpoint: '/auth/login', data: body);
+    if (response.statusCode == 200) {
+      return LoginResponse.fromJson(response.data);
+    }
+    throw extractResponseError(response);
+  }
+}
+```
+
+## Networking — `DioHelper`
+
+- Use `requiresAuth: true` in `Options.extra` to attach the Authorization header automatically.
+- Convenience methods: `getData`, `postData`, `postFormData`, `putData`, `deleteData`.
+- Error messages: use `extractResponseError(response)` from `dio_client.dart`.
+
+```dart
+// ✅ Authenticated request
+final response = await _dio.getData(
+  endpoint: '/seller/profile',
+  options: Options(extra: {'requiresAuth': true}),
+);
+```
+
+## App-wide Singletons
+
+`AuthViewModel` and `ProfileViewModel` are registered as **singletons** and exposed via `MultiBlocProvider` in `main.dart`. Access them with `context.read<AuthViewModel>()` anywhere in the tree.
+
+All other Cubits are **factories** — instantiated fresh per screen via `BlocProvider(create: (_) => getIt<MyCubit>())`.
