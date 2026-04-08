@@ -25,6 +25,17 @@ class SellerViewModel extends Cubit<SellerViewModelState> {
     return _sellerId;
   }
 
+  Future<void> _refreshSessionForSellerEndpoints() async {
+    final refreshTokenStr =
+        cacheHelper.getData(key: CacheKeys.refreshToken) as String?;
+    if (refreshTokenStr == null || refreshTokenStr.isEmpty) return;
+
+    final authRepo = getIt<AuthRepository>();
+    await authRepo.refreshToken(
+      RefreshTokenRequestModel(refreshToken: refreshTokenStr),
+    );
+  }
+
   // ── Step 1: Create Seller ─────────────────────────────────────────────────
   // POST /api/seller/CreateSeller
 
@@ -154,16 +165,15 @@ class SellerViewModel extends Cubit<SellerViewModelState> {
     String? localAccountNumber,
     int? instaPayNumber,
   }) async {
-    final id = sellerId;
-    if (id == null) {
-      emit(const SellerError('Seller ID not found. Please create seller first.'));
-      return;
-    }
-
     emit(SellerLoading());
     try {
+      try {
+        await _refreshSessionForSellerEndpoints();
+      } catch (_) {
+        // Proceed with the current token if refresh fails.
+      }
+
       final response = await sellerRepository.businessVerification(
-        sellerId: id,
         commercialRegister: commercialRegister,
         taxId: taxId,
         ownerNationalIdFront: ownerNationalIdFront,

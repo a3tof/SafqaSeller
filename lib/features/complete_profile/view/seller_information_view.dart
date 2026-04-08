@@ -12,6 +12,7 @@ import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/custom_button.dart';
 import 'package:safqaseller/features/complete_profile/view/identity_verification_view.dart';
+import 'package:safqaseller/features/complete_profile/view/legal_documents_view.dart';
 import 'package:safqaseller/features/seller/view_model/seller_view_model.dart';
 import 'package:safqaseller/features/seller/view_model/seller_view_model_state.dart';
 import 'package:safqaseller/features/auth/model/models/location_model.dart';
@@ -139,12 +140,15 @@ class _SellerInformationViewState extends State<SellerInformationView> {
       child: BlocConsumer<SellerViewModel, SellerViewModelState>(
         listener: (context, state) {
           if (state is SellerCreated) {
-            // Navigate to Identity Verification with sellerId
-            Navigator.pushNamed(
-              context,
-              IdentityVerificationView.routeName,
-              arguments: _selectedBusinessType == 1, // isBusinessFlow
-            );
+            if (_selectedBusinessType == 1) {
+              Navigator.pushNamed(context, LegalDocumentsView.routeName);
+            } else {
+              Navigator.pushNamed(
+                context,
+                IdentityVerificationView.routeName,
+                arguments: false,
+              );
+            }
           } else if (state is SellerError) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

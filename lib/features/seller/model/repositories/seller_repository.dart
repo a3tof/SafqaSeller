@@ -28,7 +28,7 @@ class SellerRepository {
       'CityId': cityId,
       'BusinessType': businessType,
       'Description': description,
-      'Logo': ?logo,
+      if (logo != null) 'Logo': logo,
     });
 
     final response = await dioHelper.postFormData(
@@ -75,7 +75,6 @@ class SellerRepository {
   // Authorization: Bearer {token}
 
   Future<ApiResponse> businessVerification({
-    required int sellerId,
     required MultipartFile commercialRegister,
     required MultipartFile taxId,
     required MultipartFile ownerNationalIdFront,
@@ -91,17 +90,19 @@ class SellerRepository {
       'TaxId': taxId,
       'OwnerNationalIdFront': ownerNationalIdFront,
       'OwnerNationalIdBack': ownerNationalIdBack,
-      'BankName': bankName,
-      'AccountName': accountName,
-      'IBAN': iban,
-      if (localAccountNumber != null && localAccountNumber.isNotEmpty)
-        'LocalAccountNumber': localAccountNumber,
-      'instaPayNumber': ?instaPayNumber,
     });
 
     final response = await dioHelper.postFormData(
-      endPoint: 'seller/$sellerId/business-verification',
+      endPoint: 'seller/business-verification',
       data: formData,
+      queryParams: {
+        'BankName': bankName,
+        'AccountName': accountName,
+        'IBAN': iban,
+        if (localAccountNumber != null && localAccountNumber.isNotEmpty)
+          'LocalAccountNumber': localAccountNumber,
+        if (instaPayNumber != null) 'instaPayNumber': instaPayNumber,
+      },
       requiresAuth: true,
     );
 

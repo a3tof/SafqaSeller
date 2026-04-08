@@ -19,7 +19,6 @@ class DioHelper {
             validateStatus: (_) => true,
             headers: {
               'x-api-key': AppConfig.apiKey,
-              'Content-Type': 'application/json',
             },
           ),
         ) {
@@ -69,7 +68,7 @@ class DioHelper {
     return token;
   }
 
-  /// Calls Auth/refresh-token with the expired token sent as a JSON string body.
+  /// Calls Auth/refresh-token with the stored refresh token payload.
   /// Returns the new token on success, or falls back to the expired token.
   Future<String?> _refreshAccessToken(String expiredToken) async {
     try {
@@ -82,9 +81,7 @@ class DioHelper {
 
       final response = await dio.post<dynamic>(
         'Auth/refresh-token',
-        // Refresh expects a raw JSON string body, preferring the cached
-        // refresh token and falling back to the expired access token.
-        data: jsonEncode(tokenToSend),
+        data: {'refreshToken': tokenToSend},
         options: Options(
           extra: {'_refreshing': true},
           contentType: 'application/json',
@@ -131,7 +128,10 @@ class DioHelper {
       endPoint,
       data: data,
       queryParameters: queryParams,
-      options: Options(extra: {'requiresAuth': requiresAuth}),
+      options: Options(
+        contentType: Headers.jsonContentType,
+        extra: {'requiresAuth': requiresAuth},
+      ),
     );
   }
 
@@ -160,11 +160,13 @@ class DioHelper {
   Future<Response<dynamic>> postFormData({
     required String endPoint,
     required FormData data,
+    Map<String, dynamic>? queryParams,
     bool requiresAuth = false,
   }) async {
     return dio.post<dynamic>(
       endPoint,
       data: data,
+      queryParameters: queryParams,
       options: Options(
         extra: {'requiresAuth': requiresAuth},
       ),
@@ -179,7 +181,10 @@ class DioHelper {
     return dio.put<dynamic>(
       endPoint,
       data: data,
-      options: Options(extra: {'requiresAuth': requiresAuth}),
+      options: Options(
+        contentType: Headers.jsonContentType,
+        extra: {'requiresAuth': requiresAuth},
+      ),
     );
   }
 
@@ -201,7 +206,10 @@ class DioHelper {
     return dio.delete<dynamic>(
       endPoint,
       data: data,
-      options: Options(extra: {'requiresAuth': requiresAuth}),
+      options: Options(
+        contentType: Headers.jsonContentType,
+        extra: {'requiresAuth': requiresAuth},
+      ),
     );
   }
 }

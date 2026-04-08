@@ -8,6 +8,7 @@ import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/auth/view_model/auth/auth_view_model.dart';
 import 'package:safqaseller/features/auth/view_model/auth/auth_view_model_state.dart';
+import 'package:safqaseller/features/home/view/home_screen_view.dart';
 import 'package:safqaseller/features/seller/view_model/seller_view_model.dart';
 import 'package:safqaseller/features/seller/view_model/seller_view_model_state.dart';
 
@@ -116,6 +117,32 @@ class _SellerHomeBody extends StatelessWidget {
                           style: TextStyles.regular14(context).copyWith(
                             color: const Color(0xFF666666),
                             height: 1.5,
+                          ),
+                        ),
+                        SizedBox(height: 24.h),
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                HomeScreenView.routeName,
+                                (route) => false,
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryColor,
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(vertical: 14.h),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14.r),
+                              ),
+                            ),
+                            child: Text(
+                              'Go to Home',
+                              style: TextStyles.semiBold16(context)
+                                  .copyWith(color: Colors.white),
+                            ),
                           ),
                         ),
                       ],

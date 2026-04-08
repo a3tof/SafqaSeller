@@ -4,7 +4,6 @@ import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/custom_button.dart';
-import 'package:safqaseller/features/complete_profile/view/identity_verification_view.dart';
 import 'package:safqaseller/features/complete_profile/view/seller_information_view.dart';
 import 'package:safqaseller/generated/l10n.dart';
 
@@ -53,11 +52,10 @@ class _AccountTypeViewState extends State<AccountTypeView> {
                       arguments: _AccountType.personal,
                     );
                   } else {
-                    // Business: Identity Verification comes first
                     Navigator.pushNamed(
                       context,
-                      IdentityVerificationView.routeName,
-                      arguments: true, // isBusinessFlow
+                      SellerInformationView.routeName,
+                      arguments: _AccountType.business,
                     );
                   }
                 },
