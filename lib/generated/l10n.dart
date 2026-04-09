@@ -1848,6 +1848,166 @@ class S {
       args: [],
     );
   }
+
+  /// `Search history`
+  String get historySearchHint {
+    return Intl.message(
+      'Search history',
+      name: 'historySearchHint',
+      desc: 'Search field hint in history screen',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get historyRetry {
+    return Intl.message(
+      'Retry',
+      name: 'historyRetry',
+      desc: 'Retry button text in history screen',
+      args: [],
+    );
+  }
+
+  /// `Export`
+  String get historyExport {
+    return Intl.message(
+      'Export',
+      name: 'historyExport',
+      desc: 'Export button label in history screen',
+      args: [],
+    );
+  }
+
+  /// `Auctions`
+  String get historyAuctions {
+    return Intl.message(
+      'Auctions',
+      name: 'historyAuctions',
+      desc: 'Auctions label in history header',
+      args: [],
+    );
+  }
+
+  /// `No history found.`
+  String get historyNoItems {
+    return Intl.message(
+      'No history found.',
+      name: 'historyNoItems',
+      desc: 'Empty state text when there are no history items',
+      args: [],
+    );
+  }
+
+  /// `No matching history found.`
+  String get historyNoMatchingItems {
+    return Intl.message(
+      'No matching history found.',
+      name: 'historyNoMatchingItems',
+      desc: 'Empty state text when search has no results in history',
+      args: [],
+    );
+  }
+
+  /// `Upcoming`
+  String get historyStatusUpcoming {
+    return Intl.message(
+      'Upcoming',
+      name: 'historyStatusUpcoming',
+      desc: 'Upcoming auction status label in history',
+      args: [],
+    );
+  }
+
+  /// `Active`
+  String get historyStatusActive {
+    return Intl.message(
+      'Active',
+      name: 'historyStatusActive',
+      desc: 'Active auction status label in history',
+      args: [],
+    );
+  }
+
+  /// `Ending Soon`
+  String get historyStatusEndingSoon {
+    return Intl.message(
+      'Ending Soon',
+      name: 'historyStatusEndingSoon',
+      desc: 'Ending soon auction status label in history',
+      args: [],
+    );
+  }
+
+  /// `Finished`
+  String get historyStatusFinished {
+    return Intl.message(
+      'Finished',
+      name: 'historyStatusFinished',
+      desc: 'Finished auction status label in history',
+      args: [],
+    );
+  }
+
+  /// `Canceled`
+  String get historyStatusCanceled {
+    return Intl.message(
+      'Canceled',
+      name: 'historyStatusCanceled',
+      desc: 'Canceled auction status label in history',
+      args: [],
+    );
+  }
+
+  /// `Sold`
+  String get historyStatusSold {
+    return Intl.message(
+      'Sold',
+      name: 'historyStatusSold',
+      desc: 'Sold auction status label in history',
+      args: [],
+    );
+  }
+
+  /// `Starting Price`
+  String get historyStartingPrice {
+    return Intl.message(
+      'Starting Price',
+      name: 'historyStartingPrice',
+      desc: 'Starting price label in history card',
+      args: [],
+    );
+  }
+
+  /// `Current Price`
+  String get historyCurrentPrice {
+    return Intl.message(
+      'Current Price',
+      name: 'historyCurrentPrice',
+      desc: 'Current price label in history card',
+      args: [],
+    );
+  }
+
+  /// `Final Price`
+  String get historyFinalPrice {
+    return Intl.message(
+      'Final Price',
+      name: 'historyFinalPrice',
+      desc: 'Final price label in history card',
+      args: [],
+    );
+  }
+
+  /// `Lot`
+  String get historyLotLabel {
+    return Intl.message(
+      'Lot',
+      name: 'historyLotLabel',
+      desc: 'Lot label prefix in history card',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

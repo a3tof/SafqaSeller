@@ -425,6 +425,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "termsWalletBalance": MessageLookupByLibrary.simpleMessage(
       "Buyers must maintain sufficient wallet balance to cover their bids and purchases.",
     ),
+    "historyAuctions": MessageLookupByLibrary.simpleMessage("Auctions"),
+    "historyCurrentPrice": MessageLookupByLibrary.simpleMessage("Current Price"),
+    "historyExport": MessageLookupByLibrary.simpleMessage("Export"),
+    "historyFinalPrice": MessageLookupByLibrary.simpleMessage("Final Price"),
+    "historyLotLabel": MessageLookupByLibrary.simpleMessage("Lot"),
+    "historyNoItems": MessageLookupByLibrary.simpleMessage("No history found."),
+    "historyNoMatchingItems": MessageLookupByLibrary.simpleMessage(
+      "No matching history found.",
+    ),
+    "historyRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "historySearchHint": MessageLookupByLibrary.simpleMessage("Search history"),
+    "historyStartingPrice": MessageLookupByLibrary.simpleMessage(
+      "Starting Price",
+    ),
+    "historyStatusActive": MessageLookupByLibrary.simpleMessage("Active"),
+    "historyStatusCanceled": MessageLookupByLibrary.simpleMessage("Canceled"),
+    "historyStatusEndingSoon": MessageLookupByLibrary.simpleMessage(
+      "Ending Soon",
+    ),
+    "historyStatusFinished": MessageLookupByLibrary.simpleMessage("Finished"),
+    "historyStatusSold": MessageLookupByLibrary.simpleMessage("Sold"),
+    "historyStatusUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "verificationCode": MessageLookupByLibrary.simpleMessage(
       "Verification Code",
     ),

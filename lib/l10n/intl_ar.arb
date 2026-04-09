@@ -675,5 +675,69 @@
   "kBasicAnalytics": "تحليلات أساسية",
   "kPinnedAsTopBanner": "تثبيت كإعلان في الصفحة الرئيسية لمدة 7 أيام",
   "kInstantPushNotific": "إشعارات فورية لجميع المشترين المهتمين",
-  "kDetailedAnalytics": "تحليلات مفصلة"
+  "kDetailedAnalytics": "تحليلات مفصلة",
+  "historySearchHint": "ابحث في السجل",
+  "@historySearchHint": {
+    "description": "Search field hint in history screen"
+  },
+  "historyRetry": "إعادة المحاولة",
+  "@historyRetry": {
+    "description": "Retry button text in history screen"
+  },
+  "historyExport": "تصدير",
+  "@historyExport": {
+    "description": "Export button label in history screen"
+  },
+  "historyAuctions": "مزادات",
+  "@historyAuctions": {
+    "description": "Auctions label in history header"
+  },
+  "historyNoItems": "لا يوجد سجل.",
+  "@historyNoItems": {
+    "description": "Empty state text when there are no history items"
+  },
+  "historyNoMatchingItems": "لا توجد نتائج مطابقة في السجل.",
+  "@historyNoMatchingItems": {
+    "description": "Empty state text when search has no results in history"
+  },
+  "historyStatusUpcoming": "قادم",
+  "@historyStatusUpcoming": {
+    "description": "Upcoming auction status label in history"
+  },
+  "historyStatusActive": "نشط",
+  "@historyStatusActive": {
+    "description": "Active auction status label in history"
+  },
+  "historyStatusEndingSoon": "ينتهي قريبا",
+  "@historyStatusEndingSoon": {
+    "description": "Ending soon auction status label in history"
+  },
+  "historyStatusFinished": "منتهي",
+  "@historyStatusFinished": {
+    "description": "Finished auction status label in history"
+  },
+  "historyStatusCanceled": "ملغي",
+  "@historyStatusCanceled": {
+    "description": "Canceled auction status label in history"
+  },
+  "historyStatusSold": "تم البيع",
+  "@historyStatusSold": {
+    "description": "Sold auction status label in history"
+  },
+  "historyStartingPrice": "السعر الابتدائي",
+  "@historyStartingPrice": {
+    "description": "Starting price label in history card"
+  },
+  "historyCurrentPrice": "السعر الحالي",
+  "@historyCurrentPrice": {
+    "description": "Current price label in history card"
+  },
+  "historyFinalPrice": "السعر النهائي",
+  "@historyFinalPrice": {
+    "description": "Final price label in history card"
+  },
+  "historyLotLabel": "قطعة",
+  "@historyLotLabel": {
+    "description": "Lot label prefix in history card"
+  }
 }

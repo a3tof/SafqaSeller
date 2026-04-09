@@ -7,6 +7,7 @@ import 'package:safqaseller/features/history/model/models/history_models.dart';
 import 'package:safqaseller/features/history/view/widgets/history_card.dart';
 import 'package:safqaseller/features/history/view_model/history_view_model.dart';
 import 'package:safqaseller/features/history/view_model/history_view_model_state.dart';
+import 'package:safqaseller/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class HistoryViewBody extends StatefulWidget {
@@ -70,24 +71,26 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
   }
 
   String _statusLabel(AuctionStatus status) {
+    final s = S.of(context);
     switch (status) {
       case AuctionStatus.upcoming:
-        return 'upcoming';
+        return s.historyStatusUpcoming;
       case AuctionStatus.active:
-        return 'active';
+        return s.historyStatusActive;
       case AuctionStatus.endingSoon:
-        return 'ending soon';
+        return s.historyStatusEndingSoon;
       case AuctionStatus.finished:
-        return 'finished';
+        return s.historyStatusFinished;
       case AuctionStatus.canceled:
-        return 'canceled';
+        return s.historyStatusCanceled;
       case AuctionStatus.sold:
-        return 'sold';
+        return s.historyStatusSold;
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -113,7 +116,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
                   context,
                 ).copyWith(color: AppColors.primaryColor),
                 decoration: InputDecoration(
-                  hintText: 'Search history',
+                  hintText: s.historySearchHint,
                   hintStyle: TextStyles.regular14(
                     context,
                   ).copyWith(color: const Color(0xFF999999)),
@@ -121,10 +124,12 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
                 ),
               )
             : Text(
-                'History',
+                s.kHistory,
                 style: TextStyles.bold28(context).copyWith(
                   color: AppColors.primaryColor,
-                  fontFamily: 'AlegreyaSC',
+                  fontFamily: Localizations.localeOf(context).languageCode == 'ar'
+                      ? 'Cairo'
+                      : 'AlegreyaSC',
                 ),
               ),
         actions: [
@@ -177,7 +182,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
                         backgroundColor: AppColors.primaryColor,
                         foregroundColor: Colors.white,
                       ),
-                      child: const Text('Retry'),
+                      child: Text(s.historyRetry),
                     ),
                   ],
                 ),
@@ -190,7 +195,9 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
           final isSearchActive = _searchController.text.trim().isNotEmpty;
 
           return _HistoryList(
-            totalCount: isSearchActive ? filteredItems.length : success.totalCount,
+            totalCount: isSearchActive
+                ? filteredItems.length
+                : success.totalCount,
             items: filteredItems,
             currentPage: success.currentPage,
             totalPages: success.totalPages,
@@ -227,6 +234,7 @@ class _HistoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasItems = items.isNotEmpty;
+    final s = S.of(context);
 
     return RefreshIndicator(
       onRefresh: onRefresh,
@@ -244,8 +252,8 @@ class _HistoryList extends StatelessWidget {
               child: Center(
                 child: Text(
                   isSearchActive
-                      ? 'No matching history found.'
-                      : 'No history found.',
+                      ? s.historyNoMatchingItems
+                      : s.historyNoItems,
                   style: TextStyles.regular14(
                     context,
                   ).copyWith(color: const Color(0xFF666666)),
@@ -416,6 +424,7 @@ class _HistoryHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Row(
       children: [
         Container(
@@ -425,30 +434,31 @@ class _HistoryHeader extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.r),
           ),
           child: Text(
-            '$totalCount Auctions',
+            '$totalCount ${s.historyAuctions}',
             style: TextStyles.regular11(
               context,
             ).copyWith(color: const Color(0xFF444444)),
           ),
         ),
         const Spacer(),
-        ElevatedButton.icon(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryColor,
-            foregroundColor: Colors.white,
-            elevation: 0,
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-          ),
-          icon: Icon(Icons.file_download_outlined, size: 18.sp),
-          label: Text(
-            'Export',
-            style: TextStyles.semiBold13(context).copyWith(color: Colors.white),
-          ),
-        ),
+        //* Export button is not implemented yet
+        // ElevatedButton.icon(
+        //   onPressed: () {},
+        //   style: ElevatedButton.styleFrom(
+        //     backgroundColor: AppColors.primaryColor,
+        //     foregroundColor: Colors.white,
+        //     elevation: 0,
+        //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(10.r),
+        //     ),
+        //   ),
+        //   icon: Icon(Icons.file_download_outlined, size: 18.sp),
+        //   label: Text(
+        //     'Export',
+        //     style: TextStyles.semiBold13(context).copyWith(color: Colors.white),
+        //   ),
+        // ),
       ],
     );
   }

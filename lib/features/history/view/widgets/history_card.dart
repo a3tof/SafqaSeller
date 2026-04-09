@@ -5,6 +5,7 @@ import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/history/model/models/history_models.dart';
+import 'package:safqaseller/generated/l10n.dart';
 
 class HistoryCard extends StatelessWidget {
   const HistoryCard({super.key, required this.item});
@@ -13,7 +14,7 @@ class HistoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final statusStyle = _statusStyle(item.status);
+    final statusStyle = _statusStyle(context, item.status);
 
     return Container(
       constraints: BoxConstraints(minHeight: 130.h),
@@ -49,7 +50,7 @@ class HistoryCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          _formatLotNumber(item.lotNumber),
+                          _formatLotNumber(context, item.lotNumber),
                           style: TextStyles.regular14(
                             context,
                           ).copyWith(color: const Color(0xFF888888)),
@@ -114,7 +115,7 @@ class HistoryCard extends StatelessWidget {
                       SizedBox(width: 4.w),
                       Expanded(
                         child: Text(
-                          _metaValue(item),
+                          _metaValue(context, item),
                           style: TextStyles.regular12(
                             context,
                           ).copyWith(color: const Color(0xFF7A7A7A)),
@@ -126,7 +127,7 @@ class HistoryCard extends StatelessWidget {
                   ),
                   SizedBox(height: 6.h),
                   Text(
-                    _priceLabel(item.status),
+                    _priceLabel(context, item.status),
                     style: TextStyles.regular11(
                       context,
                     ).copyWith(color: const Color(0xFF888888)),
@@ -147,41 +148,42 @@ class HistoryCard extends StatelessWidget {
     );
   }
 
-  _StatusStyle _statusStyle(AuctionStatus status) {
+  _StatusStyle _statusStyle(BuildContext context, AuctionStatus status) {
+    final s = S.of(context);
     switch (status) {
       case AuctionStatus.upcoming:
-        return const _StatusStyle(
-          label: 'Upcoming',
+        return _StatusStyle(
+          label: s.historyStatusUpcoming,
           backgroundColor: Color(0x1A023E8A),
           textColor: Color(0xFF023E8A),
         );
       case AuctionStatus.active:
-        return const _StatusStyle(
-          label: 'Active',
+        return _StatusStyle(
+          label: s.historyStatusActive,
           backgroundColor: Color(0x1A00762E),
           textColor: Color(0xFF00762E),
         );
       case AuctionStatus.endingSoon:
-        return const _StatusStyle(
-          label: 'Ending Soon',
+        return _StatusStyle(
+          label: s.historyStatusEndingSoon,
           backgroundColor: Color(0x1AFF7519),
           textColor: Color(0xFFFF7519),
         );
       case AuctionStatus.finished:
-        return const _StatusStyle(
-          label: 'Finished',
+        return _StatusStyle(
+          label: s.historyStatusFinished,
           backgroundColor: Color(0x1A808080),
           textColor: Color(0xFF808080),
         );
       case AuctionStatus.canceled:
-        return const _StatusStyle(
-          label: 'Canceled',
+        return _StatusStyle(
+          label: s.historyStatusCanceled,
           backgroundColor: Color(0x1ABA1A1A),
           textColor: Color(0xFFBA1A1A),
         );
       case AuctionStatus.sold:
-        return const _StatusStyle(
-          label: 'Sold',
+        return _StatusStyle(
+          label: s.historyStatusSold,
           backgroundColor: Color(0x1A00762E),
           textColor: Color(0xFF00762E),
         );
@@ -197,29 +199,31 @@ class HistoryCard extends StatelessWidget {
     return usesDate ? Icons.calendar_today_outlined : Icons.hourglass_empty;
   }
 
-  String _metaValue(HistoryItem item) {
+  String _metaValue(BuildContext context, HistoryItem item) {
     final usesDate =
         item.endDate != null &&
         (item.status == AuctionStatus.finished ||
             item.status == AuctionStatus.canceled ||
             item.status == AuctionStatus.sold);
     if (usesDate) {
-      return DateFormat('MMM dd, yyyy').format(item.endDate!);
+      final locale = Localizations.localeOf(context).toString();
+      return DateFormat.yMMMd(locale).format(item.endDate!);
     }
     return item.timeLeft ?? item.mileage ?? '--';
   }
 
-  String _priceLabel(AuctionStatus status) {
+  String _priceLabel(BuildContext context, AuctionStatus status) {
+    final s = S.of(context);
     switch (status) {
       case AuctionStatus.upcoming:
       case AuctionStatus.canceled:
-        return 'Starting Price';
+        return s.historyStartingPrice;
       case AuctionStatus.active:
       case AuctionStatus.endingSoon:
-        return 'Current Price';
+        return s.historyCurrentPrice;
       case AuctionStatus.finished:
       case AuctionStatus.sold:
-        return 'Final Price';
+        return s.historyFinalPrice;
     }
   }
 
@@ -227,10 +231,11 @@ class HistoryCard extends StatelessWidget {
     return '\$${NumberFormat('#,##0.##').format(value)}';
   }
 
-  String _formatLotNumber(String raw) {
+  String _formatLotNumber(BuildContext context, String raw) {
+    final lotLabel = S.of(context).historyLotLabel;
     if (raw.toLowerCase().startsWith('lot#')) return raw;
-    if (raw.startsWith('#')) return 'Lot$raw';
-    return 'Lot#$raw';
+    if (raw.startsWith('#')) return '$lotLabel$raw';
+    return '$lotLabel#$raw';
   }
 }
 

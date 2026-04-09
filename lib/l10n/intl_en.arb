@@ -675,5 +675,69 @@
   "kBasicAnalytics": "Basic Analytics",
   "kPinnedAsTopBanner": "Pinned as a Top Banner on the homepage for 7 days",
   "kInstantPushNotific": "Instant push notifications to all interested buyers",
-  "kDetailedAnalytics": "Detailed Analytics"
+  "kDetailedAnalytics": "Detailed Analytics",
+  "historySearchHint": "Search history",
+  "@historySearchHint": {
+    "description": "Search field hint in history screen"
+  },
+  "historyRetry": "Retry",
+  "@historyRetry": {
+    "description": "Retry button text in history screen"
+  },
+  "historyExport": "Export",
+  "@historyExport": {
+    "description": "Export button label in history screen"
+  },
+  "historyAuctions": "Auctions",
+  "@historyAuctions": {
+    "description": "Auctions label in history header"
+  },
+  "historyNoItems": "No history found.",
+  "@historyNoItems": {
+    "description": "Empty state text when there are no history items"
+  },
+  "historyNoMatchingItems": "No matching history found.",
+  "@historyNoMatchingItems": {
+    "description": "Empty state text when search has no results in history"
+  },
+  "historyStatusUpcoming": "Upcoming",
+  "@historyStatusUpcoming": {
+    "description": "Upcoming auction status label in history"
+  },
+  "historyStatusActive": "Active",
+  "@historyStatusActive": {
+    "description": "Active auction status label in history"
+  },
+  "historyStatusEndingSoon": "Ending Soon",
+  "@historyStatusEndingSoon": {
+    "description": "Ending soon auction status label in history"
+  },
+  "historyStatusFinished": "Finished",
+  "@historyStatusFinished": {
+    "description": "Finished auction status label in history"
+  },
+  "historyStatusCanceled": "Canceled",
+  "@historyStatusCanceled": {
+    "description": "Canceled auction status label in history"
+  },
+  "historyStatusSold": "Sold",
+  "@historyStatusSold": {
+    "description": "Sold auction status label in history"
+  },
+  "historyStartingPrice": "Starting Price",
+  "@historyStartingPrice": {
+    "description": "Starting price label in history card"
+  },
+  "historyCurrentPrice": "Current Price",
+  "@historyCurrentPrice": {
+    "description": "Current price label in history card"
+  },
+  "historyFinalPrice": "Final Price",
+  "@historyFinalPrice": {
+    "description": "Final price label in history card"
+  },
+  "historyLotLabel": "Lot",
+  "@historyLotLabel": {
+    "description": "Lot label prefix in history card"
+  }
 }

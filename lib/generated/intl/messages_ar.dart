@@ -407,6 +407,28 @@ class MessageLookup extends MessageLookupByLibrary {
     "termsWalletBalance": MessageLookupByLibrary.simpleMessage(
       "يجب على المشترين الحفاظ على رصيد محفظة كافٍ لتغطية عروضهم ومشترياتهم.",
     ),
+    "historyAuctions": MessageLookupByLibrary.simpleMessage("مزادات"),
+    "historyCurrentPrice": MessageLookupByLibrary.simpleMessage("السعر الحالي"),
+    "historyExport": MessageLookupByLibrary.simpleMessage("تصدير"),
+    "historyFinalPrice": MessageLookupByLibrary.simpleMessage("السعر النهائي"),
+    "historyLotLabel": MessageLookupByLibrary.simpleMessage("قطعة"),
+    "historyNoItems": MessageLookupByLibrary.simpleMessage("لا يوجد سجل."),
+    "historyNoMatchingItems": MessageLookupByLibrary.simpleMessage(
+      "لا توجد نتائج مطابقة في السجل.",
+    ),
+    "historyRetry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+    "historySearchHint": MessageLookupByLibrary.simpleMessage("ابحث في السجل"),
+    "historyStartingPrice": MessageLookupByLibrary.simpleMessage(
+      "السعر الابتدائي",
+    ),
+    "historyStatusActive": MessageLookupByLibrary.simpleMessage("نشط"),
+    "historyStatusCanceled": MessageLookupByLibrary.simpleMessage("ملغي"),
+    "historyStatusEndingSoon": MessageLookupByLibrary.simpleMessage(
+      "ينتهي قريبا",
+    ),
+    "historyStatusFinished": MessageLookupByLibrary.simpleMessage("منتهي"),
+    "historyStatusSold": MessageLookupByLibrary.simpleMessage("تم البيع"),
+    "historyStatusUpcoming": MessageLookupByLibrary.simpleMessage("قادم"),
     "verificationCode": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
     "verificationCodeDescription": MessageLookupByLibrary.simpleMessage(
       "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني",
