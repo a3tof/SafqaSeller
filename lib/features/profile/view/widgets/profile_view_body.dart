@@ -50,6 +50,9 @@ class ProfileViewBody extends StatelessWidget {
           final auctionsCount = profileState is ProfileLoaded
               ? (profileState.auctionsCount ?? '0')
               : '0';
+          final activePlanId = profileState is ProfileLoaded
+              ? profileState.activePlanId
+              : null;
           final cityLabel = profileState is ProfileLoaded
               ? ((profileState.cityName?.trim().isNotEmpty ?? false)
                     ? profileState.cityName!
@@ -67,7 +70,10 @@ class ProfileViewBody extends StatelessWidget {
               child: Column(
                 children: [
                   // ── Profile Header (Avatar + Buttons) ──
-                  ProfileHeaderSection(logoBytes: logoBytes),
+                  ProfileHeaderSection(
+                    logoBytes: logoBytes,
+                    activePlanId: activePlanId,
+                  ),
                   SizedBox(height: 20.h),
 
                   // ── Metrics Row (Rating, Users, Deliveries) ──

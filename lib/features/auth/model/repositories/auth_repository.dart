@@ -22,19 +22,21 @@ class AuthRepository {
     _requireSuccess(r);
     final data = r.data;
     if (data is List) {
-      return data.map((e) => LocationModel.fromJson(e as Map<String, dynamic>)).toList();
+      return data
+          .map((e) => LocationModel.fromJson(e as Map<String, dynamic>))
+          .toList();
     }
     return [];
   }
 
   Future<List<LocationModel>> getCities(int countryId) async {
-    final r = await dioHelper.getData(
-      endPoint: 'Auth/cities/$countryId',
-    );
+    final r = await dioHelper.getData(endPoint: 'Auth/cities/$countryId');
     _requireSuccess(r);
     final data = r.data;
     if (data is List) {
-      return data.map((e) => LocationModel.fromJson(e as Map<String, dynamic>)).toList();
+      return data
+          .map((e) => LocationModel.fromJson(e as Map<String, dynamic>))
+          .toList();
     }
     return [];
   }
@@ -96,6 +98,8 @@ class AuthRepository {
     await cacheHelper.removeData(key: CacheKeys.tokenTime);
     await cacheHelper.removeData(key: CacheKeys.refreshToken);
     await cacheHelper.removeData(key: CacheKeys.userId);
+    await cacheHelper.removeData(key: CacheKeys.activePlan);
+    await cacheHelper.removeData(key: CacheKeys.activePlanUserId);
     await cacheHelper.saveData(key: CacheKeys.isLoggedIn, value: false);
   }
 

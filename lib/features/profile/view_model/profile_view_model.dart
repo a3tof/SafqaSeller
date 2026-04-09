@@ -35,6 +35,7 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
             ? current.followersCount
             : null,
         auctionsCount: current is ProfileLoaded ? current.auctionsCount : null,
+        activePlanId: _readActivePlanId(),
       ),
     );
   }
@@ -50,6 +51,7 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
     }
     try {
       final profile = await profileRepository.getProfile();
+      await _syncActivePlan(profile.activePlanId);
       emit(
         ProfileLoaded(
           isProfileCompleted: isCompleted,
@@ -65,6 +67,7 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
           rating: profile.rating,
           followersCount: profile.followersCount,
           auctionsCount: profile.auctionsCount,
+          activePlanId: profile.activePlanId,
         ),
       );
     } catch (e) {
@@ -100,6 +103,7 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
             ? current.followersCount
             : null,
         auctionsCount: current is ProfileLoaded ? current.auctionsCount : null,
+        activePlanId: current is ProfileLoaded ? current.activePlanId : null,
       ),
     );
   }
@@ -107,6 +111,45 @@ class ProfileViewModel extends Cubit<ProfileViewModelState> {
   /// Resets profile completion (used on logout).
   Future<void> reset() async {
     await cacheHelper.removeData(key: CacheKeys.isProfileCompleted);
+    await cacheHelper.removeData(key: CacheKeys.activePlan);
+    await cacheHelper.removeData(key: CacheKeys.activePlanUserId);
     emit(const ProfileLoaded(isProfileCompleted: false));
+  }
+
+  String? _readActivePlanId() {
+    final currentUserId = cacheHelper
+        .getData(key: CacheKeys.userId)
+        ?.toString();
+    final cachedUserId = cacheHelper
+        .getData(key: CacheKeys.activePlanUserId)
+        ?.toString();
+    if (currentUserId == null ||
+        currentUserId.isEmpty ||
+        cachedUserId == null ||
+        cachedUserId.isEmpty ||
+        currentUserId != cachedUserId) {
+      return null;
+    }
+    return cacheHelper.getData(key: CacheKeys.activePlan)?.toString();
+  }
+
+  Future<void> _syncActivePlan(String? activePlanId) async {
+    final currentUserId = cacheHelper
+        .getData(key: CacheKeys.userId)
+        ?.toString();
+
+    if (activePlanId == null || activePlanId.isEmpty) {
+      await cacheHelper.removeData(key: CacheKeys.activePlan);
+      await cacheHelper.removeData(key: CacheKeys.activePlanUserId);
+      return;
+    }
+
+    await cacheHelper.saveData(key: CacheKeys.activePlan, value: activePlanId);
+    if (currentUserId != null && currentUserId.isNotEmpty) {
+      await cacheHelper.saveData(
+        key: CacheKeys.activePlanUserId,
+        value: currentUserId,
+      );
+    }
   }
 }

@@ -62,6 +62,8 @@ class AuthViewModel extends Cubit<AuthViewModelState> {
     await cacheHelper.removeData(key: CacheKeys.role);
     await cacheHelper.removeData(key: CacheKeys.isProfileCompleted);
     await cacheHelper.removeData(key: CacheKeys.sellerId);
+    await cacheHelper.removeData(key: CacheKeys.activePlan);
+    await cacheHelper.removeData(key: CacheKeys.activePlanUserId);
     await cacheHelper.saveData(key: CacheKeys.isLoggedIn, value: false);
     emit(AuthUnauthenticated());
   }

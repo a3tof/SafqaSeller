@@ -3,9 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/storage/cache_helper.dart';
-import 'package:safqaseller/core/storage/cache_keys.dart';
 import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/profile/view/edit_account_view.dart';
@@ -14,14 +11,14 @@ import 'package:safqaseller/features/subscription/view/subscription_view.dart';
 import 'package:safqaseller/generated/l10n.dart';
 
 class ProfileHeaderSection extends StatelessWidget {
-  const ProfileHeaderSection({super.key, this.logoBytes});
+  const ProfileHeaderSection({super.key, this.logoBytes, this.activePlanId});
 
   final Uint8List? logoBytes;
+  final String? activePlanId;
 
   @override
   Widget build(BuildContext context) {
-    final cacheHelper = getIt<CacheHelper>();
-    final activePlanLabel = _planLabel(context, _readActivePlanId(cacheHelper));
+    final activePlanLabel = _planLabel(context, activePlanId);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -85,25 +82,6 @@ class ProfileHeaderSection extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  String? _readActivePlanId(CacheHelper cacheHelper) {
-    final currentUserId = cacheHelper
-        .getData(key: CacheKeys.userId)
-        ?.toString();
-    final planUserId = cacheHelper
-        .getData(key: CacheKeys.activePlanUserId)
-        ?.toString();
-
-    if (currentUserId == null ||
-        currentUserId.isEmpty ||
-        planUserId == null ||
-        planUserId.isEmpty ||
-        currentUserId != planUserId) {
-      return null;
-    }
-
-    return cacheHelper.getData(key: CacheKeys.activePlan)?.toString();
   }
 
   String? _planLabel(BuildContext context, String? activePlan) {

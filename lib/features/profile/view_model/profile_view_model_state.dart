@@ -28,6 +28,7 @@ class ProfileLoaded extends ProfileViewModelState {
   final String? rating;
   final String? followersCount;
   final String? auctionsCount;
+  final String? activePlanId;
 
   const ProfileLoaded({
     required this.isProfileCompleted,
@@ -43,6 +44,7 @@ class ProfileLoaded extends ProfileViewModelState {
     this.rating,
     this.followersCount,
     this.auctionsCount,
+    this.activePlanId,
   });
 
   @override
@@ -60,6 +62,7 @@ class ProfileLoaded extends ProfileViewModelState {
     rating,
     followersCount,
     auctionsCount,
+    activePlanId,
   ];
 }
 

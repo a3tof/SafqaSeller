@@ -16,6 +16,7 @@ class ProfileModel {
   final String rating;
   final String followersCount;
   final String auctionsCount;
+  final String? upgradeType;
 
   ProfileModel({
     this.fullName,
@@ -30,6 +31,7 @@ class ProfileModel {
     this.rating = '0',
     this.followersCount = '0',
     this.auctionsCount = '0',
+    this.upgradeType,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -99,6 +101,12 @@ class ProfileModel {
                 json['TotalAuctions'],
           ) ??
           '0',
+      upgradeType:
+          (json['upgradeType'] ??
+                  json['UpgradeType'] ??
+                  json['planType'] ??
+                  json['PlanType'])
+              ?.toString(),
     );
   }
 
@@ -111,6 +119,8 @@ class ProfileModel {
       return null;
     }
   }
+
+  String? get activePlanId => _mapUpgradeTypeToPlanId(upgradeType);
 }
 
 String? _stringifyMetric(dynamic value) {
@@ -131,4 +141,21 @@ int? _parseInt(dynamic value) {
   if (value is String) return int.tryParse(value);
   if (value is double) return value.toInt();
   return int.tryParse(value.toString());
+}
+
+String? _mapUpgradeTypeToPlanId(String? upgradeType) {
+  final normalized = upgradeType?.trim().toLowerCase();
+  switch (normalized) {
+    case '1':
+    case 'basic':
+      return '1';
+    case '2':
+    case 'premium':
+      return '2';
+    case '3':
+    case 'elite':
+      return '3';
+    default:
+      return null;
+  }
 }
