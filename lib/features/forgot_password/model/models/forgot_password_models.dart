@@ -5,7 +5,7 @@ class ForgotPasswordRequestModel {
 
   const ForgotPasswordRequestModel({required this.email});
 
-  Map<String, dynamic> toJson() => {'Email': email};
+  Map<String, dynamic> toJson() => {'email': email};
 }
 
 class VerifyOtpRequestModel {
@@ -14,7 +14,7 @@ class VerifyOtpRequestModel {
 
   const VerifyOtpRequestModel({required this.email, required this.code});
 
-  Map<String, dynamic> toJson() => {'Email': email, 'Code': code};
+  Map<String, dynamic> toJson() => {'email': email, 'code': code};
 }
 
 class ResetPasswordRequestModel {
@@ -29,10 +29,10 @@ class ResetPasswordRequestModel {
   });
 
   Map<String, dynamic> toJson() => {
-        'Email': email,
-        'Token': token,
-        'NewPassword': newPassword,
-      };
+    'email': email,
+    'token': token,
+    'newPassword': newPassword,
+  };
 }
 
 // Response models

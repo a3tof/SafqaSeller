@@ -10,7 +10,7 @@ class ForgotPasswordRepository {
     ForgotPasswordRequestModel model,
   ) async {
     final r = await dioHelper.postData(
-      endPoint: 'forgetpassword/request',
+      endPoint: 'Auth/request-ForgetPassword',
       data: model.toJson(),
     );
     _requireSuccess(r);
@@ -19,11 +19,9 @@ class ForgotPasswordRepository {
     return result;
   }
 
-  Future<VerifyOtpResponseModel> verifyOtp(
-    VerifyOtpRequestModel model,
-  ) async {
+  Future<VerifyOtpResponseModel> verifyOtp(VerifyOtpRequestModel model) async {
     final r = await dioHelper.postData(
-      endPoint: 'forgetpassword/verify',
+      endPoint: 'Auth/verify-ForgetPassword',
       data: model.toJson(),
     );
     _requireSuccess(r);
@@ -38,7 +36,7 @@ class ForgotPasswordRepository {
     ResetPasswordRequestModel model,
   ) async {
     final r = await dioHelper.postData(
-      endPoint: 'forgetpassword/reset',
+      endPoint: 'Auth/reset-ForgetPassword',
       data: model.toJson(),
     );
     _requireSuccess(r);
@@ -53,7 +51,7 @@ class ForgotPasswordRepository {
     ForgotPasswordRequestModel model,
   ) async {
     final r = await dioHelper.postData(
-      endPoint: 'forgetpassword/resend',
+      endPoint: 'Auth/resendOtp',
       data: model.toJson(),
     );
     _requireSuccess(r);
@@ -64,7 +62,7 @@ class ForgotPasswordRepository {
 
   Future<MessageResponseModel> signOutAll() async {
     final r = await dioHelper.postNoBody(
-      endPoint: 'forgetpassword/signout-all',
+      endPoint: 'Auth/signout-all',
       requiresAuth: true,
     );
     _requireSuccess(r);
