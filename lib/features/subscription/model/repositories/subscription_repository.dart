@@ -8,6 +8,10 @@ class SubscriptionRepository {
   final DioHelper dioHelper;
   final CacheHelper cacheHelper;
 
+  String? getActivePlanId() {
+    return cacheHelper.getData(key: CacheKeys.activePlan)?.toString();
+  }
+
   Future<String> upgrade({required int upgradeType}) async {
     final response = await dioHelper.postData(
       endPoint: 'seller/upgrade',

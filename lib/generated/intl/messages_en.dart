@@ -93,7 +93,11 @@ class MessageLookup extends MessageLookupByLibrary {
       "Detailed Analytics",
     ),
     "kActivePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
+    "kCurrentPlan": MessageLookupByLibrary.simpleMessage("Current Plan"),
     "kNoPlanActive": MessageLookupByLibrary.simpleMessage("No active plan"),
+    "kIncludedInCurrentPlan": MessageLookupByLibrary.simpleMessage(
+      "Included in Current Plan",
+    ),
     "kSubscriptionUpgradeFailed": MessageLookupByLibrary.simpleMessage(
       "Upgrade failed. Please try again.",
     ),

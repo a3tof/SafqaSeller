@@ -45,7 +45,23 @@ class SubscriptionPlanCard extends StatelessWidget {
       builder: (context, state) {
         final isLoading =
             state is SubscriptionLoading && state.planId == planId;
-        final isBusy = state is SubscriptionLoading;
+        final activePlanId = int.tryParse(state.activePlanId ?? '');
+        final isCurrentPlan = activePlanId == plan.upgradeType;
+        final isIncludedInHigherPlan =
+            activePlanId != null && activePlanId > plan.upgradeType;
+        final canUpgrade =
+            !isLoading &&
+            !isCurrentPlan &&
+            !isIncludedInHigherPlan &&
+            (activePlanId == null || plan.upgradeType > activePlanId);
+        final buttonLabel = _buttonLabel(
+          context,
+          isCurrentPlan: isCurrentPlan,
+          isIncludedInHigherPlan: isIncludedInHigherPlan,
+        );
+        final buttonColor = canUpgrade
+            ? AppColors.primaryColor
+            : AppColors.primaryColor.withValues(alpha: 0.7);
 
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -101,19 +117,17 @@ class SubscriptionPlanCard extends StatelessWidget {
                 width: double.infinity,
                 height: 50.h,
                 child: ElevatedButton(
-                  onPressed: isBusy
-                      ? null
-                      : () {
+                  onPressed: canUpgrade
+                      ? () {
                           context.read<SubscriptionViewModel>().upgrade(
                             upgradeType: plan.upgradeType,
                           );
-                        },
+                        }
+                      : null,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
+                    backgroundColor: buttonColor,
                     foregroundColor: Colors.white,
-                    disabledBackgroundColor: AppColors.primaryColor.withValues(
-                      alpha: 0.7,
-                    ),
+                    disabledBackgroundColor: buttonColor,
                     disabledForegroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(25.r),
@@ -132,7 +146,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                           ),
                         )
                       : Text(
-                          plan.ctaLabel,
+                          buttonLabel,
                           style: TextStyles.semiBold16(
                             context,
                           ).copyWith(color: Colors.white),
@@ -145,5 +159,19 @@ class SubscriptionPlanCard extends StatelessWidget {
         );
       },
     );
+  }
+
+  String _buttonLabel(
+    BuildContext context, {
+    required bool isCurrentPlan,
+    required bool isIncludedInHigherPlan,
+  }) {
+    if (isCurrentPlan) {
+      return S.of(context).kCurrentPlan;
+    }
+    if (isIncludedInHigherPlan) {
+      return S.of(context).kIncludedInCurrentPlan;
+    }
+    return plan.ctaLabel;
   }
 }

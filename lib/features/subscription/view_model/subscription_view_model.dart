@@ -4,20 +4,35 @@ import 'package:safqaseller/features/subscription/view_model/subscription_view_m
 
 class SubscriptionViewModel extends Cubit<SubscriptionState> {
   SubscriptionViewModel(this.subscriptionRepository)
-    : super(SubscriptionInitial());
+    : super(
+        SubscriptionInitial(
+          activePlanId: subscriptionRepository.getActivePlanId(),
+        ),
+      );
 
   final SubscriptionRepository subscriptionRepository;
 
   Future<void> upgrade({required int upgradeType}) async {
     final planId = upgradeType.toString();
-    emit(SubscriptionLoading(planId));
+    emit(
+      SubscriptionLoading(
+        planId,
+        activePlanId: subscriptionRepository.getActivePlanId(),
+      ),
+    );
     try {
       final savedPlanId = await subscriptionRepository.upgrade(
         upgradeType: upgradeType,
       );
       emit(SubscriptionSuccess(savedPlanId));
     } catch (e) {
-      emit(SubscriptionError(_clean(e), planId));
+      emit(
+        SubscriptionError(
+          _clean(e),
+          planId,
+          activePlanId: subscriptionRepository.getActivePlanId(),
+        ),
+      );
     }
   }
 

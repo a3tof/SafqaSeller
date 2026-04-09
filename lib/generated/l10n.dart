@@ -1929,6 +1929,26 @@ class S {
     );
   }
 
+  /// `Current Plan`
+  String get kCurrentPlan {
+    return Intl.message(
+      'Current Plan',
+      name: 'kCurrentPlan',
+      desc: 'Button label for the seller active subscription tier',
+      args: [],
+    );
+  }
+
+  /// `Included in Current Plan`
+  String get kIncludedInCurrentPlan {
+    return Intl.message(
+      'Included in Current Plan',
+      name: 'kIncludedInCurrentPlan',
+      desc: 'Button label for lower tiers already covered by a higher plan',
+      args: [],
+    );
+  }
+
   /// `Search history`
   String get historySearchHint {
     return Intl.message(

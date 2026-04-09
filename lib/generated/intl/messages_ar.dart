@@ -81,6 +81,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "kDescription": MessageLookupByLibrary.simpleMessage("الوصف"),
     "kDetailedAnalytics": MessageLookupByLibrary.simpleMessage("تحليلات مفصلة"),
     "kActivePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
+    "kCurrentPlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
+    "kIncludedInCurrentPlan": MessageLookupByLibrary.simpleMessage(
+      "مضمنة في باقتك الحالية",
+    ),
     "kNoPlanActive": MessageLookupByLibrary.simpleMessage("لا توجد باقة مفعلة"),
     "kSubscriptionUpgradeFailed": MessageLookupByLibrary.simpleMessage(
       "فشلت الترقية. يرجى المحاولة مرة أخرى.",

@@ -708,6 +708,14 @@
   "@kNoPlanActive": {
     "description": "Shown when the seller has no active upgrade plan"
   },
+  "kCurrentPlan": "Current Plan",
+  "@kCurrentPlan": {
+    "description": "Button label for the seller active subscription tier"
+  },
+  "kIncludedInCurrentPlan": "Included in Current Plan",
+  "@kIncludedInCurrentPlan": {
+    "description": "Button label for lower tiers already covered by a higher plan"
+  },
   "historySearchHint": "Search history",
   "@historySearchHint": {
     "description": "Search field hint in history screen"
