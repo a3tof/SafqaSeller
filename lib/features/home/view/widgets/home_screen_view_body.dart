@@ -60,6 +60,10 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
     }
   }
 
+  Future<void> _refreshHome() async {
+    await context.read<HomeViewModel>().loadHomeData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,100 +79,111 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
 
             return Skeletonizer(
               enabled: isLoading,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  SizedBox(height: 4.h),
-                  const Center(child: _SafqaBusinessLogo()),
-                  SizedBox(height: 24.h),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.w),
-                    child: _GreetingRow(
-                      storeName: storeName,
-                      logoBytes: logoBytes,
-                    ),
-                  ),
-                  if (state is HomeFailure) ...[
-                    SizedBox(height: 8.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              state.error,
-                              style: TextStyles.regular13(context)
-                                  .copyWith(color: Colors.red),
-                            ),
-                          ),
-                          TextButton(
-                            onPressed: () =>
-                                context.read<HomeViewModel>().loadHomeData(),
-                            child: Text(
-                              'Retry',
-                              style: TextStyles.semiBold13(context)
-                                  .copyWith(color: AppColors.primaryColor),
-                            ),
-                          ),
-                        ],
+              child: LayoutBuilder(
+                builder: (context, constraints) => RefreshIndicator(
+                  onRefresh: _refreshHome,
+                  child: SingleChildScrollView(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: 24.h),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
                       ),
-                    ),
-                  ],
-                  SizedBox(height: 32.h),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      padding: EdgeInsets.only(
-                          left: 16.w, right: 16.w, bottom: 24.h),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          HomeActionCard(
-                            label: S.of(context).kNewLotAuction,
-                            showAddIcon: true,
-                            backgroundImage: Assets.imagesFrame1,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                LotAuctionView.routeName,
-                              );
-                            },
+                          SizedBox(height: 4.h),
+                          const Center(child: _SafqaBusinessLogo()),
+                          SizedBox(height: 24.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: _GreetingRow(
+                              storeName: storeName,
+                              logoBytes: logoBytes,
+                            ),
                           ),
-                          SizedBox(height: 16.h),
-                          HomeActionCard(
-                            label: S.of(context).kNewSingleAuction,
-                            showAddIcon: true,
-                            backgroundImage: Assets.imagesFrame1,
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                ItemAuctionView.routeName,
-                              );
-                            },
-                          ),
-                          SizedBox(height: 16.h),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: HomeActionCard(
-                                  label: S.of(context).kHistory,
+                          if (state is HomeFailure) ...[
+                            SizedBox(height: 8.h),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      state.error,
+                                      style: TextStyles.regular13(context)
+                                          .copyWith(color: Colors.red),
+                                    ),
+                                  ),
+                                  TextButton(
+                                    onPressed: () =>
+                                        context.read<HomeViewModel>().loadHomeData(),
+                                    child: Text(
+                                      'Retry',
+                                      style: TextStyles.semiBold13(context)
+                                          .copyWith(color: AppColors.primaryColor),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                          SizedBox(height: 32.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16.w),
+                            child: Column(
+                              children: [
+                                HomeActionCard(
+                                  label: S.of(context).kNewLotAuction,
+                                  showAddIcon: true,
                                   backgroundImage: Assets.imagesFrame1,
-                                  onTap: () {},
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      LotAuctionView.routeName,
+                                    );
+                                  },
                                 ),
-                              ),
-                              SizedBox(width: 8.w),
-                              Expanded(
-                                child: HomeActionCard(
-                                  label: S.of(context).kStatistics,
-                                  backgroundImage: Assets.imagesFrame2,
-                                  onTap: () {},
+                                SizedBox(height: 16.h),
+                                HomeActionCard(
+                                  label: S.of(context).kNewSingleAuction,
+                                  showAddIcon: true,
+                                  backgroundImage: Assets.imagesFrame1,
+                                  onTap: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      ItemAuctionView.routeName,
+                                    );
+                                  },
                                 ),
-                              ),
-                            ],
+                                SizedBox(height: 16.h),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: HomeActionCard(
+                                        label: S.of(context).kHistory,
+                                        backgroundImage: Assets.imagesFrame1,
+                                        onTap: () {},
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Expanded(
+                                      child: HomeActionCard(
+                                        label: S.of(context).kStatistics,
+                                        backgroundImage: Assets.imagesFrame2,
+                                        onTap: () {},
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             );
           },
