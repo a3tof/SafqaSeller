@@ -716,6 +716,38 @@
   "@kIncludedInCurrentPlan": {
     "description": "Button label for lower tiers already covered by a higher plan"
   },
+  "kChangePassword": "تغيير كلمة المرور",
+  "@kChangePassword": {
+    "description": "Title and button label for change password screen"
+  },
+  "kCurrentPassword": "كلمة المرور الحالية",
+  "@kCurrentPassword": {
+    "description": "Current password field label"
+  },
+  "kNewPassword": "كلمة المرور الجديدة",
+  "@kNewPassword": {
+    "description": "New password field label"
+  },
+  "kConfirmPassword": "تأكيد كلمة المرور",
+  "@kConfirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "kPasswordChanged": "تم تغيير كلمة المرور بنجاح.",
+  "@kPasswordChanged": {
+    "description": "Shown after successful password change"
+  },
+  "kPasswordMismatch": "كلمات المرور غير متطابقة.",
+  "@kPasswordMismatch": {
+    "description": "Validation when confirm password does not match"
+  },
+  "kPasswordTooShort": "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",
+  "@kPasswordTooShort": {
+    "description": "Validation for password minimum length"
+  },
+  "kPasswordSameAsCurrent": "يجب أن تختلف كلمة المرور الجديدة عن الحالية.",
+  "@kPasswordSameAsCurrent": {
+    "description": "Validation when new password matches current password"
+  },
   "historySearchHint": "ابحث في السجل",
   "@historySearchHint": {
     "description": "Search field hint in history screen"

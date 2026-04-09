@@ -10,18 +10,16 @@ class DioHelper {
   final CacheHelper _cacheHelper;
 
   DioHelper({required CacheHelper cacheHelper})
-      : _cacheHelper = cacheHelper,
-        dio = Dio(
-          BaseOptions(
-            baseUrl: AppConfig.baseUrl,
-            receiveDataWhenStatusError: true,
-            // Accept every status code — repositories decide what is success/failure.
-            validateStatus: (_) => true,
-            headers: {
-              'x-api-key': AppConfig.apiKey,
-            },
-          ),
-        ) {
+    : _cacheHelper = cacheHelper,
+      dio = Dio(
+        BaseOptions(
+          baseUrl: AppConfig.baseUrl,
+          receiveDataWhenStatusError: true,
+          // Accept every status code — repositories decide what is success/failure.
+          validateStatus: (_) => true,
+          headers: {'x-api-key': AppConfig.apiKey},
+        ),
+      ) {
     // ── Header injection + token refresh ────────────────────────────────────
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -122,6 +120,17 @@ class DioHelper {
     return null;
   }
 
+  /// Explicit refresh path using the currently cached access token as JSON string.
+  /// Useful after flows like password change when the backend should issue a fresh token.
+  Future<String?> refreshSessionWithStoredToken() async {
+    final token = _cacheHelper.getData(key: CacheKeys.token) as String?;
+    if (token == null || token.isEmpty) {
+      return null;
+    }
+
+    return _refreshAccessToken(token);
+  }
+
   Future<String?> _storeRefreshedSession(dynamic data) async {
     final body = _decodeIfString(data);
     if (body is! Map) return null;
@@ -135,7 +144,8 @@ class DioHelper {
       value: DateTime.now().toIso8601String(),
     );
 
-    final newRefresh = (body['RefreshToken'] ?? body['refreshToken']) as String?;
+    final newRefresh =
+        (body['RefreshToken'] ?? body['refreshToken']) as String?;
     if (newRefresh != null && newRefresh.isNotEmpty) {
       await _cacheHelper.saveData(
         key: CacheKeys.refreshToken,
@@ -208,9 +218,7 @@ class DioHelper {
         endPoint,
         data: data,
         queryParameters: queryParams,
-        options: Options(
-          extra: {'requiresAuth': requiresAuth},
-        ),
+        options: Options(extra: {'requiresAuth': requiresAuth}),
       );
     } on DioException catch (e) {
       throw Exception(_dioConnectionError(e));
@@ -371,7 +379,8 @@ String extractResponseError(dynamic data, int? statusCode) {
   final body = _decodeIfString(data);
 
   if (body is Map) {
-    final msg = _str(body['message']) ??
+    final msg =
+        _str(body['message']) ??
         _str(body['Message']) ??
         _str(body['title']) ??
         _str(body['Title']);

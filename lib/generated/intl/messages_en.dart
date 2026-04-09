@@ -80,9 +80,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "kBusinessNumber": MessageLookupByLibrary.simpleMessage("Business Number"),
     "kCairoEgypt": MessageLookupByLibrary.simpleMessage("Cairo, Egypt"),
     "kChangeLanguage": MessageLookupByLibrary.simpleMessage("Change Language"),
+    "kChangePassword": MessageLookupByLibrary.simpleMessage("Change Password"),
     "kCity": MessageLookupByLibrary.simpleMessage("City"),
     "kCompanyIban": MessageLookupByLibrary.simpleMessage("Company IBAN"),
+    "kConfirmPassword": MessageLookupByLibrary.simpleMessage(
+      "Confirm Password",
+    ),
     "kCountry": MessageLookupByLibrary.simpleMessage("Country"),
+    "kCurrentPassword": MessageLookupByLibrary.simpleMessage(
+      "Current Password",
+    ),
     "kDeposit": MessageLookupByLibrary.simpleMessage("Deposit"),
     "kDepositNmoney": MessageLookupByLibrary.simpleMessage("Deposit\\nmoney"),
     "kDepositSuccessful": MessageLookupByLibrary.simpleMessage(
@@ -156,12 +163,25 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kLogoOptional": MessageLookupByLibrary.simpleMessage("Logo (Optional)"),
     "kLogout": MessageLookupByLibrary.simpleMessage("Logout"),
+    "kNewPassword": MessageLookupByLibrary.simpleMessage("New Password"),
     "kNewLotAuction": MessageLookupByLibrary.simpleMessage("New Lot Auction"),
     "kNewSingleAuction": MessageLookupByLibrary.simpleMessage(
       "New Single Auction",
     ),
     "kNoPreviousPageTo": MessageLookupByLibrary.simpleMessage(
       "No previous page to navigate back to",
+    ),
+    "kPasswordChanged": MessageLookupByLibrary.simpleMessage(
+      "Password changed successfully.",
+    ),
+    "kPasswordMismatch": MessageLookupByLibrary.simpleMessage(
+      "Passwords do not match.",
+    ),
+    "kPasswordSameAsCurrent": MessageLookupByLibrary.simpleMessage(
+      "New password must differ from current.",
+    ),
+    "kPasswordTooShort": MessageLookupByLibrary.simpleMessage(
+      "Password must be at least 8 characters.",
     ),
     "kNoSavedCards": MessageLookupByLibrary.simpleMessage("No saved cards"),
     "kNoTransactionsYet": MessageLookupByLibrary.simpleMessage(

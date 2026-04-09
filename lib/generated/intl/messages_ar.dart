@@ -70,9 +70,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "kBusinessNumber": MessageLookupByLibrary.simpleMessage("الرقم التجاري"),
     "kCairoEgypt": MessageLookupByLibrary.simpleMessage("القاهرة، مصر"),
     "kChangeLanguage": MessageLookupByLibrary.simpleMessage("تغيير اللغة"),
+    "kChangePassword": MessageLookupByLibrary.simpleMessage(
+      "تغيير كلمة المرور",
+    ),
     "kCity": MessageLookupByLibrary.simpleMessage("المدينة"),
     "kCompanyIban": MessageLookupByLibrary.simpleMessage("رقم الآيبان للشركة"),
+    "kConfirmPassword": MessageLookupByLibrary.simpleMessage(
+      "تأكيد كلمة المرور",
+    ),
     "kCountry": MessageLookupByLibrary.simpleMessage("الدولة"),
+    "kCurrentPassword": MessageLookupByLibrary.simpleMessage(
+      "كلمة المرور الحالية",
+    ),
     "kDeposit": MessageLookupByLibrary.simpleMessage("إيداع"),
     "kDepositNmoney": MessageLookupByLibrary.simpleMessage("إيداع\\nالمال"),
     "kDepositSuccessful": MessageLookupByLibrary.simpleMessage(
@@ -144,12 +153,25 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kLogoOptional": MessageLookupByLibrary.simpleMessage("الشعار (اختياري)"),
     "kLogout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
+    "kNewPassword": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
     "kNewLotAuction": MessageLookupByLibrary.simpleMessage(
       "مزاد لمجموعة جديدة",
     ),
     "kNewSingleAuction": MessageLookupByLibrary.simpleMessage("مزاد فردي جديد"),
     "kNoPreviousPageTo": MessageLookupByLibrary.simpleMessage(
       "لا توجد صفحة سابقة للرجوع إليها",
+    ),
+    "kPasswordChanged": MessageLookupByLibrary.simpleMessage(
+      "تم تغيير كلمة المرور بنجاح.",
+    ),
+    "kPasswordMismatch": MessageLookupByLibrary.simpleMessage(
+      "كلمات المرور غير متطابقة.",
+    ),
+    "kPasswordSameAsCurrent": MessageLookupByLibrary.simpleMessage(
+      "يجب أن تختلف كلمة المرور الجديدة عن الحالية.",
+    ),
+    "kPasswordTooShort": MessageLookupByLibrary.simpleMessage(
+      "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",
     ),
     "kNoSavedCards": MessageLookupByLibrary.simpleMessage(
       "لا توجد بطاقات محفوظة",

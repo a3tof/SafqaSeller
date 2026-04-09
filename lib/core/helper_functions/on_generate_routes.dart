@@ -21,6 +21,7 @@ import 'package:safqaseller/features/complete_profile/view/identity_verification
 import 'package:safqaseller/features/complete_profile/view/legal_documents_view.dart';
 import 'package:safqaseller/features/complete_profile/view/seller_information_view.dart';
 import 'package:safqaseller/features/complete_profile/view/store_information_view.dart';
+import 'package:safqaseller/features/change_password/view/change_password_view.dart';
 import 'package:safqaseller/features/history/view/history_view.dart';
 import 'package:safqaseller/features/profile/view/edit_account_view.dart';
 import 'package:safqaseller/features/profile/view/profile_view.dart';
@@ -95,6 +96,8 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const HistoryView());
     case ReviewsView.routeName:
       return MaterialPageRoute(builder: (_) => const ReviewsView());
+    case ChangePasswordView.routeName:
+      return MaterialPageRoute(builder: (_) => const ChangePasswordView());
 
     // ── Auction ────────────────────────────────────────────────────────────
     case LotAuctionView.routeName:

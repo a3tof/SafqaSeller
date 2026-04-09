@@ -9,6 +9,8 @@ import 'package:safqaseller/features/auth/view_model/confirm_email/confirm_email
 import 'package:safqaseller/features/auth/view_model/login/login_view_model.dart';
 import 'package:safqaseller/features/auth/view_model/logout/logout_view_model.dart';
 import 'package:safqaseller/features/auth/view_model/register/register_view_model.dart';
+import 'package:safqaseller/features/change_password/model/repositories/change_password_repository.dart';
+import 'package:safqaseller/features/change_password/view_model/change_password/change_password_view_model.dart';
 import 'package:safqaseller/features/forgot_password/model/repositories/forgot_password_repository.dart';
 import 'package:safqaseller/features/forgot_password/view_model/forgot_password_view_model.dart';
 import 'package:safqaseller/features/history/model/repositories/history_repository.dart';
@@ -52,6 +54,9 @@ Future<void> setupServiceLocator() async {
   getIt.registerLazySingleton(
     () => ForgotPasswordRepository(dioHelper: getIt()),
   );
+  getIt.registerLazySingleton(
+    () => ChangePasswordRepository(dioHelper: getIt()),
+  );
   getIt.registerLazySingleton(() => WalletRepository(dioHelper: getIt()));
   getIt.registerLazySingleton(() => SellerRepository(dioHelper: getIt()));
   getIt.registerLazySingleton(
@@ -72,6 +77,7 @@ Future<void> setupServiceLocator() async {
   getIt.registerFactory(() => LoginViewModel(getIt()));
   getIt.registerFactory(() => ConfirmEmailViewModel(getIt()));
   getIt.registerFactory(() => ForgotPasswordViewModel(getIt()));
+  getIt.registerFactory(() => ChangePasswordViewModel(getIt()));
   getIt.registerFactory(() => LogoutViewModel(getIt<AuthViewModel>()));
   getIt.registerFactory(() => WalletViewModel(getIt()));
   getIt.registerFactory(() => AddCardViewModel(getIt()));

@@ -5,6 +5,7 @@ import 'package:safqaseller/core/service_locator.dart';
 import 'package:safqaseller/core/storage/cache_helper.dart';
 import 'package:safqaseller/core/storage/cache_keys.dart';
 import 'package:safqaseller/features/auth/view_model/logout/logout_view_model.dart';
+import 'package:safqaseller/features/change_password/view/change_password_view.dart';
 import 'package:safqaseller/features/profile/view/widgets/profile_header_section.dart';
 import 'package:safqaseller/features/profile/view/widgets/profile_info_field.dart';
 import 'package:safqaseller/features/profile/view/widgets/profile_menu_item.dart';
@@ -129,6 +130,17 @@ class ProfileViewBody extends StatelessWidget {
                     label: S.of(context).kReviewsRatings,
                     onTap: () {
                       Navigator.pushNamed(context, ReviewsView.routeName);
+                    },
+                  ),
+                  SizedBox(height: 12.h),
+                  ProfileMenuItem(
+                    icon: Icons.lock_outline_rounded,
+                    label: S.of(context).kChangePassword,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        ChangePasswordView.routeName,
+                      );
                     },
                   ),
                   SizedBox(height: 12.h),

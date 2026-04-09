@@ -716,6 +716,38 @@
   "@kIncludedInCurrentPlan": {
     "description": "Button label for lower tiers already covered by a higher plan"
   },
+  "kChangePassword": "Change Password",
+  "@kChangePassword": {
+    "description": "Title and button label for change password screen"
+  },
+  "kCurrentPassword": "Current Password",
+  "@kCurrentPassword": {
+    "description": "Current password field label"
+  },
+  "kNewPassword": "New Password",
+  "@kNewPassword": {
+    "description": "New password field label"
+  },
+  "kConfirmPassword": "Confirm Password",
+  "@kConfirmPassword": {
+    "description": "Confirm password field label"
+  },
+  "kPasswordChanged": "Password changed successfully.",
+  "@kPasswordChanged": {
+    "description": "Shown after successful password change"
+  },
+  "kPasswordMismatch": "Passwords do not match.",
+  "@kPasswordMismatch": {
+    "description": "Validation when confirm password does not match"
+  },
+  "kPasswordTooShort": "Password must be at least 8 characters.",
+  "@kPasswordTooShort": {
+    "description": "Validation for password minimum length"
+  },
+  "kPasswordSameAsCurrent": "New password must differ from current.",
+  "@kPasswordSameAsCurrent": {
+    "description": "Validation when new password matches current password"
+  },
   "historySearchHint": "Search history",
   "@historySearchHint": {
     "description": "Search field hint in history screen"
