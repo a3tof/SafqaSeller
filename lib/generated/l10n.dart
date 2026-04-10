@@ -1574,86 +1574,6 @@ class S {
     );
   }
 
-  /// `Change Password`
-  String get kChangePassword {
-    return Intl.message(
-      'Change Password',
-      name: 'kChangePassword',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
-  /// `Current Password`
-  String get kCurrentPassword {
-    return Intl.message(
-      'Current Password',
-      name: 'kCurrentPassword',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
-  /// `New Password`
-  String get kNewPassword {
-    return Intl.message(
-      'New Password',
-      name: 'kNewPassword',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
-  /// `Confirm Password`
-  String get kConfirmPassword {
-    return Intl.message(
-      'Confirm Password',
-      name: 'kConfirmPassword',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
-  /// `Password changed successfully.`
-  String get kPasswordChanged {
-    return Intl.message(
-      'Password changed successfully.',
-      name: 'kPasswordChanged',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
-  /// `Passwords do not match.`
-  String get kPasswordMismatch {
-    return Intl.message(
-      'Passwords do not match.',
-      name: 'kPasswordMismatch',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
-  /// `Password must be at least 8 characters.`
-  String get kPasswordTooShort {
-    return Intl.message(
-      'Password must be at least 8 characters.',
-      name: 'kPasswordTooShort',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
-  /// `New password must differ from current.`
-  String get kPasswordSameAsCurrent {
-    return Intl.message(
-      'New password must differ from current.',
-      name: 'kPasswordSameAsCurrent',
-      desc: 'Auto-generated',
-      args: [],
-    );
-  }
-
   /// `Logout`
   String get kLogout {
     return Intl.message(
@@ -2029,6 +1949,86 @@ class S {
     );
   }
 
+  /// `Change Password`
+  String get kChangePassword {
+    return Intl.message(
+      'Change Password',
+      name: 'kChangePassword',
+      desc: 'Title and button label for change password screen',
+      args: [],
+    );
+  }
+
+  /// `Current Password`
+  String get kCurrentPassword {
+    return Intl.message(
+      'Current Password',
+      name: 'kCurrentPassword',
+      desc: 'Current password field label',
+      args: [],
+    );
+  }
+
+  /// `New Password`
+  String get kNewPassword {
+    return Intl.message(
+      'New Password',
+      name: 'kNewPassword',
+      desc: 'New password field label',
+      args: [],
+    );
+  }
+
+  /// `Confirm Password`
+  String get kConfirmPassword {
+    return Intl.message(
+      'Confirm Password',
+      name: 'kConfirmPassword',
+      desc: 'Confirm password field label',
+      args: [],
+    );
+  }
+
+  /// `Password changed successfully.`
+  String get kPasswordChanged {
+    return Intl.message(
+      'Password changed successfully.',
+      name: 'kPasswordChanged',
+      desc: 'Shown after successful password change',
+      args: [],
+    );
+  }
+
+  /// `Passwords do not match.`
+  String get kPasswordMismatch {
+    return Intl.message(
+      'Passwords do not match.',
+      name: 'kPasswordMismatch',
+      desc: 'Validation when confirm password does not match',
+      args: [],
+    );
+  }
+
+  /// `Password must be at least 8 characters.`
+  String get kPasswordTooShort {
+    return Intl.message(
+      'Password must be at least 8 characters.',
+      name: 'kPasswordTooShort',
+      desc: 'Validation for password minimum length',
+      args: [],
+    );
+  }
+
+  /// `New password must differ from current.`
+  String get kPasswordSameAsCurrent {
+    return Intl.message(
+      'New password must differ from current.',
+      name: 'kPasswordSameAsCurrent',
+      desc: 'Validation when new password matches current password',
+      args: [],
+    );
+  }
+
   /// `Search history`
   String get historySearchHint {
     return Intl.message(
@@ -2324,7 +2324,8 @@ class S {
     return Intl.message(
       'We couldn\'t find your account email. Please refresh your profile and try again.',
       name: 'withdrawalEmailMissing',
-      desc: 'Shown when email is missing before starting withdrawal verification',
+      desc:
+          'Shown when email is missing before starting withdrawal verification',
       args: [],
     );
   }

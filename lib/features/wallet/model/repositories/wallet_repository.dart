@@ -104,6 +104,9 @@ class WalletRepository {
       endPoint: 'Wallet/TransactionHistory',
       requiresAuth: true,
     );
+    if (_isNoTransactionsResponse(r)) {
+      return [];
+    }
     _require(r);
     final list = _asList(r.data);
     if (list == null) {
@@ -127,6 +130,12 @@ class WalletRepository {
     if (r.statusCode != 400) return false;
     final message = extractResponseError(r.data, r.statusCode).toLowerCase();
     return message.contains('wallet not found');
+  }
+
+  bool _isNoTransactionsResponse(Response<dynamic> r) {
+    if (r.statusCode != 404) return false;
+    final message = extractResponseError(r.data, r.statusCode).toLowerCase();
+    return message.contains('no transactions');
   }
 
   Map<String, dynamic>? _asMap(dynamic data) {

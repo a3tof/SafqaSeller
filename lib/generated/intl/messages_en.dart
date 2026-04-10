@@ -22,13 +22,22 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "addNewCard": MessageLookupByLibrary.simpleMessage("Add new card"),
     "birthdate": MessageLookupByLibrary.simpleMessage("Birthdate"),
+    "card": MessageLookupByLibrary.simpleMessage("Card"),
     "confirmPassword": MessageLookupByLibrary.simpleMessage("Confirm Password"),
+    "confirmWithdrawal": MessageLookupByLibrary.simpleMessage(
+      "Confirm withdrawal",
+    ),
+    "confirmWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
+      "Enter your password to confirm this withdrawal request.",
+    ),
     "createAccount": MessageLookupByLibrary.simpleMessage("Create Account"),
     "createPassword": MessageLookupByLibrary.simpleMessage("Create Password"),
     "createPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "Create a new password for your account",
     ),
+    "currentPassword": MessageLookupByLibrary.simpleMessage("Current Password"),
     "dontHaveAccount": MessageLookupByLibrary.simpleMessage(
       "Don\'t have an account?",
     ),
@@ -38,6 +47,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "email": MessageLookupByLibrary.simpleMessage("Email"),
     "emailConfirmedSuccessfully": MessageLookupByLibrary.simpleMessage(
       "Email confirmed successfully",
+    ),
+    "enterAmount": MessageLookupByLibrary.simpleMessage("Enter an amount"),
+    "enterValidAmount": MessageLookupByLibrary.simpleMessage(
+      "Enter a valid amount",
     ),
     "female": MessageLookupByLibrary.simpleMessage("Female"),
     "fieldRequired": MessageLookupByLibrary.simpleMessage(
@@ -55,11 +68,36 @@ class MessageLookup extends MessageLookupByLibrary {
     "haveAccount": MessageLookupByLibrary.simpleMessage(
       "Already have an account?",
     ),
+    "historyAuctions": MessageLookupByLibrary.simpleMessage("Auctions"),
+    "historyCurrentPrice": MessageLookupByLibrary.simpleMessage(
+      "Current Price",
+    ),
+    "historyExport": MessageLookupByLibrary.simpleMessage("Export"),
+    "historyFinalPrice": MessageLookupByLibrary.simpleMessage("Final Price"),
+    "historyLotLabel": MessageLookupByLibrary.simpleMessage("Lot"),
+    "historyNoItems": MessageLookupByLibrary.simpleMessage("No history found."),
+    "historyNoMatchingItems": MessageLookupByLibrary.simpleMessage(
+      "No matching history found.",
+    ),
+    "historyRetry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "historySearchHint": MessageLookupByLibrary.simpleMessage("Search history"),
+    "historyStartingPrice": MessageLookupByLibrary.simpleMessage(
+      "Starting Price",
+    ),
+    "historyStatusActive": MessageLookupByLibrary.simpleMessage("Active"),
+    "historyStatusCanceled": MessageLookupByLibrary.simpleMessage("Canceled"),
+    "historyStatusEndingSoon": MessageLookupByLibrary.simpleMessage(
+      "Ending Soon",
+    ),
+    "historyStatusFinished": MessageLookupByLibrary.simpleMessage("Finished"),
+    "historyStatusSold": MessageLookupByLibrary.simpleMessage("Sold"),
+    "historyStatusUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "invalidOtp": MessageLookupByLibrary.simpleMessage("Invalid OTP"),
     "kAccountNameBenef": MessageLookupByLibrary.simpleMessage(
       "Account Name / Beneficiary Name",
     ),
     "kAccountType": MessageLookupByLibrary.simpleMessage("Account Type"),
+    "kActivePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
     "kAddCard": MessageLookupByLibrary.simpleMessage("Add Card"),
     "kAppearsAtTheTop24": MessageLookupByLibrary.simpleMessage(
       "Appears at the top of search results for 24 hours",
@@ -90,6 +128,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kCurrentPassword": MessageLookupByLibrary.simpleMessage(
       "Current Password",
     ),
+    "kCurrentPlan": MessageLookupByLibrary.simpleMessage("Current Plan"),
     "kDeposit": MessageLookupByLibrary.simpleMessage("Deposit"),
     "kDepositNmoney": MessageLookupByLibrary.simpleMessage("Deposit\\nmoney"),
     "kDepositSuccessful": MessageLookupByLibrary.simpleMessage(
@@ -98,18 +137,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "kDescription": MessageLookupByLibrary.simpleMessage("Description"),
     "kDetailedAnalytics": MessageLookupByLibrary.simpleMessage(
       "Detailed Analytics",
-    ),
-    "kActivePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
-    "kCurrentPlan": MessageLookupByLibrary.simpleMessage("Current Plan"),
-    "kNoPlanActive": MessageLookupByLibrary.simpleMessage("No active plan"),
-    "kIncludedInCurrentPlan": MessageLookupByLibrary.simpleMessage(
-      "Included in Current Plan",
-    ),
-    "kSubscriptionUpgradeFailed": MessageLookupByLibrary.simpleMessage(
-      "Upgrade failed. Please try again.",
-    ),
-    "kSubscriptionUpgradeSuccess": MessageLookupByLibrary.simpleMessage(
-      "Upgrade successful!",
     ),
     "kEdit": MessageLookupByLibrary.simpleMessage("Edit"),
     "kEditAccount": MessageLookupByLibrary.simpleMessage("Edit account"),
@@ -142,6 +169,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "kIdentityVerificatio": MessageLookupByLibrary.simpleMessage(
       "Identity Verification",
     ),
+    "kIncludedInCurrentPlan": MessageLookupByLibrary.simpleMessage(
+      "Included in Current Plan",
+    ),
     "kInstaPayNumberOp": MessageLookupByLibrary.simpleMessage(
       "Insta Pay Number (Optional)",
     ),
@@ -163,14 +193,20 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kLogoOptional": MessageLookupByLibrary.simpleMessage("Logo (Optional)"),
     "kLogout": MessageLookupByLibrary.simpleMessage("Logout"),
-    "kNewPassword": MessageLookupByLibrary.simpleMessage("New Password"),
     "kNewLotAuction": MessageLookupByLibrary.simpleMessage("New Lot Auction"),
+    "kNewPassword": MessageLookupByLibrary.simpleMessage("New Password"),
     "kNewSingleAuction": MessageLookupByLibrary.simpleMessage(
       "New Single Auction",
     ),
+    "kNoPlanActive": MessageLookupByLibrary.simpleMessage("No active plan"),
     "kNoPreviousPageTo": MessageLookupByLibrary.simpleMessage(
       "No previous page to navigate back to",
     ),
+    "kNoSavedCards": MessageLookupByLibrary.simpleMessage("No saved cards"),
+    "kNoTransactionsYet": MessageLookupByLibrary.simpleMessage(
+      "No transactions yet",
+    ),
+    "kOpeningChat": MessageLookupByLibrary.simpleMessage("Opening chat..."),
     "kPasswordChanged": MessageLookupByLibrary.simpleMessage(
       "Password changed successfully.",
     ),
@@ -183,11 +219,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "kPasswordTooShort": MessageLookupByLibrary.simpleMessage(
       "Password must be at least 8 characters.",
     ),
-    "kNoSavedCards": MessageLookupByLibrary.simpleMessage("No saved cards"),
-    "kNoTransactionsYet": MessageLookupByLibrary.simpleMessage(
-      "No transactions yet",
-    ),
-    "kOpeningChat": MessageLookupByLibrary.simpleMessage("Opening chat..."),
     "kPhoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
     "kPinnedAsTopBanner": MessageLookupByLibrary.simpleMessage(
       "Pinned as a Top Banner on the homepage for 7 days",
@@ -207,17 +238,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "kPleaseUploadAllTh": MessageLookupByLibrary.simpleMessage(
       "Please upload all three documents",
     ),
+    "kPremium": MessageLookupByLibrary.simpleMessage("Premium"),
+    "kPrimary": MessageLookupByLibrary.simpleMessage("Primary"),
     "kProfileUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
       "Profile updated successfully",
     ),
-    "kPremium": MessageLookupByLibrary.simpleMessage("Premium"),
-    "kPrimary": MessageLookupByLibrary.simpleMessage("Primary"),
     "kPushNotifications": MessageLookupByLibrary.simpleMessage(
       "Push notifications sent to interested buyers",
     ),
     "kReviewsRatings": MessageLookupByLibrary.simpleMessage(
       "Reviews & Ratings",
     ),
+    "kSave": MessageLookupByLibrary.simpleMessage("Save"),
     "kSelectCity": MessageLookupByLibrary.simpleMessage("Select City"),
     "kSelectCountry": MessageLookupByLibrary.simpleMessage("Select Country"),
     "kSellerInformation": MessageLookupByLibrary.simpleMessage(
@@ -234,7 +266,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Store Logo (Optional)",
     ),
     "kStoreName": MessageLookupByLibrary.simpleMessage("Store Name"),
-    "kSave": MessageLookupByLibrary.simpleMessage("Save"),
+    "kSubscriptionUpgradeFailed": MessageLookupByLibrary.simpleMessage(
+      "Upgrade failed. Please try again.",
+    ),
+    "kSubscriptionUpgradeSuccess": MessageLookupByLibrary.simpleMessage(
+      "Upgrade successful!",
+    ),
     "kTakeASelfieWithI": MessageLookupByLibrary.simpleMessage(
       "Take a Selfie with ID",
     ),
@@ -301,6 +338,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
     "resend": MessageLookupByLibrary.simpleMessage("Resend"),
+    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "savedCard": MessageLookupByLibrary.simpleMessage("Saved Card"),
+    "savedCards": MessageLookupByLibrary.simpleMessage("Saved Cards"),
+    "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
     "sendCode": MessageLookupByLibrary.simpleMessage("Send Code"),
     "signIn": MessageLookupByLibrary.simpleMessage("Sign In"),
     "signInWithApple": MessageLookupByLibrary.simpleMessage(
@@ -465,30 +506,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "termsWalletBalance": MessageLookupByLibrary.simpleMessage(
       "Buyers must maintain sufficient wallet balance to cover their bids and purchases.",
     ),
-    "historyAuctions": MessageLookupByLibrary.simpleMessage("Auctions"),
-    "historyCurrentPrice": MessageLookupByLibrary.simpleMessage(
-      "Current Price",
-    ),
-    "historyExport": MessageLookupByLibrary.simpleMessage("Export"),
-    "historyFinalPrice": MessageLookupByLibrary.simpleMessage("Final Price"),
-    "historyLotLabel": MessageLookupByLibrary.simpleMessage("Lot"),
-    "historyNoItems": MessageLookupByLibrary.simpleMessage("No history found."),
-    "historyNoMatchingItems": MessageLookupByLibrary.simpleMessage(
-      "No matching history found.",
-    ),
-    "historyRetry": MessageLookupByLibrary.simpleMessage("Retry"),
-    "historySearchHint": MessageLookupByLibrary.simpleMessage("Search history"),
-    "historyStartingPrice": MessageLookupByLibrary.simpleMessage(
-      "Starting Price",
-    ),
-    "historyStatusActive": MessageLookupByLibrary.simpleMessage("Active"),
-    "historyStatusCanceled": MessageLookupByLibrary.simpleMessage("Canceled"),
-    "historyStatusEndingSoon": MessageLookupByLibrary.simpleMessage(
-      "Ending Soon",
-    ),
-    "historyStatusFinished": MessageLookupByLibrary.simpleMessage("Finished"),
-    "historyStatusSold": MessageLookupByLibrary.simpleMessage("Sold"),
-    "historyStatusUpcoming": MessageLookupByLibrary.simpleMessage("Upcoming"),
     "verificationCode": MessageLookupByLibrary.simpleMessage(
       "Verification Code",
     ),
@@ -501,24 +518,7 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "walletBalance": MessageLookupByLibrary.simpleMessage("Wallet balance"),
     "withdrawalEmailMissing": MessageLookupByLibrary.simpleMessage(
-      "We couldn't find your account email. Please refresh your profile and try again.",
+      "We couldn\'t find your account email. Please refresh your profile and try again.",
     ),
-    "confirmWithdrawal": MessageLookupByLibrary.simpleMessage(
-      "Confirm withdrawal",
-    ),
-    "confirmWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
-      "Enter your password to confirm this withdrawal request.",
-    ),
-    "currentPassword": MessageLookupByLibrary.simpleMessage("Current Password"),
-    "card": MessageLookupByLibrary.simpleMessage("Card"),
-    "addNewCard": MessageLookupByLibrary.simpleMessage("Add new card"),
-    "enterAmount": MessageLookupByLibrary.simpleMessage("Enter an amount"),
-    "enterValidAmount": MessageLookupByLibrary.simpleMessage(
-      "Enter a valid amount",
-    ),
-    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
-    "savedCard": MessageLookupByLibrary.simpleMessage("Saved Card"),
-    "savedCards": MessageLookupByLibrary.simpleMessage("Saved Cards"),
-    "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
   };
 }

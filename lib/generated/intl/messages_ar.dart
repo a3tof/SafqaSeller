@@ -22,20 +22,33 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+    "addNewCard": MessageLookupByLibrary.simpleMessage("إضافة بطاقة جديدة"),
     "birthdate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
+    "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
     "confirmPassword": MessageLookupByLibrary.simpleMessage(
       "تأكيد كلمة المرور",
+    ),
+    "confirmWithdrawal": MessageLookupByLibrary.simpleMessage("تأكيد السحب"),
+    "confirmWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
+      "أدخل كلمة المرور لتأكيد طلب السحب هذا.",
     ),
     "createAccount": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
     "createPassword": MessageLookupByLibrary.simpleMessage("إنشاء كلمة المرور"),
     "createPasswordDescription": MessageLookupByLibrary.simpleMessage(
       "أنشئ كلمة مرور جديدة لحسابك",
     ),
+    "currentPassword": MessageLookupByLibrary.simpleMessage(
+      "كلمة المرور الحالية",
+    ),
     "dontHaveAccount": MessageLookupByLibrary.simpleMessage("ليس لديك حساب؟"),
     "dontReceiveCode": MessageLookupByLibrary.simpleMessage("لم تستلم الرمز؟"),
     "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
     "emailConfirmedSuccessfully": MessageLookupByLibrary.simpleMessage(
       "تم تأكيد البريد الإلكتروني بنجاح",
+    ),
+    "enterAmount": MessageLookupByLibrary.simpleMessage("أدخل المبلغ"),
+    "enterValidAmount": MessageLookupByLibrary.simpleMessage(
+      "أدخل مبلغًا صحيحًا",
     ),
     "female": MessageLookupByLibrary.simpleMessage("أنثى"),
     "fieldRequired": MessageLookupByLibrary.simpleMessage("هذا الحقل مطلوب"),
@@ -49,11 +62,34 @@ class MessageLookup extends MessageLookupByLibrary {
     "fullName": MessageLookupByLibrary.simpleMessage("الاسم الكامل"),
     "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
     "haveAccount": MessageLookupByLibrary.simpleMessage("هل لديك حساب بالفعل؟"),
+    "historyAuctions": MessageLookupByLibrary.simpleMessage("مزادات"),
+    "historyCurrentPrice": MessageLookupByLibrary.simpleMessage("السعر الحالي"),
+    "historyExport": MessageLookupByLibrary.simpleMessage("تصدير"),
+    "historyFinalPrice": MessageLookupByLibrary.simpleMessage("السعر النهائي"),
+    "historyLotLabel": MessageLookupByLibrary.simpleMessage("قطعة"),
+    "historyNoItems": MessageLookupByLibrary.simpleMessage("لا يوجد سجل."),
+    "historyNoMatchingItems": MessageLookupByLibrary.simpleMessage(
+      "لا توجد نتائج مطابقة في السجل.",
+    ),
+    "historyRetry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+    "historySearchHint": MessageLookupByLibrary.simpleMessage("ابحث في السجل"),
+    "historyStartingPrice": MessageLookupByLibrary.simpleMessage(
+      "السعر الابتدائي",
+    ),
+    "historyStatusActive": MessageLookupByLibrary.simpleMessage("نشط"),
+    "historyStatusCanceled": MessageLookupByLibrary.simpleMessage("ملغي"),
+    "historyStatusEndingSoon": MessageLookupByLibrary.simpleMessage(
+      "ينتهي قريبا",
+    ),
+    "historyStatusFinished": MessageLookupByLibrary.simpleMessage("منتهي"),
+    "historyStatusSold": MessageLookupByLibrary.simpleMessage("تم البيع"),
+    "historyStatusUpcoming": MessageLookupByLibrary.simpleMessage("قادم"),
     "invalidOtp": MessageLookupByLibrary.simpleMessage("رمز التحقق غير صالح"),
     "kAccountNameBenef": MessageLookupByLibrary.simpleMessage(
       "اسم الحساب / اسم المستفيد",
     ),
     "kAccountType": MessageLookupByLibrary.simpleMessage("نوع الحساب"),
+    "kActivePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
     "kAddCard": MessageLookupByLibrary.simpleMessage("إضافة بطاقة"),
     "kAppearsAtTheTop24": MessageLookupByLibrary.simpleMessage(
       "يظهر في أعلى نتائج البحث لمدة 24 ساعة",
@@ -82,6 +118,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "kCurrentPassword": MessageLookupByLibrary.simpleMessage(
       "كلمة المرور الحالية",
     ),
+    "kCurrentPlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
     "kDeposit": MessageLookupByLibrary.simpleMessage("إيداع"),
     "kDepositNmoney": MessageLookupByLibrary.simpleMessage("إيداع\\nالمال"),
     "kDepositSuccessful": MessageLookupByLibrary.simpleMessage(
@@ -89,18 +126,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kDescription": MessageLookupByLibrary.simpleMessage("الوصف"),
     "kDetailedAnalytics": MessageLookupByLibrary.simpleMessage("تحليلات مفصلة"),
-    "kActivePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
-    "kCurrentPlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
-    "kIncludedInCurrentPlan": MessageLookupByLibrary.simpleMessage(
-      "مضمنة في باقتك الحالية",
-    ),
-    "kNoPlanActive": MessageLookupByLibrary.simpleMessage("لا توجد باقة مفعلة"),
-    "kSubscriptionUpgradeFailed": MessageLookupByLibrary.simpleMessage(
-      "فشلت الترقية. يرجى المحاولة مرة أخرى.",
-    ),
-    "kSubscriptionUpgradeSuccess": MessageLookupByLibrary.simpleMessage(
-      "تمت الترقية بنجاح!",
-    ),
     "kEdit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "kEditAccount": MessageLookupByLibrary.simpleMessage("تعديل الحساب"),
     "kEditAccountPhotoHint": MessageLookupByLibrary.simpleMessage(
@@ -130,6 +155,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "kIdentityVerificatio": MessageLookupByLibrary.simpleMessage(
       "التحقق من الهوية",
     ),
+    "kIncludedInCurrentPlan": MessageLookupByLibrary.simpleMessage(
+      "مضمنة في باقتك الحالية",
+    ),
     "kInstaPayNumberOp": MessageLookupByLibrary.simpleMessage(
       "رقم إنستا باي (اختياري)",
     ),
@@ -153,13 +181,23 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kLogoOptional": MessageLookupByLibrary.simpleMessage("الشعار (اختياري)"),
     "kLogout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
-    "kNewPassword": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
     "kNewLotAuction": MessageLookupByLibrary.simpleMessage(
       "مزاد لمجموعة جديدة",
     ),
+    "kNewPassword": MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة"),
     "kNewSingleAuction": MessageLookupByLibrary.simpleMessage("مزاد فردي جديد"),
+    "kNoPlanActive": MessageLookupByLibrary.simpleMessage("لا توجد باقة مفعلة"),
     "kNoPreviousPageTo": MessageLookupByLibrary.simpleMessage(
       "لا توجد صفحة سابقة للرجوع إليها",
+    ),
+    "kNoSavedCards": MessageLookupByLibrary.simpleMessage(
+      "لا توجد بطاقات محفوظة",
+    ),
+    "kNoTransactionsYet": MessageLookupByLibrary.simpleMessage(
+      "لا توجد معاملات حتى الآن",
+    ),
+    "kOpeningChat": MessageLookupByLibrary.simpleMessage(
+      "جاري فتح المحادثة...",
     ),
     "kPasswordChanged": MessageLookupByLibrary.simpleMessage(
       "تم تغيير كلمة المرور بنجاح.",
@@ -172,15 +210,6 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "kPasswordTooShort": MessageLookupByLibrary.simpleMessage(
       "يجب أن تكون كلمة المرور 8 أحرف على الأقل.",
-    ),
-    "kNoSavedCards": MessageLookupByLibrary.simpleMessage(
-      "لا توجد بطاقات محفوظة",
-    ),
-    "kNoTransactionsYet": MessageLookupByLibrary.simpleMessage(
-      "لا توجد معاملات حتى الآن",
-    ),
-    "kOpeningChat": MessageLookupByLibrary.simpleMessage(
-      "جاري فتح المحادثة...",
     ),
     "kPhoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
     "kPinnedAsTopBanner": MessageLookupByLibrary.simpleMessage(
@@ -201,17 +230,18 @@ class MessageLookup extends MessageLookupByLibrary {
     "kPleaseUploadAllTh": MessageLookupByLibrary.simpleMessage(
       "يرجى رفع جميع المستندات الثلاثة",
     ),
+    "kPremium": MessageLookupByLibrary.simpleMessage("المميزة"),
+    "kPrimary": MessageLookupByLibrary.simpleMessage("الأساسية"),
     "kProfileUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
       "تم تحديث الملف الشخصي بنجاح",
     ),
-    "kPremium": MessageLookupByLibrary.simpleMessage("المميزة"),
-    "kPrimary": MessageLookupByLibrary.simpleMessage("الأساسية"),
     "kPushNotifications": MessageLookupByLibrary.simpleMessage(
       "إرسال إشعارات فورية للمشترين المهتمين",
     ),
     "kReviewsRatings": MessageLookupByLibrary.simpleMessage(
       "التقييمات والمراجعات",
     ),
+    "kSave": MessageLookupByLibrary.simpleMessage("حفظ"),
     "kSelectCity": MessageLookupByLibrary.simpleMessage("اختر المدينة"),
     "kSelectCountry": MessageLookupByLibrary.simpleMessage("اختر الدولة"),
     "kSellerInformation": MessageLookupByLibrary.simpleMessage(
@@ -224,7 +254,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "شعار المتجر (اختياري)",
     ),
     "kStoreName": MessageLookupByLibrary.simpleMessage("اسم المتجر"),
-    "kSave": MessageLookupByLibrary.simpleMessage("حفظ"),
+    "kSubscriptionUpgradeFailed": MessageLookupByLibrary.simpleMessage(
+      "فشلت الترقية. يرجى المحاولة مرة أخرى.",
+    ),
+    "kSubscriptionUpgradeSuccess": MessageLookupByLibrary.simpleMessage(
+      "تمت الترقية بنجاح!",
+    ),
     "kTakeASelfieWithI": MessageLookupByLibrary.simpleMessage(
       "التقط صورة شخصية مع الهوية",
     ),
@@ -291,6 +326,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
     "resend": MessageLookupByLibrary.simpleMessage("إعادة الإرسال"),
+    "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+    "savedCard": MessageLookupByLibrary.simpleMessage("البطاقة المحفوظة"),
+    "savedCards": MessageLookupByLibrary.simpleMessage("البطاقات المحفوظة"),
+    "seeAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
     "sendCode": MessageLookupByLibrary.simpleMessage("إرسال الرمز"),
     "signIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "signInWithApple": MessageLookupByLibrary.simpleMessage(
@@ -449,28 +488,6 @@ class MessageLookup extends MessageLookupByLibrary {
     "termsWalletBalance": MessageLookupByLibrary.simpleMessage(
       "يجب على المشترين الحفاظ على رصيد محفظة كافٍ لتغطية عروضهم ومشترياتهم.",
     ),
-    "historyAuctions": MessageLookupByLibrary.simpleMessage("مزادات"),
-    "historyCurrentPrice": MessageLookupByLibrary.simpleMessage("السعر الحالي"),
-    "historyExport": MessageLookupByLibrary.simpleMessage("تصدير"),
-    "historyFinalPrice": MessageLookupByLibrary.simpleMessage("السعر النهائي"),
-    "historyLotLabel": MessageLookupByLibrary.simpleMessage("قطعة"),
-    "historyNoItems": MessageLookupByLibrary.simpleMessage("لا يوجد سجل."),
-    "historyNoMatchingItems": MessageLookupByLibrary.simpleMessage(
-      "لا توجد نتائج مطابقة في السجل.",
-    ),
-    "historyRetry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
-    "historySearchHint": MessageLookupByLibrary.simpleMessage("ابحث في السجل"),
-    "historyStartingPrice": MessageLookupByLibrary.simpleMessage(
-      "السعر الابتدائي",
-    ),
-    "historyStatusActive": MessageLookupByLibrary.simpleMessage("نشط"),
-    "historyStatusCanceled": MessageLookupByLibrary.simpleMessage("ملغي"),
-    "historyStatusEndingSoon": MessageLookupByLibrary.simpleMessage(
-      "ينتهي قريبا",
-    ),
-    "historyStatusFinished": MessageLookupByLibrary.simpleMessage("منتهي"),
-    "historyStatusSold": MessageLookupByLibrary.simpleMessage("تم البيع"),
-    "historyStatusUpcoming": MessageLookupByLibrary.simpleMessage("قادم"),
     "verificationCode": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
     "verificationCodeDescription": MessageLookupByLibrary.simpleMessage(
       "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني",
@@ -483,22 +500,5 @@ class MessageLookup extends MessageLookupByLibrary {
     "withdrawalEmailMissing": MessageLookupByLibrary.simpleMessage(
       "تعذر العثور على البريد الإلكتروني للحساب. يرجى تحديث الملف الشخصي ثم المحاولة مرة أخرى.",
     ),
-    "confirmWithdrawal": MessageLookupByLibrary.simpleMessage("تأكيد السحب"),
-    "confirmWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
-      "أدخل كلمة المرور لتأكيد طلب السحب هذا.",
-    ),
-    "currentPassword": MessageLookupByLibrary.simpleMessage(
-      "كلمة المرور الحالية",
-    ),
-    "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
-    "addNewCard": MessageLookupByLibrary.simpleMessage("إضافة بطاقة جديدة"),
-    "enterAmount": MessageLookupByLibrary.simpleMessage("أدخل المبلغ"),
-    "enterValidAmount": MessageLookupByLibrary.simpleMessage(
-      "أدخل مبلغًا صحيحًا",
-    ),
-    "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
-    "savedCard": MessageLookupByLibrary.simpleMessage("البطاقة المحفوظة"),
-    "savedCards": MessageLookupByLibrary.simpleMessage("البطاقات المحفوظة"),
-    "seeAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
   };
 }
