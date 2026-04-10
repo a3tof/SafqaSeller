@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
+import 'package:safqaseller/features/chat/view/chat_thread_view.dart';
+import 'package:safqaseller/features/chat/view/chat_thread_view_args.dart';
 import 'package:safqaseller/features/notifications/model/models/notification_model.dart';
 import 'package:safqaseller/features/notifications/view/widgets/notification_item.dart';
 import 'package:safqaseller/features/notifications/view_model/notifications/notifications_view_model.dart';
@@ -55,13 +57,17 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.error_outline,
-                      size: 48.sp, color: Colors.grey[400]),
+                  Icon(
+                    Icons.error_outline,
+                    size: 48.sp,
+                    color: Colors.grey[400],
+                  ),
                   SizedBox(height: 12.h),
                   Text(
                     state.message,
-                    style: TextStyles.regular14(context)
-                        .copyWith(color: Colors.grey),
+                    style: TextStyles.regular14(
+                      context,
+                    ).copyWith(color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16.h),
@@ -71,8 +77,9 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
                         .loadNotifications(),
                     child: Text(
                       'Retry',
-                      style: TextStyles.medium16(context)
-                          .copyWith(color: AppColors.primaryColor),
+                      style: TextStyles.medium16(
+                        context,
+                      ).copyWith(color: AppColors.primaryColor),
                     ),
                   ),
                 ],
@@ -130,8 +137,9 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
                     context.read<NotificationsViewModel>().markAllAsRead(),
                 child: Text(
                   'Mark all',
-                  style: TextStyles.medium14(context)
-                      .copyWith(color: AppColors.primaryColor),
+                  style: TextStyles.medium14(
+                    context,
+                  ).copyWith(color: AppColors.primaryColor),
                 ),
               );
             }
@@ -174,30 +182,29 @@ class _NotificationsList extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Text(
                   'Notification Options',
-                  style: TextStyles.medium16(context).copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyles.medium16(
+                    context,
+                  ).copyWith(fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 20.h),
                 ListTile(
                   leading: const Icon(Icons.delete_outline, color: Colors.red),
                   title: Text(
                     'Delete',
-                    style: TextStyles.medium16(context).copyWith(color: Colors.red),
+                    style: TextStyles.medium16(
+                      context,
+                    ).copyWith(color: Colors.red),
                   ),
                   onTap: () {
                     Navigator.pop(bottomSheetContext);
-                    context
-                        .read<NotificationsViewModel>()
-                        .deleteNotifications([notification.id]);
+                    context.read<NotificationsViewModel>().deleteNotifications([
+                      notification.id,
+                    ]);
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.close),
-                  title: Text(
-                    'Cancel',
-                    style: TextStyles.medium16(context),
-                  ),
+                  title: Text('Cancel', style: TextStyles.medium16(context)),
                   onTap: () => Navigator.pop(bottomSheetContext),
                 ),
               ],
@@ -223,9 +230,15 @@ class _NotificationsList extends StatelessWidget {
               notification: notification,
               onLongPress: () => _showDeleteMenu(context, notification),
               onActionTap: () {
-                // TODO: navigate to chat when backend is wired
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(S.of(context).kOpeningChat)),
+                Navigator.pushNamed(
+                  context,
+                  ChatThreadView.routeName,
+                  arguments: ChatThreadViewArgs(
+                    conversationId: notification.id,
+                    buyerName: notification.title.isEmpty
+                        ? S.of(context).chatTitle
+                        : notification.title,
+                  ),
                 );
               },
             ),
@@ -265,8 +278,11 @@ class _EmptyNotificationsPlaceholder extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.notifications_off_outlined,
-              size: 64.sp, color: Colors.grey[300]),
+          Icon(
+            Icons.notifications_off_outlined,
+            size: 64.sp,
+            color: Colors.grey[300],
+          ),
           SizedBox(height: 16.h),
           Text(
             'No notifications yet',

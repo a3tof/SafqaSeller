@@ -2199,6 +2199,86 @@ class S {
     );
   }
 
+  /// `Chat`
+  String get chatTitle {
+    return Intl.message(
+      'Chat',
+      name: 'chatTitle',
+      desc: 'Chat list screen title',
+      args: [],
+    );
+  }
+
+  /// `Search conversations`
+  String get chatSearchHint {
+    return Intl.message(
+      'Search conversations',
+      name: 'chatSearchHint',
+      desc: 'Chat list search field hint',
+      args: [],
+    );
+  }
+
+  /// `No conversations yet`
+  String get chatNoConversations {
+    return Intl.message(
+      'No conversations yet',
+      name: 'chatNoConversations',
+      desc: 'Shown when the seller has no conversations',
+      args: [],
+    );
+  }
+
+  /// `Type a message...`
+  String get chatTypeMessage {
+    return Intl.message(
+      'Type a message...',
+      name: 'chatTypeMessage',
+      desc: 'Chat thread composer hint',
+      args: [],
+    );
+  }
+
+  /// `Send`
+  String get chatSend {
+    return Intl.message(
+      'Send',
+      name: 'chatSend',
+      desc: 'Chat send action label',
+      args: [],
+    );
+  }
+
+  /// `No messages yet`
+  String get chatNoMessages {
+    return Intl.message(
+      'No messages yet',
+      name: 'chatNoMessages',
+      desc: 'Shown when a chat thread is empty',
+      args: [],
+    );
+  }
+
+  /// `Failed to send message`
+  String get chatSendFailed {
+    return Intl.message(
+      'Failed to send message',
+      name: 'chatSendFailed',
+      desc: 'Shown when sending a chat message fails',
+      args: [],
+    );
+  }
+
+  /// `You`
+  String get chatYou {
+    return Intl.message(
+      'You',
+      name: 'chatYou',
+      desc: 'Label for the current user in chat',
+      args: [],
+    );
+  }
+
   /// `Saved Cards`
   String get savedCards {
     return Intl.message(

@@ -22,6 +22,9 @@ import 'package:safqaseller/features/complete_profile/view/legal_documents_view.
 import 'package:safqaseller/features/complete_profile/view/seller_information_view.dart';
 import 'package:safqaseller/features/complete_profile/view/store_information_view.dart';
 import 'package:safqaseller/features/change_password/view/change_password_view.dart';
+import 'package:safqaseller/features/chat/view/chat_list_view.dart';
+import 'package:safqaseller/features/chat/view/chat_thread_view.dart';
+import 'package:safqaseller/features/chat/view/chat_thread_view_args.dart';
 import 'package:safqaseller/features/history/view/history_view.dart';
 import 'package:safqaseller/features/profile/view/edit_account_view.dart';
 import 'package:safqaseller/features/profile/view/profile_view.dart';
@@ -98,6 +101,11 @@ Route<dynamic> onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(builder: (_) => const ReviewsView());
     case ChangePasswordView.routeName:
       return MaterialPageRoute(builder: (_) => const ChangePasswordView());
+    case ChatListView.routeName:
+      return MaterialPageRoute(builder: (_) => const ChatListView());
+    case ChatThreadView.routeName:
+      final args = settings.arguments as ChatThreadViewArgs;
+      return MaterialPageRoute(builder: (_) => ChatThreadView(args: args));
 
     // ── Auction ────────────────────────────────────────────────────────────
     case LotAuctionView.routeName:

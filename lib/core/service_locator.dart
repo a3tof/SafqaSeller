@@ -11,6 +11,9 @@ import 'package:safqaseller/features/auth/view_model/logout/logout_view_model.da
 import 'package:safqaseller/features/auth/view_model/register/register_view_model.dart';
 import 'package:safqaseller/features/change_password/model/repositories/change_password_repository.dart';
 import 'package:safqaseller/features/change_password/view_model/change_password/change_password_view_model.dart';
+import 'package:safqaseller/features/chat/model/repositories/chat_repository.dart';
+import 'package:safqaseller/features/chat/view_model/chat_list/chat_list_view_model.dart';
+import 'package:safqaseller/features/chat/view_model/chat_thread/chat_thread_view_model.dart';
 import 'package:safqaseller/features/forgot_password/model/repositories/forgot_password_repository.dart';
 import 'package:safqaseller/features/forgot_password/view_model/forgot_password_view_model.dart';
 import 'package:safqaseller/features/history/model/repositories/history_repository.dart';
@@ -64,6 +67,7 @@ Future<void> setupServiceLocator() async {
   );
   getIt.registerLazySingleton(() => ProfileRepository(dioHelper: getIt()));
   getIt.registerLazySingleton(() => HistoryRepository(dioHelper: getIt()));
+  getIt.registerLazySingleton(() => ChatRepository(dioHelper: getIt()));
   getIt.registerLazySingleton(
     () => SubscriptionRepository(dioHelper: getIt(), cacheHelper: getIt()),
   );
@@ -89,6 +93,8 @@ Future<void> setupServiceLocator() async {
   getIt.registerFactory(() => NotificationsViewModel(getIt()));
   getIt.registerFactory(() => HomeViewModel(getIt()));
   getIt.registerFactory(() => HistoryViewModel(getIt()));
+  getIt.registerFactory(() => ChatListViewModel(getIt()));
+  getIt.registerFactory(() => ChatThreadViewModel(getIt()));
   getIt.registerFactory(() => EditAccountViewModel(getIt()));
   getIt.registerFactory(() => SubscriptionViewModel(getIt()));
 }

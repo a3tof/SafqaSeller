@@ -339,6 +339,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone Number"),
     "resend": MessageLookupByLibrary.simpleMessage("Resend"),
     "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "chatTitle": MessageLookupByLibrary.simpleMessage("Chat"),
+    "chatSearchHint": MessageLookupByLibrary.simpleMessage(
+      "Search conversations",
+    ),
+    "chatNoConversations": MessageLookupByLibrary.simpleMessage(
+      "No conversations yet",
+    ),
+    "chatTypeMessage": MessageLookupByLibrary.simpleMessage(
+      "Type a message...",
+    ),
+    "chatSend": MessageLookupByLibrary.simpleMessage("Send"),
+    "chatNoMessages": MessageLookupByLibrary.simpleMessage("No messages yet"),
+    "chatSendFailed": MessageLookupByLibrary.simpleMessage(
+      "Failed to send message",
+    ),
+    "chatYou": MessageLookupByLibrary.simpleMessage("You"),
     "savedCard": MessageLookupByLibrary.simpleMessage("Saved Card"),
     "savedCards": MessageLookupByLibrary.simpleMessage("Saved Cards"),
     "seeAll": MessageLookupByLibrary.simpleMessage("See all"),

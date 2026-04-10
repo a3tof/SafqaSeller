@@ -816,6 +816,38 @@
   "@retry": {
     "description": "Generic retry action label"
   },
+  "chatTitle": "المحادثات",
+  "@chatTitle": {
+    "description": "Chat list screen title"
+  },
+  "chatSearchHint": "ابحث في المحادثات",
+  "@chatSearchHint": {
+    "description": "Chat list search field hint"
+  },
+  "chatNoConversations": "لا توجد محادثات بعد",
+  "@chatNoConversations": {
+    "description": "Shown when the seller has no conversations"
+  },
+  "chatTypeMessage": "اكتب رسالة...",
+  "@chatTypeMessage": {
+    "description": "Chat thread composer hint"
+  },
+  "chatSend": "إرسال",
+  "@chatSend": {
+    "description": "Chat send action label"
+  },
+  "chatNoMessages": "لا توجد رسائل بعد",
+  "@chatNoMessages": {
+    "description": "Shown when a chat thread is empty"
+  },
+  "chatSendFailed": "فشل إرسال الرسالة",
+  "@chatSendFailed": {
+    "description": "Shown when sending a chat message fails"
+  },
+  "chatYou": "أنت",
+  "@chatYou": {
+    "description": "Label for the current user in chat"
+  },
   "savedCards": "البطاقات المحفوظة",
   "@savedCards": {
     "description": "Wallet saved cards section title"

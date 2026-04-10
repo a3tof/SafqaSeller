@@ -816,6 +816,38 @@
   "@retry": {
     "description": "Generic retry action label"
   },
+  "chatTitle": "Chat",
+  "@chatTitle": {
+    "description": "Chat list screen title"
+  },
+  "chatSearchHint": "Search conversations",
+  "@chatSearchHint": {
+    "description": "Chat list search field hint"
+  },
+  "chatNoConversations": "No conversations yet",
+  "@chatNoConversations": {
+    "description": "Shown when the seller has no conversations"
+  },
+  "chatTypeMessage": "Type a message...",
+  "@chatTypeMessage": {
+    "description": "Chat thread composer hint"
+  },
+  "chatSend": "Send",
+  "@chatSend": {
+    "description": "Chat send action label"
+  },
+  "chatNoMessages": "No messages yet",
+  "@chatNoMessages": {
+    "description": "Shown when a chat thread is empty"
+  },
+  "chatSendFailed": "Failed to send message",
+  "@chatSendFailed": {
+    "description": "Shown when sending a chat message fails"
+  },
+  "chatYou": "You",
+  "@chatYou": {
+    "description": "Label for the current user in chat"
+  },
   "savedCards": "Saved Cards",
   "@savedCards": {
     "description": "Wallet saved cards section title"
