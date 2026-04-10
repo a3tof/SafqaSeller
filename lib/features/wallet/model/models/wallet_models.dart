@@ -6,9 +6,16 @@ class WalletBalance {
   const WalletBalance({required this.balance});
 
   factory WalletBalance.fromJson(Map<String, dynamic> json) {
-    final raw = json['balance'] ?? json['Balance'] ?? 0;
+    final raw =
+        json['balance'] ??
+        json['Balance'] ??
+        json['amount'] ??
+        json['Amount'] ??
+        json['walletBalance'] ??
+        json['WalletBalance'] ??
+        0;
     return WalletBalance(
-      balance: (raw is int) ? raw.toDouble() : (raw as num).toDouble(),
+      balance: _toDouble(raw),
     );
   }
 }
@@ -33,14 +40,34 @@ class CardModel {
   });
 
   factory CardModel.fromJson(Map<String, dynamic> json) {
+    final rawCardNumber =
+        (json['cardNumber'] ??
+                json['CardNumber'] ??
+                json['maskedCardNumber'] ??
+                json['MaskedCardNumber'])
+            ?.toString();
     return CardModel(
-      id: (json['id'] ?? json['Id']) as int,
+      id: _toInt(json['id'] ?? json['Id']),
       cardholderName:
-          (json['cardholderName'] ?? json['CardholderName'] ?? '') as String,
-      last4: (json['last4'] ?? json['Last4'] ?? '****') as String,
+          (json['cardholderName'] ??
+                  json['CardholderName'] ??
+                  json['holderName'] ??
+                  json['HolderName'] ??
+                  '')
+              .toString(),
+      last4: (json['last4'] ??
+                  json['Last4'] ??
+                  json['lastDigits'] ??
+                  json['LastDigits'])
+              ?.toString() ??
+          _extractLast4(rawCardNumber),
       expiryDate:
-          (json['expiryDate'] ?? json['ExpiryDate'] ?? '') as String,
-      label: (json['label'] ?? json['Label']) as String?,
+          (json['expiryDate'] ?? json['ExpiryDate'] ?? '').toString(),
+      label: (json['label'] ??
+              json['Label'] ??
+              json['cardLabel'] ??
+              json['CardLabel'])
+          ?.toString(),
     );
   }
 }
@@ -66,7 +93,13 @@ class TransactionModel {
 
   factory TransactionModel.fromJson(Map<String, dynamic> json) {
     final typeStr =
-        ((json['type'] ?? json['Type'] ?? '') as String).toLowerCase();
+        (json['type'] ??
+                json['Type'] ??
+                json['transactionType'] ??
+                json['TransactionType'] ??
+                '')
+            .toString()
+            .toLowerCase();
 
     TransactionType type;
     if (typeStr.contains('withdraw')) {
@@ -83,14 +116,26 @@ class TransactionModel {
     final date =
         rawDate is String && rawDate.isNotEmpty ? DateTime.parse(rawDate) : DateTime.now();
 
-    final rawAmount = json['amount'] ?? json['Amount'] ?? 0;
-    final amount =
-        (rawAmount is int) ? rawAmount.toDouble() : (rawAmount as num).toDouble();
+    final rawAmount =
+        json['amount'] ??
+        json['Amount'] ??
+        json['value'] ??
+        json['Value'] ??
+        json['transactionAmount'] ??
+        json['TransactionAmount'] ??
+        0;
+    final amount = _toDouble(rawAmount);
 
     return TransactionModel(
-      id: (json['id'] ?? json['Id'] ?? 0) as int,
-      title: (json['title'] ?? json['Title'] ?? json['type'] ?? 'Transaction')
-          as String,
+      id: _toInt(json['id'] ?? json['Id'] ?? 0),
+      title: (json['title'] ??
+              json['Title'] ??
+              json['description'] ??
+              json['Description'] ??
+              json['type'] ??
+              json['Type'] ??
+              'Transaction')
+          .toString(),
       amount: amount,
       date: date,
       type: type,
@@ -120,7 +165,7 @@ class AddCardRequest {
         'expiryDate': expiryDate,
         'cvv': cvv,
         'cardholderName': cardholderName,
-        if (label != null && label!.isNotEmpty) 'label': label,
+        if (label != null && label!.isNotEmpty) 'cardLabel': label,
       };
 }
 
@@ -152,4 +197,24 @@ class WithdrawalRequest {
         'amount': amount,
         'cardId': cardId,
       };
+}
+
+double _toDouble(dynamic value) {
+  if (value is num) return value.toDouble();
+  if (value is String) return double.tryParse(value) ?? 0;
+  return double.tryParse(value?.toString() ?? '') ?? 0;
+}
+
+int _toInt(dynamic value) {
+  if (value is int) return value;
+  if (value is String) return int.tryParse(value) ?? 0;
+  if (value is double) return value.toInt();
+  return int.tryParse(value?.toString() ?? '') ?? 0;
+}
+
+String _extractLast4(String? cardNumber) {
+  if (cardNumber == null || cardNumber.isEmpty) return '****';
+  final digits = cardNumber.replaceAll(RegExp(r'[^0-9]'), '');
+  if (digits.length < 4) return digits.padLeft(4, '*');
+  return digits.substring(digits.length - 4);
 }

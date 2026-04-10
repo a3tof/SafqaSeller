@@ -2188,6 +2188,146 @@ class S {
       args: [],
     );
   }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message(
+      'Retry',
+      name: 'retry',
+      desc: 'Generic retry action label',
+      args: [],
+    );
+  }
+
+  /// `Saved Cards`
+  String get savedCards {
+    return Intl.message(
+      'Saved Cards',
+      name: 'savedCards',
+      desc: 'Wallet saved cards section title',
+      args: [],
+    );
+  }
+
+  /// `Saved Card`
+  String get savedCard {
+    return Intl.message(
+      'Saved Card',
+      name: 'savedCard',
+      desc: 'Wallet saved card field label',
+      args: [],
+    );
+  }
+
+  /// `See all`
+  String get seeAll {
+    return Intl.message(
+      'See all',
+      name: 'seeAll',
+      desc: 'See all action label',
+      args: [],
+    );
+  }
+
+  /// `Add new card`
+  String get addNewCard {
+    return Intl.message(
+      'Add new card',
+      name: 'addNewCard',
+      desc: 'Wallet add new card shortcut label',
+      args: [],
+    );
+  }
+
+  /// `Wallet balance`
+  String get walletBalance {
+    return Intl.message(
+      'Wallet balance',
+      name: 'walletBalance',
+      desc: 'Wallet balance section label',
+      args: [],
+    );
+  }
+
+  /// `Card`
+  String get card {
+    return Intl.message(
+      'Card',
+      name: 'card',
+      desc: 'Generic card label',
+      args: [],
+    );
+  }
+
+  /// `Enter an amount`
+  String get enterAmount {
+    return Intl.message(
+      'Enter an amount',
+      name: 'enterAmount',
+      desc: 'Validation message when amount is empty',
+      args: [],
+    );
+  }
+
+  /// `Enter a valid amount`
+  String get enterValidAmount {
+    return Intl.message(
+      'Enter a valid amount',
+      name: 'enterValidAmount',
+      desc: 'Validation message when amount is invalid',
+      args: [],
+    );
+  }
+
+  /// `Enter the verification code sent to your email to continue your withdrawal.`
+  String get verifyWithdrawalDescription {
+    return Intl.message(
+      'Enter the verification code sent to your email to continue your withdrawal.',
+      name: 'verifyWithdrawalDescription',
+      desc: 'Withdrawal OTP screen description',
+      args: [],
+    );
+  }
+
+  /// `Confirm withdrawal`
+  String get confirmWithdrawal {
+    return Intl.message(
+      'Confirm withdrawal',
+      name: 'confirmWithdrawal',
+      desc: 'Confirm withdrawal action label',
+      args: [],
+    );
+  }
+
+  /// `Enter your password to confirm this withdrawal request.`
+  String get confirmWithdrawalDescription {
+    return Intl.message(
+      'Enter your password to confirm this withdrawal request.',
+      name: 'confirmWithdrawalDescription',
+      desc: 'Withdrawal password confirmation description',
+      args: [],
+    );
+  }
+
+  /// `Current Password`
+  String get currentPassword {
+    return Intl.message(
+      'Current Password',
+      name: 'currentPassword',
+      desc: 'Current password field label',
+      args: [],
+    );
+  }
+
+  /// `We couldn't find your account email. Please refresh your profile and try again.`
+  String get withdrawalEmailMissing {
+    return Intl.message(
+      'We couldn\'t find your account email. Please refresh your profile and try again.',
+      name: 'withdrawalEmailMissing',
+      desc: 'Shown when email is missing before starting withdrawal verification',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

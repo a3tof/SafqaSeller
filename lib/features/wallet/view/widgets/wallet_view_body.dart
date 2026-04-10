@@ -1,241 +1,218 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
-import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
-import 'package:safqaseller/features/wallet/view/add_card_view.dart';
 import 'package:safqaseller/features/wallet/view/deposit_view.dart';
 import 'package:safqaseller/features/wallet/view/saved_cards_view.dart';
 import 'package:safqaseller/features/wallet/view/transaction_history_view.dart';
 import 'package:safqaseller/features/wallet/view/widgets/transaction_item.dart';
 import 'package:safqaseller/features/wallet/view/widgets/wallet_action_button.dart';
 import 'package:safqaseller/features/wallet/view/withdrawal_view.dart';
+import 'package:safqaseller/features/wallet/view_model/wallet/wallet_view_model.dart';
+import 'package:safqaseller/features/wallet/view_model/wallet/wallet_view_model_state.dart';
 import 'package:safqaseller/generated/l10n.dart';
 
-/// UI-only wallet screen with mock data. No BLoC/state management.
-class WalletViewBody extends StatelessWidget {
+class WalletViewBody extends StatefulWidget {
   const WalletViewBody({super.key});
 
-  static final _mockBalance = const WalletBalance(balance: 1250.50);
-  List<CardModel> _mockCards(BuildContext context) => [
-    CardModel(
-      id: 1,
-      cardholderName: 'John Doe',
-      last4: '4242',
-      expiryDate: '12/28',
-      label: S.of(context).kPrimary,
-    ),
-  ];
-  List<TransactionModel> _mockTransactions(BuildContext context) => [
-    TransactionModel(
-      id: 1,
-      title: S.of(context).kDeposit,
-      amount: 500,
-      date: DateTime.now(),
-      type: TransactionType.deposit,
-    ),
-    TransactionModel(
-      id: 2,
-      title: S.of(context).kWithdrawal,
-      amount: 120,
-      date: DateTime.now().subtract(const Duration(days: 1)),
-      type: TransactionType.withdrawal,
-    ),
-  ];
+  @override
+  State<WalletViewBody> createState() => _WalletViewBodyState();
+}
+
+class _WalletViewBodyState extends State<WalletViewBody> {
+  bool _isBalanceVisible = true;
+
+  Future<void> _openRoute(String routeName) async {
+    await Navigator.pushNamed(context, routeName);
+    if (!mounted) return;
+    await context.read<WalletViewModel>().loadWallet();
+  }
+
+  String _formatBalance(double balance) {
+    if (!_isBalanceVisible) {
+      return 'EGP ••••';
+    }
+
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final formatter = NumberFormat.currency(
+      locale: locale,
+      symbol: 'EGP ',
+      decimalDigits: balance == balance.roundToDouble() ? 0 : 2,
+    );
+    return formatter.format(balance);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: buildAppBar(context: context, title: S.of(context).kWallet),
-      body: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
-        child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20.h),
-                  // ── Balance + action buttons row ─────────────────────────
-                  LayoutBuilder(
-                    builder: (context, constraints) {
-                      final screenW = MediaQuery.of(context).size.width;
-                      final isNarrow =
-                          screenW < 390 || constraints.maxWidth < 320;
-                      return isNarrow
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                _BalanceSection(balance: _mockBalance),
-                                SizedBox(height: 16.h),
-                                Wrap(
-                                  spacing: 20.w,
-                                  runSpacing: 12.h,
-                                  children: [
-                                    WalletActionButton(
-                                      icon: Icons.add_rounded,
-                                      label: S.of(context).kDepositNmoney,
-                                      onTap: () => Navigator.pushNamed(
-                                          context, DepositView.routeName),
-                                      filled: true,
-                                    ),
-                                    SizedBox(width: 20.w),
-                                    WalletActionButton(
-                                      icon: Icons.swap_horiz_rounded,
-                                      label: S.of(context).kWithdrawalNmoney,
-                                      onTap: () => Navigator.pushNamed(
-                                          context, WithdrawalView.routeName),
-                                      filled: false,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )
-                          : Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Expanded(
-                                  child: _BalanceSection(balance: _mockBalance),
-                                ),
-                                SizedBox(width: 12.w),
-                                Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    WalletActionButton(
-                                      icon: Icons.add_rounded,
-                                      label: S.of(context).kDepositNmoney,
-                                      onTap: () => Navigator.pushNamed(
-                                          context, DepositView.routeName),
-                                      filled: true,
-                                    ),
-                                    SizedBox(width: 20.w),
-                                    WalletActionButton(
-                                      icon: Icons.swap_horiz_rounded,
-                                      label: S.of(context).kWithdrawalNmoney,
-                                      onTap: () => Navigator.pushNamed(
-                                          context, WithdrawalView.routeName),
-                                      filled: false,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                    },
-                  ),
+      body: BlocBuilder<WalletViewModel, WalletState>(
+        builder: (context, state) {
+          if (state is WalletLoading || state is WalletInitial) {
+            return const Center(child: CircularProgressIndicator());
+          }
 
-                  SizedBox(height: 28.h),
-                  // ── Saved Cards ──────────────────────────────────────────
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Saved Cards',
-                        style: TextStyles.medium20(context),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, SavedCardsView.routeName),
-                        child: Text(
-                          'See all',
-                          style: TextStyles.regular14(context).copyWith(
-                            color: AppColors.primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 8.h),
-                  if (_mockCards(context).isEmpty)
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 24.h),
-                        child: Column(
-                          children: [
-                            Icon(Icons.credit_card_off_outlined,
-                                size: 48.sp, color: Colors.grey),
-                            SizedBox(height: 8.h),
-                            Text(S.of(context).kNoSavedCards,
-                                style: TextStyles.regular14(context)
-                                    .copyWith(color: Colors.grey)),
-                          ],
-                        ),
-                      ),
-                    )
-                  else
-                    SizedBox(
-                      height: 215.h,
-                      child: PageView.builder(
-                        itemCount: _mockCards(context).length,
-                        itemBuilder: (_, i) => _CreditCardWidget(card: _mockCards(context)[i]),
-                      ),
-                    ),
-
-                  SizedBox(height: 4.h),
-                  // ── Add card shortcut ────────────────────────────────────
-                  TextButton.icon(
-                    onPressed: () =>
-                        Navigator.pushNamed(context, AddCardView.routeName),
-                    icon: Icon(Icons.add_circle_outline,
-                        size: 20.sp, color: AppColors.primaryColor),
-                    label: Text(
-                      'Add new card',
-                      style: TextStyles.medium14(context)
-                          .copyWith(color: AppColors.primaryColor),
-                    ),
-                  ),
-
-                  SizedBox(height: 16.h),
-                  // ── Transaction History ──────────────────────────────────
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(S.of(context).kTransactionHistory,
-                          style: TextStyles.medium20(context)),
-                      TextButton(
-                        onPressed: () => Navigator.pushNamed(
-                            context, TransactionHistoryView.routeName),
-                        child: Text(
-                          'See all',
-                          style: TextStyles.regular14(context).copyWith(
-                            color: AppColors.primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  if (_mockTransactions(context).isEmpty)
-                    Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 24.h),
-                        child: Text(S.of(context).kNoTransactionsYet,
-                            style: TextStyles.regular14(context)
-                                .copyWith(color: Colors.grey)),
-                      ),
-                    )
-                  else ...[
-                    // Date header for the first group
+          if (state is WalletError) {
+            return Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
                     Text(
-                      DateFormat('d MMMM yyyy')
-                          .format(_mockTransactions(context).first.date),
-                      style: TextStyles.medium14(context)
-                          .copyWith(color: const Color(0xFFAAAAAA)),
+                      state.message,
+                      textAlign: TextAlign.center,
+                      style: TextStyles.regular16(context),
                     ),
-                    SizedBox(height: 12.h),
-                    ..._mockTransactions(context)
-                        .take(3)
-                        .map((t) => Padding(
-                              padding: EdgeInsets.only(bottom: 12.h),
-                              child: TransactionItem(transaction: t),
-                            )),
+                    SizedBox(height: 16.h),
+                    ElevatedButton(
+                      onPressed: () => context.read<WalletViewModel>().loadWallet(),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor,
+                      ),
+                      child: Text(
+                        S.of(context).retry,
+                        style: TextStyles.semiBold16(context).copyWith(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ],
-                  SizedBox(height: 24.h),
-                ],
-        ),
+                ),
+              ),
+            );
+          }
+
+          final wallet = state as WalletSuccess;
+          final transactions = wallet.transactions.take(4).toList();
+
+          return RefreshIndicator(
+            onRefresh: context.read<WalletViewModel>().loadWallet,
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                final locale = Localizations.localeOf(context).toLanguageTag();
+                final maxContentWidth = constraints.maxWidth > 700 ? 520.0 : 343.w;
+
+                return SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+                  child: Center(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(maxWidth: maxContentWidth),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 28.h),
+                          _BalanceSection(
+                            title: S.of(context).walletBalance,
+                            formattedBalance: _formatBalance(wallet.balance.balance),
+                            isVisible: _isBalanceVisible,
+                            onToggleVisibility: () {
+                              setState(() {
+                                _isBalanceVisible = !_isBalanceVisible;
+                              });
+                            },
+                          ),
+                          SizedBox(height: 34.h),
+                          Center(
+                            child: Wrap(
+                              alignment: WrapAlignment.center,
+                              spacing: 16.w,
+                              runSpacing: 16.h,
+                              children: [
+                                WalletActionButton(
+                                  icon: Icons.arrow_upward_rounded,
+                                  label: S.of(context).kDepositNmoney,
+                                  onTap: () => _openRoute(DepositView.routeName),
+                                  backgroundColor: const Color(0xFFE7F6EC),
+                                  iconColor: const Color(0xFF00762E),
+                                ),
+                                WalletActionButton(
+                                  icon: Icons.account_balance_wallet_outlined,
+                                  label: S.of(context).kWithdrawalNmoney,
+                                  onTap: () => _openRoute(WithdrawalView.routeName),
+                                  backgroundColor: const Color(0xFFFDEBEC),
+                                  iconColor: const Color(0xFFBA1A1A),
+                                ),
+                                WalletActionButton(
+                                  icon: Icons.credit_card_rounded,
+                                  label: S.of(context).savedCards,
+                                  onTap: () => _openRoute(SavedCardsView.routeName),
+                                  backgroundColor: AppColors.secondaryColor,
+                                  iconColor: AppColors.primaryColor,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 40.h),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  S.of(context).kTransactionHistory,
+                                  style: TextStyles.medium20(
+                                    context,
+                                  ).copyWith(color: Colors.black),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    _openRoute(TransactionHistoryView.routeName),
+                                child: Text(
+                                  S.of(context).seeAll,
+                                  style: TextStyles.regular14(context).copyWith(
+                                    color: AppColors.primaryColor,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10.h),
+                          if (transactions.isEmpty)
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 24.h),
+                              child: Center(
+                                child: Text(
+                                  S.of(context).kNoTransactionsYet,
+                                  style: TextStyles.regular14(context).copyWith(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            )
+                          else ...[
+                            Text(
+                              DateFormat('d MMMM yyyy', locale).format(
+                                transactions.first.date,
+                              ),
+                              style: TextStyles.medium14(context).copyWith(
+                                color: const Color(0xFFAAAAAA),
+                              ),
+                            ),
+                            SizedBox(height: 16.h),
+                            ...transactions.map(
+                              (transaction) => Padding(
+                                padding: EdgeInsets.only(bottom: 12.h),
+                                child: TransactionItem(transaction: transaction),
+                              ),
+                            ),
+                          ],
+                          SizedBox(height: 24.h),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
       ),
     );
   }
@@ -244,152 +221,57 @@ class WalletViewBody extends StatelessWidget {
 // ── Private sub-widgets ────────────────────────────────────────────────────────
 
 class _BalanceSection extends StatelessWidget {
-  const _BalanceSection({required this.balance});
-  final WalletBalance balance;
+  const _BalanceSection({
+    required this.title,
+    required this.formattedBalance,
+    required this.isVisible,
+    required this.onToggleVisibility,
+  });
+
+  final String title;
+  final String formattedBalance;
+  final bool isVisible;
+  final VoidCallback onToggleVisibility;
 
   @override
   Widget build(BuildContext context) {
-    final parts = balance.balance.toStringAsFixed(2).split('.');
-    final whole = parts[0];
-    final decimal = parts[1];
-
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
-          'Wallet balance',
-          style: TextStyles.regular18(context)
-              .copyWith(color: const Color(0xFF666666)),
-        ),
-        SizedBox(height: 4.h),
         Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              whole,
-              style: TextStyle(
-                fontSize: 28.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
-              ),
+              title,
+              style: TextStyles.regular16(
+                context,
+              ).copyWith(color: AppColors.primaryColor),
             ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 2.h),
-              child: Text(
-                '.$decimal',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w300,
-                  color: Colors.black,
+            SizedBox(width: 8.w),
+            InkWell(
+              borderRadius: BorderRadius.circular(20.r),
+              onTap: onToggleVisibility,
+              child: Padding(
+                padding: EdgeInsets.all(4.r),
+                child: Icon(
+                  isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  size: 20.sp,
+                  color: AppColors.primaryColor,
                 ),
               ),
             ),
           ],
         ),
-      ],
-    );
-  }
-}
-
-/// Visual credit card widget displayed in the saved-cards carousel.
-class _CreditCardWidget extends StatelessWidget {
-  const _CreditCardWidget({required this.card});
-  final CardModel card;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 215.h,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF023E8A), Color(0xFF0077B6)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+        SizedBox(height: 8.h),
+        Text(
+          formattedBalance,
+          textAlign: TextAlign.center,
+          style: TextStyles.bold28(context).copyWith(
+            color: Colors.black,
+            fontSize: 34.sp,
+          ),
         ),
-        borderRadius: BorderRadius.circular(16.r),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primaryColor.withValues(alpha: 0.3),
-            blurRadius: 16,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      padding: EdgeInsets.all(20.w),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                card.label?.isNotEmpty == true ? card.label! : 'Credit Card',
-                style: TextStyle(
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white70,
-                ),
-              ),
-              Text(
-                'VISA',
-                style: TextStyle(
-                  fontSize: 22.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  fontStyle: FontStyle.italic,
-                ),
-              ),
-            ],
-          ),
-          const Spacer(),
-          Text(
-            '.... .... .... ${card.last4}',
-            style: TextStyle(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-              letterSpacing: 2,
-            ),
-          ),
-          SizedBox(height: 12.h),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'CARD HOLDER',
-                    style: TextStyle(
-                        fontSize: 10.sp, color: Colors.white70),
-                  ),
-                  Text(
-                    card.cardholderName.toUpperCase(),
-                    style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Text(S.of(context).kExpires,
-                      style: TextStyle(fontSize: 10.sp, color: Colors.white70)),
-                  Text(
-                    card.expiryDate,
-                    style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
-      ),
+      ],
     );
   }
 }

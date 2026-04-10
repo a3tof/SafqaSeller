@@ -811,5 +811,61 @@
   "historyLotLabel": "Lot",
   "@historyLotLabel": {
     "description": "Lot label prefix in history card"
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Generic retry action label"
+  },
+  "savedCards": "Saved Cards",
+  "@savedCards": {
+    "description": "Wallet saved cards section title"
+  },
+  "savedCard": "Saved Card",
+  "@savedCard": {
+    "description": "Wallet saved card field label"
+  },
+  "seeAll": "See all",
+  "@seeAll": {
+    "description": "See all action label"
+  },
+  "addNewCard": "Add new card",
+  "@addNewCard": {
+    "description": "Wallet add new card shortcut label"
+  },
+  "walletBalance": "Wallet balance",
+  "@walletBalance": {
+    "description": "Wallet balance section label"
+  },
+  "card": "Card",
+  "@card": {
+    "description": "Generic card label"
+  },
+  "enterAmount": "Enter an amount",
+  "@enterAmount": {
+    "description": "Validation message when amount is empty"
+  },
+  "enterValidAmount": "Enter a valid amount",
+  "@enterValidAmount": {
+    "description": "Validation message when amount is invalid"
+  },
+  "verifyWithdrawalDescription": "Enter the verification code sent to your email to continue your withdrawal.",
+  "@verifyWithdrawalDescription": {
+    "description": "Withdrawal OTP screen description"
+  },
+  "confirmWithdrawal": "Confirm withdrawal",
+  "@confirmWithdrawal": {
+    "description": "Confirm withdrawal action label"
+  },
+  "confirmWithdrawalDescription": "Enter your password to confirm this withdrawal request.",
+  "@confirmWithdrawalDescription": {
+    "description": "Withdrawal password confirmation description"
+  },
+  "currentPassword": "Current Password",
+  "@currentPassword": {
+    "description": "Current password field label"
+  },
+  "withdrawalEmailMissing": "We couldn't find your account email. Please refresh your profile and try again.",
+  "@withdrawalEmailMissing": {
+    "description": "Shown when email is missing before starting withdrawal verification"
   }
 }

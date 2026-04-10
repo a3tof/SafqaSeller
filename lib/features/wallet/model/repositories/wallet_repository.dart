@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:safqaseller/core/network/dio_client.dart';
+import 'package:safqaseller/features/forgot_password/model/models/forgot_password_models.dart';
 import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
 
 class WalletRepository {
@@ -11,11 +12,18 @@ class WalletRepository {
 
   Future<WalletBalance> getBalance() async {
     final r = await dioHelper.getData(
-      endPoint: 'seller/Wallet',
+      endPoint: 'Wallet/balance',
       requiresAuth: true,
     );
     _require(r);
-    return WalletBalance.fromJson(r.data as Map<String, dynamic>);
+    final body = _asMap(r.data);
+    if (body != null) {
+      return WalletBalance.fromJson(body);
+    }
+    if (r.data is num || r.data is String) {
+      return WalletBalance.fromJson({'balance': r.data});
+    }
+    throw Exception('Unexpected wallet balance response format');
   }
 
   // ── Deposit ───────────────────────────────────────────────────────────────
@@ -60,11 +68,14 @@ class WalletRepository {
 
   Future<List<CardModel>> getCards() async {
     final r = await dioHelper.getData(
-      endPoint: 'seller/Wallet/Cards',
+      endPoint: 'Card/cards',
       requiresAuth: true,
     );
     _require(r);
-    final list = r.data as List<dynamic>;
+    final list = _asList(r.data);
+    if (list == null) {
+      throw Exception('Unexpected cards response format');
+    }
     return list
         .map((e) => CardModel.fromJson(e as Map<String, dynamic>))
         .toList();
@@ -72,7 +83,7 @@ class WalletRepository {
 
   Future<void> addCard(AddCardRequest request) async {
     final r = await dioHelper.postData(
-      endPoint: 'seller/Wallet/Cards',
+      endPoint: 'Card/AddCard',
       data: request.toJson(),
       requiresAuth: true,
     );
@@ -91,14 +102,79 @@ class WalletRepository {
 
   Future<List<TransactionModel>> getTransactions() async {
     final r = await dioHelper.getData(
-      endPoint: 'seller/Wallet/Transactions',
+      endPoint: 'Wallet/TransactionHistory',
       requiresAuth: true,
     );
     _require(r);
-    final list = r.data as List<dynamic>;
+    final list = _asList(r.data);
+    if (list == null) {
+      throw Exception('Unexpected transaction history response format');
+    }
     return list
         .map((e) => TransactionModel.fromJson(e as Map<String, dynamic>))
         .toList();
+  }
+
+  Future<MessageResponseModel> requestWithdrawalOtp(String email) async {
+    final r = await dioHelper.postData(
+      endPoint: 'Auth/request-ForgetPassword',
+      data: {'email': email},
+    );
+    _require(r);
+    final body = _asMap(r.data);
+    if (body == null) {
+      throw Exception('Unexpected OTP request response format');
+    }
+    final result = MessageResponseModel.fromJson(body);
+    if (!result.isSuccess) {
+      throw Exception(result.message ?? 'OTP request failed');
+    }
+    return result;
+  }
+
+  Future<VerifyOtpResponseModel> verifyWithdrawalOtp(
+    String email,
+    String code,
+  ) async {
+    final r = await dioHelper.postData(
+      endPoint: 'Auth/verify-ForgetPassword',
+      data: {'email': email, 'code': code},
+    );
+    _require(r);
+    final body = _asMap(r.data);
+    if (body == null) {
+      throw Exception('Unexpected OTP verification response format');
+    }
+    final result = VerifyOtpResponseModel.fromJson(body);
+    if (!result.isSuccess) {
+      throw Exception(result.message ?? 'OTP verification failed');
+    }
+    return result;
+  }
+
+  Future<MessageResponseModel> confirmWithdrawalReset(
+    String email,
+    String token,
+    String password,
+  ) async {
+    final r = await dioHelper.postData(
+      endPoint: 'Auth/reset-ForgetPassword',
+      data: {
+        'email': email,
+        'token': token,
+        'newPassword': password,
+      },
+    );
+    _require(r);
+    final body = _asMap(r.data);
+    if (body == null) {
+      throw Exception('Unexpected password confirmation response format');
+    }
+    final result = MessageResponseModel.fromJson(body);
+    if (!result.isSuccess) {
+      throw Exception(result.message ?? 'Password confirmation failed');
+    }
+    return result;
   }
 
   // ── Helper ────────────────────────────────────────────────────────────────
@@ -114,5 +190,39 @@ class WalletRepository {
     if (r.statusCode != 400) return false;
     final message = extractResponseError(r.data, r.statusCode).toLowerCase();
     return message.contains('wallet not found');
+  }
+
+  Map<String, dynamic>? _asMap(dynamic data) {
+    if (data is Map<String, dynamic>) return data;
+    if (data is Map) {
+      return data.map(
+        (key, value) => MapEntry(key.toString(), value),
+      );
+    }
+    return null;
+  }
+
+  List<dynamic>? _asList(dynamic data) {
+    if (data is List) return data;
+    final body = _asMap(data);
+    if (body == null) return null;
+    for (final key in const [
+      'data',
+      'Data',
+      'items',
+      'Items',
+      'cards',
+      'Cards',
+      'transactions',
+      'Transactions',
+      'history',
+      'History',
+    ]) {
+      final value = body[key];
+      if (value is List) {
+        return value;
+      }
+    }
+    return null;
   }
 }

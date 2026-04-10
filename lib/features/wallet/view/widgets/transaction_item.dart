@@ -14,9 +14,9 @@ class TransactionItem extends StatelessWidget {
   static const _titleColor = Color(0xFF064061);
   static const _dateColor = Color(0xFFAAAAAA);
   // Amount colours per type
-  static const _withdrawalColor = Color(0xFFF3735E);
-  static const _depositColor = Color(0xFF7DD97B);
-  static const _auctionColor = Color(0xFFE9653B);
+  static const _withdrawalColor = Color(0xFFBA1A1A);
+  static const _depositColor = Color(0xFF00762E);
+  static const _auctionColor = Color(0xFF00762E);
 
   Color get _amountColor {
     switch (transaction.type) {
@@ -31,15 +31,18 @@ class TransactionItem extends StatelessWidget {
     }
   }
 
-  String get _sign =>
-      transaction.type == TransactionType.deposit ? '+' : '-';
-
   @override
   Widget build(BuildContext context) {
-    final dateStr =
-        DateFormat('d MMM, yyyy').format(transaction.date);
-    final amountStr =
-        '\$$_sign${NumberFormat('#,##0.##').format(transaction.amount)}';
+    final locale = Localizations.localeOf(context).toLanguageTag();
+    final dateStr = DateFormat('d MMM, yyyy', locale).format(transaction.date);
+    final amountFormatter = NumberFormat.currency(
+      locale: locale,
+      symbol: 'EGP ',
+      decimalDigits: transaction.amount == transaction.amount.roundToDouble()
+          ? 0
+          : 2,
+    );
+    final amountStr = amountFormatter.format(transaction.amount);
 
     return Container(
       width: double.infinity,

@@ -476,5 +476,29 @@ class MessageLookup extends MessageLookupByLibrary {
       "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني",
     ),
     "verify": MessageLookupByLibrary.simpleMessage("تحقق"),
+    "verifyWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
+      "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني للمتابعة في عملية السحب.",
+    ),
+    "walletBalance": MessageLookupByLibrary.simpleMessage("رصيد المحفظة"),
+    "withdrawalEmailMissing": MessageLookupByLibrary.simpleMessage(
+      "تعذر العثور على البريد الإلكتروني للحساب. يرجى تحديث الملف الشخصي ثم المحاولة مرة أخرى.",
+    ),
+    "confirmWithdrawal": MessageLookupByLibrary.simpleMessage("تأكيد السحب"),
+    "confirmWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
+      "أدخل كلمة المرور لتأكيد طلب السحب هذا.",
+    ),
+    "currentPassword": MessageLookupByLibrary.simpleMessage(
+      "كلمة المرور الحالية",
+    ),
+    "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
+    "addNewCard": MessageLookupByLibrary.simpleMessage("إضافة بطاقة جديدة"),
+    "enterAmount": MessageLookupByLibrary.simpleMessage("أدخل المبلغ"),
+    "enterValidAmount": MessageLookupByLibrary.simpleMessage(
+      "أدخل مبلغًا صحيحًا",
+    ),
+    "retry": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
+    "savedCard": MessageLookupByLibrary.simpleMessage("البطاقة المحفوظة"),
+    "savedCards": MessageLookupByLibrary.simpleMessage("البطاقات المحفوظة"),
+    "seeAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
   };
 }

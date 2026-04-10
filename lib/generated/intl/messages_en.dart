@@ -496,5 +496,29 @@ class MessageLookup extends MessageLookupByLibrary {
       "Enter the verification code sent to your email",
     ),
     "verify": MessageLookupByLibrary.simpleMessage("Verify"),
+    "verifyWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
+      "Enter the verification code sent to your email to continue your withdrawal.",
+    ),
+    "walletBalance": MessageLookupByLibrary.simpleMessage("Wallet balance"),
+    "withdrawalEmailMissing": MessageLookupByLibrary.simpleMessage(
+      "We couldn't find your account email. Please refresh your profile and try again.",
+    ),
+    "confirmWithdrawal": MessageLookupByLibrary.simpleMessage(
+      "Confirm withdrawal",
+    ),
+    "confirmWithdrawalDescription": MessageLookupByLibrary.simpleMessage(
+      "Enter your password to confirm this withdrawal request.",
+    ),
+    "currentPassword": MessageLookupByLibrary.simpleMessage("Current Password"),
+    "card": MessageLookupByLibrary.simpleMessage("Card"),
+    "addNewCard": MessageLookupByLibrary.simpleMessage("Add new card"),
+    "enterAmount": MessageLookupByLibrary.simpleMessage("Enter an amount"),
+    "enterValidAmount": MessageLookupByLibrary.simpleMessage(
+      "Enter a valid amount",
+    ),
+    "retry": MessageLookupByLibrary.simpleMessage("Retry"),
+    "savedCard": MessageLookupByLibrary.simpleMessage("Saved Card"),
+    "savedCards": MessageLookupByLibrary.simpleMessage("Saved Cards"),
+    "seeAll": MessageLookupByLibrary.simpleMessage("See all"),
   };
 }

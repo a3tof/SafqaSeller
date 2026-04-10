@@ -11,19 +11,22 @@ class WalletActionButton extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onTap,
-    this.filled = true,
+    this.backgroundColor,
+    this.iconColor,
   });
 
   final IconData icon;
   final String label;
   final VoidCallback onTap;
 
-  /// true → primary filled circle (Deposit); false → light outlined (Withdrawal)
-  final bool filled;
+  final Color? backgroundColor;
+  final Color? iconColor;
 
   @override
   Widget build(BuildContext context) {
     final displayLabel = label.replaceAll(r'\n', '\n');
+    final circleColor = backgroundColor ?? AppColors.secondaryColor;
+    final foregroundColor = iconColor ?? AppColors.primaryColor;
 
     return GestureDetector(
       onTap: onTap,
@@ -35,19 +38,17 @@ class WalletActionButton extends StatelessWidget {
             height: 50.w,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: filled
-                  ? AppColors.primaryColor
-                  : AppColors.secondaryColor,
+              color: circleColor,
             ),
             child: Icon(
               icon,
-              color: filled ? Colors.white : AppColors.primaryColor,
-              size: 26.sp,
+              color: foregroundColor,
+              size: 24.sp,
             ),
           ),
           SizedBox(height: 8.h),
           SizedBox(
-            width: 72.w,
+            width: 86.w,
             child: Text(
               displayLabel,
               maxLines: 2,

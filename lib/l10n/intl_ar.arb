@@ -811,5 +811,61 @@
   "historyLotLabel": "قطعة",
   "@historyLotLabel": {
     "description": "Lot label prefix in history card"
+  },
+  "retry": "إعادة المحاولة",
+  "@retry": {
+    "description": "Generic retry action label"
+  },
+  "savedCards": "البطاقات المحفوظة",
+  "@savedCards": {
+    "description": "Wallet saved cards section title"
+  },
+  "savedCard": "البطاقة المحفوظة",
+  "@savedCard": {
+    "description": "Wallet saved card field label"
+  },
+  "seeAll": "عرض الكل",
+  "@seeAll": {
+    "description": "See all action label"
+  },
+  "addNewCard": "إضافة بطاقة جديدة",
+  "@addNewCard": {
+    "description": "Wallet add new card shortcut label"
+  },
+  "walletBalance": "رصيد المحفظة",
+  "@walletBalance": {
+    "description": "Wallet balance section label"
+  },
+  "card": "بطاقة",
+  "@card": {
+    "description": "Generic card label"
+  },
+  "enterAmount": "أدخل المبلغ",
+  "@enterAmount": {
+    "description": "Validation message when amount is empty"
+  },
+  "enterValidAmount": "أدخل مبلغًا صحيحًا",
+  "@enterValidAmount": {
+    "description": "Validation message when amount is invalid"
+  },
+  "verifyWithdrawalDescription": "أدخل رمز التحقق المرسل إلى بريدك الإلكتروني للمتابعة في عملية السحب.",
+  "@verifyWithdrawalDescription": {
+    "description": "Withdrawal OTP screen description"
+  },
+  "confirmWithdrawal": "تأكيد السحب",
+  "@confirmWithdrawal": {
+    "description": "Confirm withdrawal action label"
+  },
+  "confirmWithdrawalDescription": "أدخل كلمة المرور لتأكيد طلب السحب هذا.",
+  "@confirmWithdrawalDescription": {
+    "description": "Withdrawal password confirmation description"
+  },
+  "currentPassword": "كلمة المرور الحالية",
+  "@currentPassword": {
+    "description": "Current password field label"
+  },
+  "withdrawalEmailMissing": "تعذر العثور على البريد الإلكتروني للحساب. يرجى تحديث الملف الشخصي ثم المحاولة مرة أخرى.",
+  "@withdrawalEmailMissing": {
+    "description": "Shown when email is missing before starting withdrawal verification"
   }
 }
