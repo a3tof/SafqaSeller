@@ -15,6 +15,7 @@ import 'package:safqaseller/features/auth/model/repositories/auth_repository.dar
 import 'package:safqaseller/features/profile/model/models/edit_profile_request.dart';
 import 'package:safqaseller/features/profile/view_model/edit_account/edit_account_view_model.dart';
 import 'package:safqaseller/features/profile/view_model/edit_account/edit_account_view_model_state.dart';
+import 'package:safqaseller/features/profile/view_model/profile_view_model.dart';
 import 'package:safqaseller/features/profile/view_model/profile_view_model_state.dart';
 import 'package:safqaseller/generated/l10n.dart';
 
@@ -328,6 +329,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
               context,
             ).showSnackBar(SnackBar(content: Text(state.message)));
           } else if (state is EditAccountSuccess) {
+            getIt<ProfileViewModel>().fetchProfile();
             Navigator.pop(context, S.of(context).kProfileUpdatedSuccessfully);
           }
         },

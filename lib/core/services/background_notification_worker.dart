@@ -51,7 +51,8 @@ void callbackDispatcher() {
       var accessToken = token;
       final tokenTime = preferences.getString(CacheKeys.tokenTime);
       if (_shouldRefreshToken(tokenTime)) {
-        accessToken = await _refreshToken(
+        accessToken =
+            await _refreshToken(
               dio: dio,
               preferences: preferences,
               expiredToken: accessToken,
@@ -92,11 +93,13 @@ void callbackDispatcher() {
         return true;
       }
 
-      final notifications =
-          responseData
-              .whereType<Map>()
-              .map((entry) => NotificationModel.fromJson(Map<String, dynamic>.from(entry)))
-              .toList();
+      final notifications = responseData
+          .whereType<Map>()
+          .map(
+            (entry) =>
+                NotificationModel.fromJson(Map<String, dynamic>.from(entry)),
+          )
+          .toList();
 
       final shownIds = NotificationService.readShownNotificationIds(
         preferences,
@@ -117,7 +120,10 @@ void callbackDispatcher() {
       }
 
       if (hasNewIds) {
-        await NotificationService.saveShownNotificationIds(preferences, shownIds);
+        await NotificationService.saveShownNotificationIds(
+          preferences,
+          shownIds,
+        );
       }
     } catch (_) {
       return true;
@@ -187,7 +193,8 @@ Future<String?> _refreshToken({
     DateTime.now().toIso8601String(),
   );
 
-  final newRefreshToken = (body['refreshToken'] ?? body['RefreshToken']) as String?;
+  final newRefreshToken =
+      (body['refreshToken'] ?? body['RefreshToken']) as String?;
   if (newRefreshToken != null && newRefreshToken.isNotEmpty) {
     await preferences.setString(CacheKeys.refreshToken, newRefreshToken);
   }

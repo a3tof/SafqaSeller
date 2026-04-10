@@ -23,7 +23,15 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
   @override
   void initState() {
     super.initState();
-    context.read<NotificationsViewModel>().loadNotifications();
+    _loadNotifications();
+  }
+
+  Future<void> _loadNotifications() async {
+    await context.read<NotificationsViewModel>().loadNotifications();
+    if (!mounted) {
+      return;
+    }
+    await context.read<NotificationsViewModel>().markCurrentNotificationsSeen();
   }
 
   @override
@@ -72,9 +80,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
                   ),
                   SizedBox(height: 16.h),
                   TextButton(
-                    onPressed: () => context
-                        .read<NotificationsViewModel>()
-                        .loadNotifications(),
+                    onPressed: _loadNotifications,
                     child: Text(
                       'Retry',
                       style: TextStyles.medium16(

@@ -47,6 +47,16 @@ class NotificationsViewModel extends Cubit<NotificationsState> {
 
   // ── Mark read helpers (local state only) ──────────────────────────────────
 
+  Future<void> markCurrentNotificationsSeen() async {
+    final current = state;
+    if (current is NotificationsSuccess) {
+      await notificationService.markNotificationsSeen(
+        current.notifications.map((notification) => notification.id),
+      );
+      emit(NotificationsSuccess(notifications: current.notifications));
+    }
+  }
+
   void markAsRead(int notificationId) {
     final current = state;
     if (current is NotificationsSuccess) {
@@ -72,6 +82,16 @@ class NotificationsViewModel extends Cubit<NotificationsState> {
       return current.notifications.where((n) => !n.isRead).length;
     }
     return 0;
+  }
+
+  bool get hasUnreadOrUnseen {
+    final current = state;
+    if (current is NotificationsSuccess) {
+      return notificationService.hasUnreadOrUnseenNotifications(
+        current.notifications,
+      );
+    }
+    return false;
   }
 
   String _clean(Object e) {

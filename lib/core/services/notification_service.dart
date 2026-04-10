@@ -63,19 +63,17 @@ class NotificationService {
   }
 
   Future<bool> requestPermissions() async {
-    final androidPlugin =
-        _plugin
-            .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin
-            >();
+    final androidPlugin = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     final androidGranted =
         await androidPlugin?.requestNotificationsPermission() ?? true;
 
-    final iosPlugin =
-        _plugin
-            .resolvePlatformSpecificImplementation<
-              IOSFlutterLocalNotificationsPlugin
-            >();
+    final iosPlugin = _plugin
+        .resolvePlatformSpecificImplementation<
+          IOSFlutterLocalNotificationsPlugin
+        >();
     final iosGranted = await iosPlugin?.requestPermissions(
       alert: true,
       badge: true,
@@ -124,6 +122,19 @@ class NotificationService {
     }
   }
 
+  bool hasUnreadOrUnseenNotifications(List<NotificationModel> notifications) {
+    final seenIds = readSeenNotificationIds(_cacheHelper.sharedPreferences);
+    return notifications.any(
+      (notification) => !notification.isRead || !seenIds.contains(notification.id),
+    );
+  }
+
+  Future<void> markNotificationsSeen(Iterable<int> ids) async {
+    final seenIds = readSeenNotificationIds(_cacheHelper.sharedPreferences);
+    seenIds.addAll(ids);
+    await saveSeenNotificationIds(_cacheHelper.sharedPreferences, seenIds);
+  }
+
   Future<void> showNotification({
     required int id,
     required String title,
@@ -168,11 +179,10 @@ class NotificationService {
 
     await plugin.initialize(settings: initializationSettings);
 
-    final androidPlugin =
-        plugin
-            .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin
-            >();
+    final androidPlugin = plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     await androidPlugin?.createNotificationChannel(_channel);
 
     await plugin.show(
@@ -201,12 +211,30 @@ class NotificationService {
     return <int>{};
   }
 
+  static Set<int> readSeenNotificationIds(SharedPreferences preferences) {
+    final rawValue =
+        preferences.getString(CacheKeys.seenNotificationIds) ?? '[]';
+
+    try {
+      final decoded = jsonDecode(rawValue);
+      if (decoded is List) {
+        return decoded
+            .map((value) => int.tryParse(value.toString()))
+            .whereType<int>()
+            .toSet();
+      }
+    } catch (_) {}
+
+    return <int>{};
+  }
+
   static Future<void> saveShownNotificationIds(
     SharedPreferences preferences,
     Set<int> ids,
   ) async {
-    final trimmedIds =
-        ids.length > 100 ? ids.toList().sublist(ids.length - 100) : ids.toList();
+    final trimmedIds = ids.length > 100
+        ? ids.toList().sublist(ids.length - 100)
+        : ids.toList();
 
     await preferences.setString(
       CacheKeys.shownNotificationIds,
@@ -214,12 +242,25 @@ class NotificationService {
     );
   }
 
+  static Future<void> saveSeenNotificationIds(
+    SharedPreferences preferences,
+    Set<int> ids,
+  ) async {
+    final trimmedIds = ids.length > 100
+        ? ids.toList().sublist(ids.length - 100)
+        : ids.toList();
+
+    await preferences.setString(
+      CacheKeys.seenNotificationIds,
+      jsonEncode(trimmedIds),
+    );
+  }
+
   Future<void> _createNotificationChannel() async {
-    final androidPlugin =
-        _plugin
-            .resolvePlatformSpecificImplementation<
-              AndroidFlutterLocalNotificationsPlugin
-            >();
+    final androidPlugin = _plugin
+        .resolvePlatformSpecificImplementation<
+          AndroidFlutterLocalNotificationsPlugin
+        >();
     await androidPlugin?.createNotificationChannel(_channel);
   }
 
