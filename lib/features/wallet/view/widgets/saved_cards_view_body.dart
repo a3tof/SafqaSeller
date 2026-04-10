@@ -5,9 +5,11 @@ import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/wallet/view/add_card_view.dart';
 import 'package:safqaseller/features/wallet/view/widgets/card_list_item.dart';
+import 'package:safqaseller/features/wallet/view/widgets/wallet_skeleton_data.dart';
 import 'package:safqaseller/features/wallet/view_model/wallet/wallet_view_model.dart';
 import 'package:safqaseller/features/wallet/view_model/wallet/wallet_view_model_state.dart';
 import 'package:safqaseller/generated/l10n.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class SavedCardsViewBody extends StatelessWidget {
   const SavedCardsViewBody({super.key});
@@ -45,14 +47,14 @@ class SavedCardsViewBody extends StatelessWidget {
       ),
       body: BlocBuilder<WalletViewModel, WalletState>(
         builder: (context, state) {
-          if (state is WalletLoading || state is WalletInitial) {
-            return const Center(child: CircularProgressIndicator());
-          }
+          final isLoading = state is WalletLoading || state is WalletInitial;
           if (state is WalletError) {
             return Center(child: Text(state.message));
           }
 
-          final cards = (state as WalletSuccess).cards;
+          final cards = state is WalletSuccess
+              ? state.cards
+              : WalletSkeletonData.cards;
 
           if (cards.isEmpty) {
             return Center(
@@ -80,18 +82,21 @@ class SavedCardsViewBody extends StatelessWidget {
             );
           }
 
-          return ListView.separated(
-            padding:
-                EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-            itemCount: cards.length,
-            separatorBuilder: (context, index) =>
-                const Divider(height: 1, thickness: 0.5),
-            itemBuilder: (context, i) => Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.h),
-              child: CardListItem(
-                card: cards[i],
-                onDelete: () =>
-                    context.read<WalletViewModel>().deleteCard(cards[i].id),
+          return Skeletonizer(
+            enabled: isLoading,
+            child: ListView.separated(
+              padding:
+                  EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+              itemCount: cards.length,
+              separatorBuilder: (context, index) =>
+                  const Divider(height: 1, thickness: 0.5),
+              itemBuilder: (context, i) => Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.h),
+                child: CardListItem(
+                  card: cards[i],
+                  onDelete: () =>
+                      context.read<WalletViewModel>().deleteCard(cards[i].id),
+                ),
               ),
             ),
           );

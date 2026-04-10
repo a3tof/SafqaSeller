@@ -6,6 +6,7 @@ import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
 import 'package:safqaseller/features/wallet/view_model/add_card/add_card_view_model.dart';
 import 'package:safqaseller/features/wallet/view_model/add_card/add_card_view_model_state.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class AddCardViewBody extends StatefulWidget {
   const AddCardViewBody({super.key});
@@ -60,137 +61,142 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
           );
         }
       },
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          centerTitle: true,
-          automaticallyImplyLeading: false,
-          leading: IconButton(
-            onPressed: () => Navigator.pop(context),
-            icon: Icon(Icons.close_rounded, color: Colors.red, size: 28.sp),
-          ),
-          title: Text(
-            'Add Card',
-            style: TextStyle(
-              fontFamily: 'AlegreyaSC',
-              fontSize: 28.sp,
-              fontWeight: FontWeight.w700,
-              color: AppColors.primaryColor,
-            ),
-          ),
-        ),
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Enter your card information',
-                        style: TextStyles.medium20(context),
-                      ),
-                      SizedBox(height: 16.h),
-                      // Card Number
-                      _CardField(
-                        controller: _cardNumberCtrl,
-                        hint: 'Card Number',
-                        keyboardType: TextInputType.number,
-                        maxLength: 19,
-                        validator: (v) =>
-                            v == null || v.trim().isEmpty ? 'Required' : null,
-                      ),
-                      SizedBox(height: 16.h),
-                      // Expiry + CVV row
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _CardField(
-                              controller: _expiryCtrl,
-                              hint: 'Expiry Date',
-                              keyboardType: TextInputType.datetime,
-                              validator: (v) => v == null || v.trim().isEmpty
-                                  ? 'Required'
-                                  : null,
-                            ),
-                          ),
-                          SizedBox(width: 9.w),
-                          Expanded(
-                            child: _CardField(
-                              controller: _cvvCtrl,
-                              hint: 'CVV',
-                              keyboardType: TextInputType.number,
-                              maxLength: 4,
-                              obscureText: true,
-                              validator: (v) => v == null || v.trim().isEmpty
-                                  ? 'Required'
-                                  : null,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16.h),
-                      // Cardholder Name
-                      _CardField(
-                        controller: _holderCtrl,
-                        hint: 'Cardholder Name',
-                        validator: (v) =>
-                            v == null || v.trim().isEmpty ? 'Required' : null,
-                      ),
-                      SizedBox(height: 16.h),
-                      // Label (optional)
-                      _CardField(
-                        controller: _labelCtrl,
-                        hint: 'Card Label (Optional)',
-                      ),
-                    ],
+      child: BlocBuilder<AddCardViewModel, AddCardState>(
+        builder: (context, state) {
+          final isLoading = state is AddCardLoading;
+          return Skeletonizer(
+            enabled: isLoading,
+            child: Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                centerTitle: true,
+                automaticallyImplyLeading: false,
+                leading: IconButton(
+                  onPressed: () => Navigator.pop(context),
+                  icon: Icon(Icons.close_rounded, color: Colors.red, size: 28.sp),
+                ),
+                title: Text(
+                  'Add Card',
+                  style: TextStyle(
+                    fontFamily: 'AlegreyaSC',
+                    fontSize: 28.sp,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.primaryColor,
                   ),
                 ),
               ),
-              // Add button pinned at bottom
-              Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 40.h),
-                child: BlocBuilder<AddCardViewModel, AddCardState>(
-                  builder: (context, state) {
-                    final isLoading = state is AddCardLoading;
-                    return SizedBox(
-                      width: double.infinity,
-                      height: 40.h,
-                      child: ElevatedButton(
-                        onPressed: isLoading ? null : _submit,
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
+              body: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: SingleChildScrollView(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Enter your card information',
+                              style: TextStyles.medium20(context),
+                            ),
+                            SizedBox(height: 16.h),
+                            _CardField(
+                              controller: _cardNumberCtrl,
+                              hint: 'Card Number',
+                              keyboardType: TextInputType.number,
+                              maxLength: 19,
+                              validator: (v) => v == null || v.trim().isEmpty
+                                  ? 'Required'
+                                  : null,
+                            ),
+                            SizedBox(height: 16.h),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: _CardField(
+                                    controller: _expiryCtrl,
+                                    hint: 'Expiry Date',
+                                    keyboardType: TextInputType.datetime,
+                                    validator: (v) =>
+                                        v == null || v.trim().isEmpty
+                                        ? 'Required'
+                                        : null,
+                                  ),
+                                ),
+                                SizedBox(width: 9.w),
+                                Expanded(
+                                  child: _CardField(
+                                    controller: _cvvCtrl,
+                                    hint: 'CVV',
+                                    keyboardType: TextInputType.number,
+                                    maxLength: 4,
+                                    obscureText: true,
+                                    validator: (v) =>
+                                        v == null || v.trim().isEmpty
+                                        ? 'Required'
+                                        : null,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: 16.h),
+                            _CardField(
+                              controller: _holderCtrl,
+                              hint: 'Cardholder Name',
+                              validator: (v) => v == null || v.trim().isEmpty
+                                  ? 'Required'
+                                  : null,
+                            ),
+                            SizedBox(height: 16.h),
+                            _CardField(
+                              controller: _labelCtrl,
+                              hint: 'Card Label (Optional)',
+                            ),
+                          ],
                         ),
-                        child: isLoading
-                            ? SizedBox(
-                                width: 20.w,
-                                height: 20.w,
-                                child: const CircularProgressIndicator(
-                                    color: Colors.white, strokeWidth: 2),
-                              )
-                            : Text(
-                                'Add',
-                                style: TextStyles.semiBold16(context)
-                                    .copyWith(color: Colors.white),
-                              ),
                       ),
-                    );
-                  },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 40.h),
+                      child: SizedBox(
+                        width: double.infinity,
+                        height: 40.h,
+                        child: ElevatedButton(
+                          onPressed: isLoading ? null : _submit,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: AppColors.primaryColor,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                          ),
+                          child: isLoading
+                              ? SizedBox(
+                                  width: 20.w,
+                                  height: 20.w,
+                                  child: const CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Text(
+                                  'Add',
+                                  style: TextStyles.semiBold16(context).copyWith(
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

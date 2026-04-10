@@ -8,9 +8,11 @@ import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
 import 'package:safqaseller/features/wallet/model/repositories/wallet_repository.dart';
 import 'package:safqaseller/features/wallet/view/add_card_view.dart';
+import 'package:safqaseller/features/wallet/view/widgets/wallet_skeleton_data.dart';
 import 'package:safqaseller/features/wallet/view_model/withdrawal/withdrawal_view_model.dart';
 import 'package:safqaseller/features/wallet/view_model/withdrawal/withdrawal_view_model_state.dart';
 import 'package:safqaseller/generated/l10n.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class WithdrawalViewBody extends StatefulWidget {
   const WithdrawalViewBody({super.key});
@@ -111,9 +113,8 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
         body: FutureBuilder<List<CardModel>>(
           future: _cardsFuture,
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
+            final isInitialLoading =
+                snapshot.connectionState == ConnectionState.waiting;
 
             if (snapshot.hasError) {
               return Center(
@@ -150,192 +151,198 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
               );
             }
 
-            final cards = _sanitizeCards(snapshot.data ?? const <CardModel>[]);
+            final cards = isInitialLoading
+                ? WalletSkeletonData.cards
+                : _sanitizeCards(snapshot.data ?? const <CardModel>[]);
 
-            return Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            S.of(context).kEnterWithdrawalAmo,
-                            style: TextStyles.medium20(context),
-                          ),
-                          SizedBox(height: 24.h),
-                          Text(
-                            S.of(context).savedCard,
-                            style: TextStyles.medium16(context),
-                          ),
-                          SizedBox(height: 12.h),
-                          if (cards.isEmpty)
+            return Skeletonizer(
+              enabled: isInitialLoading,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16.w, vertical: 24.h),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              S.of(context).kEnterWithdrawalAmo,
+                              style: TextStyles.medium20(context),
+                            ),
+                            SizedBox(height: 24.h),
+                            Text(
+                              S.of(context).savedCard,
+                              style: TextStyles.medium16(context),
+                            ),
+                            SizedBox(height: 12.h),
+                            if (cards.isEmpty)
+                              Container(
+                                width: double.infinity,
+                                padding: EdgeInsets.all(16.r),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(12.r),
+                                  border: Border.all(color: Colors.grey.shade300),
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      S.of(context).kNoSavedCards,
+                                      style: TextStyles.regular16(context),
+                                    ),
+                                    SizedBox(height: 12.h),
+                                    ElevatedButton(
+                                      onPressed: _openAddCard,
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: AppColors.primaryColor,
+                                      ),
+                                      child: Text(
+                                        S.of(context).kAddCard,
+                                        style: TextStyles.semiBold16(
+                                          context,
+                                        ).copyWith(color: Colors.white),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            else
+                              DropdownButtonFormField<int>(
+                                initialValue:
+                                    cards.any((card) => card.id == _selectedCardId)
+                                    ? _selectedCardId
+                                    : cards.first.id,
+                                items: cards
+                                    .map(
+                                      (card) => DropdownMenuItem<int>(
+                                        value: card.id,
+                                        child: Text(
+                                          '${card.label?.isNotEmpty == true ? card.label! : S.of(context).card} •••• ${card.last4}',
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _selectedCardId = value;
+                                  });
+                                },
+                                decoration: InputDecoration(
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12.r),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                    vertical: 14.h,
+                                  ),
+                                ),
+                              ),
+                            SizedBox(height: 24.h),
                             Container(
-                              width: double.infinity,
-                              padding: EdgeInsets.all(16.r),
+                              height: 56.h,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(12.r),
-                                border: Border.all(color: Colors.grey.shade300),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    S.of(context).kNoSavedCards,
-                                    style: TextStyles.regular16(context),
-                                  ),
-                                  SizedBox(height: 12.h),
-                                  ElevatedButton(
-                                    onPressed: _openAddCard,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primaryColor,
+                                border: Border.all(
+                                  color: AppColors.primaryColor,
+                                  width: 1.5,
+                                ),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.primaryColor.withValues(
+                                      alpha: 0.08,
                                     ),
-                                    child: Text(
-                                      S.of(context).kAddCard,
-                                      style: TextStyles.semiBold16(
-                                        context,
-                                      ).copyWith(color: Colors.white),
-                                    ),
+                                    blurRadius: 12,
+                                    offset: const Offset(0, 4),
                                   ),
                                 ],
                               ),
-                            )
-                          else
-                            DropdownButtonFormField<int>(
-                              initialValue:
-                                  cards.any((card) => card.id == _selectedCardId)
-                                  ? _selectedCardId
-                                  : cards.first.id,
-                              items: cards
-                                  .map(
-                                    (card) => DropdownMenuItem<int>(
-                                      value: card.id,
-                                      child: Text(
-                                        '${card.label?.isNotEmpty == true ? card.label! : S.of(context).card} •••• ${card.last4}',
-                                      ),
-                                    ),
-                                  )
-                                  .toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedCardId = value;
-                                });
-                              },
-                              decoration: InputDecoration(
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12.r),
+                              child: TextFormField(
+                                controller: _amountCtrl,
+                                keyboardType: const TextInputType.numberWithOptions(
+                                  decimal: true,
                                 ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.w,
-                                  vertical: 14.h,
-                                ),
-                              ),
-                            ),
-                          SizedBox(height: 24.h),
-                          Container(
-                            height: 56.h,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12.r),
-                              border: Border.all(
-                                color: AppColors.primaryColor,
-                                width: 1.5,
-                              ),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: AppColors.primaryColor.withValues(
-                                    alpha: 0.08,
-                                  ),
-                                  blurRadius: 12,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
-                            ),
-                            child: TextFormField(
-                              controller: _amountCtrl,
-                              keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true,
-                              ),
-                              validator: (value) {
-                                if (value == null || value.trim().isEmpty) {
-                                  return S.of(context).enterAmount;
-                                }
-                                final number = double.tryParse(value.trim());
-                                if (number == null || number <= 0) {
-                                  return S.of(context).enterValidAmount;
-                                }
-                                return null;
-                              },
-                              style: TextStyle(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              decoration: InputDecoration(
-                                border: InputBorder.none,
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16.w,
-                                  vertical: 16.h,
-                                ),
-                                hintText: '0.00',
-                                hintStyle: TextStyle(
-                                  fontSize: 20.sp,
-                                  color: Colors.grey[400],
-                                ),
-                                prefixText: '\$ ',
-                                prefixStyle: TextStyle(
+                                validator: (value) {
+                                  if (value == null || value.trim().isEmpty) {
+                                    return S.of(context).enterAmount;
+                                  }
+                                  final number = double.tryParse(value.trim());
+                                  if (number == null || number <= 0) {
+                                    return S.of(context).enterValidAmount;
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryColor,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16.w,
+                                    vertical: 16.h,
+                                  ),
+                                  hintText: '0.00',
+                                  hintStyle: TextStyle(
+                                    fontSize: 20.sp,
+                                    color: Colors.grey[400],
+                                  ),
+                                  prefixText: '\$ ',
+                                  prefixStyle: TextStyle(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.primaryColor,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 40.h),
-                    child: BlocBuilder<WithdrawalViewModel, WithdrawalState>(
-                      builder: (context, state) {
-                        final isLoading = state is WithdrawalLoading;
-                        return SizedBox(
-                          width: double.infinity,
-                          height: 54.h,
-                          child: ElevatedButton(
-                            onPressed: isLoading ? null : () => _submit(cards),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryColor,
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(16.r),
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 40.h),
+                      child: BlocBuilder<WithdrawalViewModel, WithdrawalState>(
+                        builder: (context, state) {
+                          final isLoading = state is WithdrawalLoading;
+                          return SizedBox(
+                            width: double.infinity,
+                            height: 54.h,
+                            child: ElevatedButton(
+                              onPressed: isLoading ? null : () => _submit(cards),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor,
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                ),
                               ),
-                            ),
-                            child: isLoading
-                                ? SizedBox(
-                                    width: 22.w,
-                                    height: 22.w,
-                                    child: const CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 2,
+                              child: isLoading
+                                  ? SizedBox(
+                                      width: 22.w,
+                                      height: 22.w,
+                                      child: const CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : Text(
+                                      S.of(context).kWithdrawal,
+                                      style: TextStyles.semiBold19(
+                                        context,
+                                      ).copyWith(color: Colors.white),
                                     ),
-                                  )
-                                : Text(
-                                    S.of(context).kWithdrawal,
-                                    style: TextStyles.semiBold19(
-                                      context,
-                                    ).copyWith(color: Colors.white),
-                                  ),
-                          ),
-                        );
-                      },
+                            ),
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },
