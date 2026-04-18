@@ -940,6 +940,32 @@
   "@auctionSaveEdits": {
     "description": "Save edits button label"
   },
+  "auctionTapToChangeImage": "اضغط لتغيير الصورة",
+  "@auctionTapToChangeImage": {
+    "description": "Hint below the auction image picker"
+  },
+  "auctionTapToAddImages": "اضغط لإضافة صور",
+  "@auctionTapToAddImages": {
+    "description": "Hint below the auction item images picker"
+  },
+  "auctionItemFieldsRequired": "يرجى ملء جميع الحقول المطلوبة للعنصر {index}.",
+  "@auctionItemFieldsRequired": {
+    "description": "Validation when required item fields are empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionItemInvalidCount": "يرجى إدخال عدد صحيح للعنصر {index}.",
+  "@auctionItemInvalidCount": {
+    "description": "Validation when item count is invalid",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
   "auctionChangesSaved": "تم حفظ التعديلات بنجاح",
   "@auctionChangesSaved": {
     "description": "Edit auction success message"

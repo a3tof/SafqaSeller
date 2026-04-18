@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
@@ -26,9 +27,11 @@ class EditAuctionView extends StatefulWidget {
 }
 
 class _EditAuctionViewState extends State<EditAuctionView> {
+  final ImagePicker _imagePicker = ImagePicker();
   late final TextEditingController _lotTitleController;
   late final TextEditingController _descriptionController;
   final List<_EditableItemData> _items = [];
+  XFile? _headImage;
   bool _didPrefill = false;
 
   @override
@@ -59,6 +62,24 @@ class _EditAuctionViewState extends State<EditAuctionView> {
       ..showSnackBar(SnackBar(content: Text(message)));
   }
 
+  Future<void> _pickHeadImage() async {
+    final image = await _imagePicker.pickImage(source: ImageSource.gallery);
+    if (image == null || !mounted) {
+      return;
+    }
+    setState(() => _headImage = image);
+  }
+
+  Future<void> _pickItemImages(int itemIndex) async {
+    final images = await _imagePicker.pickMultiImage();
+    if (!mounted || images.isEmpty || itemIndex >= _items.length) {
+      return;
+    }
+    setState(() {
+      _items[itemIndex].pickedImages.addAll(images);
+    });
+  }
+
   void _populateForm(AuctionDetailModel detail) {
     _lotTitleController.text = detail.title;
     _descriptionController.text = detail.description;
@@ -83,17 +104,19 @@ class _EditAuctionViewState extends State<EditAuctionView> {
     }
 
     final items = <EditAuctionItemRequestModel>[];
-    for (final item in _items) {
+    final s = S.of(context);
+    for (var i = 0; i < _items.length; i++) {
+      final item = _items[i];
+      final itemNumber = i + 1;
       final count = int.tryParse(item.countController.text.trim());
-      final categoryId = int.tryParse(item.categoryIdController.text.trim());
       if (item.titleController.text.trim().isEmpty ||
           item.descriptionController.text.trim().isEmpty ||
-          item.warrantyController.text.trim().isEmpty ||
-          count == null ||
-          count <= 0 ||
-          categoryId == null ||
-          categoryId <= 0) {
-        _showMessage(S.of(context).auctionLoadError);
+          item.warrantyController.text.trim().isEmpty) {
+        _showMessage(s.auctionItemFieldsRequired(itemNumber));
+        return;
+      }
+      if (count == null || count <= 0) {
+        _showMessage(s.auctionItemInvalidCount(itemNumber));
         return;
       }
 
@@ -114,8 +137,8 @@ class _EditAuctionViewState extends State<EditAuctionView> {
           description: item.descriptionController.text.trim(),
           warrantyInfo: item.warrantyController.text.trim(),
           condition: item.selectedCondition.apiValue,
-          categoryId: categoryId,
-          images: const [],
+          categoryId: item.categoryId,
+          images: item.pickedImages,
           attributes: attributes,
         ),
       );
@@ -126,7 +149,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
       request: EditAuctionRequestModel(
         title: _lotTitleController.text.trim(),
         description: _descriptionController.text.trim(),
-        image: null,
+        image: _headImage,
         items: items,
       ),
     );
@@ -219,22 +242,38 @@ class _EditAuctionViewState extends State<EditAuctionView> {
                   _SectionLabel(label: s.auctionLotDetails),
                   SizedBox(height: 10.h),
                   Center(
-                    child: Container(
-                      width: 156.w,
-                      padding: EdgeInsets.all(12.w),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.r),
-                        border: Border.all(color: const Color(0xFFE4E4E4)),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.r),
-                        child: _AuctionPreviewImage(
-                          imageUrl: detail.image ?? widget.args.item.imageUrl,
-                          width: 100.w,
-                          height: 76.h,
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: _pickHeadImage,
+                          borderRadius: BorderRadius.circular(12.r),
+                          child: Container(
+                            width: 156.w,
+                            padding: EdgeInsets.all(12.w),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(12.r),
+                              border: Border.all(color: const Color(0xFFE4E4E4)),
+                            ),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(10.r),
+                              child: _AuctionPreviewImage(
+                                imageUrl: detail.image ?? widget.args.item.imageUrl,
+                                localImage: _headImage,
+                                width: 100.w,
+                                height: 76.h,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          s.auctionTapToChangeImage,
+                          style: TextStyles.regular12(
+                            context,
+                          ).copyWith(color: Colors.black54),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(height: 12.h),
@@ -250,6 +289,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
                       child: _EditItemCard(
                         index: index + 1,
                         data: _items[index],
+                        onPickImages: () => _pickItemImages(index),
                         imageUrl: _items[index].previewImages.isNotEmpty
                             ? _items[index].previewImages.first
                             : detail.image ?? widget.args.item.imageUrl,
@@ -300,11 +340,13 @@ class _EditItemCard extends StatefulWidget {
     required this.index,
     required this.data,
     required this.imageUrl,
+    required this.onPickImages,
   });
 
   final int index;
   final _EditableItemData data;
   final String? imageUrl;
+  final Future<void> Function() onPickImages;
 
   @override
   State<_EditItemCard> createState() => _EditItemCardState();
@@ -336,20 +378,57 @@ class _EditItemCardState extends State<_EditItemCard> {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: List.generate(
-                    3,
-                    (index) => Padding(
-                      padding: EdgeInsetsDirectional.only(end: 8.w),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10.r),
-                        child: _AuctionPreviewImage(
-                          imageUrl: widget.imageUrl,
-                          width: 76.w,
-                          height: 58.h,
+                  children: [
+                    ...widget.data.previewImages.map(
+                      (imageUrl) => Padding(
+                        padding: EdgeInsetsDirectional.only(end: 8.w),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: _AuctionPreviewImage(
+                            imageUrl: imageUrl,
+                            width: 76.w,
+                            height: 58.h,
+                          ),
                         ),
                       ),
                     ),
-                  ),
+                    ...widget.data.pickedImages.map(
+                      (image) => Padding(
+                        padding: EdgeInsetsDirectional.only(end: 8.w),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: _AuctionPreviewImage(
+                            localImage: image,
+                            width: 76.w,
+                            height: 58.h,
+                          ),
+                        ),
+                      ),
+                    ),
+                    if (widget.data.previewImages.isEmpty &&
+                        widget.data.pickedImages.isEmpty)
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(end: 8.w),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10.r),
+                          child: _AuctionPreviewImage(
+                            imageUrl: widget.imageUrl,
+                            width: 76.w,
+                            height: 58.h,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 8.h),
+              InkWell(
+                onTap: widget.onPickImages,
+                child: Text(
+                  s.auctionTapToAddImages,
+                  style: TextStyles.regular12(
+                    context,
+                  ).copyWith(color: AppColors.primaryColor),
                 ),
               ),
               SizedBox(height: 10.h),
@@ -358,10 +437,11 @@ class _EditItemCardState extends State<_EditItemCard> {
                 hintText: s.auctionTitle,
               ),
               SizedBox(height: 8.h),
-              _AuctionTextField(
-                controller: widget.data.categoryIdController,
-                hintText: s.auctionCategory,
-                keyboardType: TextInputType.number,
+              Text(
+                '${s.auctionCategory}: ${widget.data.categoryId}',
+                style: TextStyles.regular12(
+                  context,
+                ).copyWith(color: Colors.black54),
               ),
               SizedBox(height: 8.h),
               _AuctionTextField(
@@ -514,9 +594,9 @@ class _AuctionTextField extends StatelessWidget {
 class _EditableItemData {
   _EditableItemData({
     required this.id,
+    required this.categoryId,
     required String title,
     required String count,
-    required String categoryId,
     required String warrantyInfo,
     required String description,
     required this.selectedCondition,
@@ -524,16 +604,16 @@ class _EditableItemData {
     required this.attributeControllers,
   }) : titleController = TextEditingController(text: title),
        countController = TextEditingController(text: count),
-       categoryIdController = TextEditingController(text: categoryId),
        warrantyController = TextEditingController(text: warrantyInfo),
-       descriptionController = TextEditingController(text: description);
+       descriptionController = TextEditingController(text: description),
+       pickedImages = [];
 
   factory _EditableItemData.fromDetail(AuctionDetailItemModel item) {
     return _EditableItemData(
       id: item.id,
+      categoryId: item.categoryId,
       title: item.title,
       count: item.count.toString(),
-      categoryId: item.categoryId.toString(),
       warrantyInfo: item.warrantyInfo,
       description: item.description,
       selectedCondition: _AuctionCondition.fromApiValue(item.condition),
@@ -548,19 +628,19 @@ class _EditableItemData {
   }
 
   final int id;
+  final int categoryId;
   final TextEditingController titleController;
   final TextEditingController countController;
-  final TextEditingController categoryIdController;
   final TextEditingController warrantyController;
   final TextEditingController descriptionController;
   final List<String> previewImages;
+  final List<XFile> pickedImages;
   final Map<int, TextEditingController> attributeControllers;
   _AuctionCondition selectedCondition;
 
   void dispose() {
     titleController.dispose();
     countController.dispose();
-    categoryIdController.dispose();
     warrantyController.dispose();
     descriptionController.dispose();
     for (final controller in attributeControllers.values) {
@@ -612,17 +692,44 @@ enum _AuctionCondition {
 
 class _AuctionPreviewImage extends StatelessWidget {
   const _AuctionPreviewImage({
-    required this.imageUrl,
+    this.imageUrl,
     required this.width,
     required this.height,
+    this.localImage,
   });
 
   final String? imageUrl;
   final double width;
   final double height;
+  final XFile? localImage;
 
   @override
   Widget build(BuildContext context) {
+    if (localImage != null) {
+      return FutureBuilder<Uint8List>(
+        future: localImage!.readAsBytes(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Image.memory(
+              snapshot.data!,
+              width: width,
+              height: height,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => _placeholder(),
+            );
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return SizedBox(
+              width: width,
+              height: height,
+              child: const Center(child: CircularProgressIndicator()),
+            );
+          }
+          return _placeholder();
+        },
+      );
+    }
+
     final value = imageUrl?.trim();
     if (value == null || value.isEmpty) {
       return _placeholder();

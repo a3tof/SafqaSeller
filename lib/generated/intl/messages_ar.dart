@@ -20,6 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(index) => "يرجى ملء جميع الحقول المطلوبة للعنصر ${index}.";
+
+  static String m1(index) => "يرجى إدخال عدد صحيح للعنصر ${index}.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "addNewCard": MessageLookupByLibrary.simpleMessage("إضافة بطاقة جديدة"),
@@ -57,6 +61,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "auctionEndsIn": MessageLookupByLibrary.simpleMessage("ينتهي في"),
     "auctionItem": MessageLookupByLibrary.simpleMessage("العنصر"),
+    "auctionItemFieldsRequired": m0,
+    "auctionItemInvalidCount": m1,
     "auctionLoadError": MessageLookupByLibrary.simpleMessage(
       "فشل في تحميل تفاصيل المزاد",
     ),
@@ -77,6 +83,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "auctionSpecify": MessageLookupByLibrary.simpleMessage("تحديد"),
     "auctionStartDate": MessageLookupByLibrary.simpleMessage("تاريخ البداية"),
     "auctionStartsIn": MessageLookupByLibrary.simpleMessage("يبدأ في"),
+    "auctionTapToAddImages": MessageLookupByLibrary.simpleMessage(
+      "اضغط لإضافة صور",
+    ),
+    "auctionTapToChangeImage": MessageLookupByLibrary.simpleMessage(
+      "اضغط لتغيير الصورة",
+    ),
     "auctionTimeLeft": MessageLookupByLibrary.simpleMessage("الوقت المتبقي"),
     "auctionTitle": MessageLookupByLibrary.simpleMessage("العنوان"),
     "auctionUsed": MessageLookupByLibrary.simpleMessage("مستعمل"),

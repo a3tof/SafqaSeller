@@ -34,7 +34,6 @@ class EditAuctionViewModel extends Cubit<EditAuctionViewModelState> {
 
     try {
       await auctionRepository.editAuction(id: id, request: request);
-      await loadAuction(id);
       emit(EditAuctionSaveSuccess());
     } catch (e) {
       if (currentDetail != null) {

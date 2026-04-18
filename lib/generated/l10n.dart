@@ -2509,6 +2509,46 @@ class S {
     );
   }
 
+  /// `Tap to change image`
+  String get auctionTapToChangeImage {
+    return Intl.message(
+      'Tap to change image',
+      name: 'auctionTapToChangeImage',
+      desc: 'Hint below the auction image picker',
+      args: [],
+    );
+  }
+
+  /// `Tap to add images`
+  String get auctionTapToAddImages {
+    return Intl.message(
+      'Tap to add images',
+      name: 'auctionTapToAddImages',
+      desc: 'Hint below the auction item images picker',
+      args: [],
+    );
+  }
+
+  /// `Please fill all required fields for item {index}.`
+  String auctionItemFieldsRequired(int index) {
+    return Intl.message(
+      'Please fill all required fields for item $index.',
+      name: 'auctionItemFieldsRequired',
+      desc: 'Validation when required item fields are empty',
+      args: [index],
+    );
+  }
+
+  /// `Please enter a valid count for item {index}.`
+  String auctionItemInvalidCount(int index) {
+    return Intl.message(
+      'Please enter a valid count for item $index.',
+      name: 'auctionItemInvalidCount',
+      desc: 'Validation when item count is invalid',
+      args: [index],
+    );
+  }
+
   /// `Changes saved successfully`
   String get auctionChangesSaved {
     return Intl.message(

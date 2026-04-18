@@ -20,6 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(index) =>
+      "Please fill all required fields for item ${index}.";
+
+  static String m1(index) => "Please enter a valid count for item ${index}.";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
     "addNewCard": MessageLookupByLibrary.simpleMessage("Add new card"),
@@ -63,6 +68,8 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "auctionEndsIn": MessageLookupByLibrary.simpleMessage("Ends in"),
     "auctionItem": MessageLookupByLibrary.simpleMessage("Item"),
+    "auctionItemFieldsRequired": m0,
+    "auctionItemInvalidCount": m1,
     "auctionLoadError": MessageLookupByLibrary.simpleMessage(
       "Failed to load auction details",
     ),
@@ -85,6 +92,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "auctionSpecify": MessageLookupByLibrary.simpleMessage("Specify"),
     "auctionStartDate": MessageLookupByLibrary.simpleMessage("Start Date"),
     "auctionStartsIn": MessageLookupByLibrary.simpleMessage("Starts in"),
+    "auctionTapToAddImages": MessageLookupByLibrary.simpleMessage(
+      "Tap to add images",
+    ),
+    "auctionTapToChangeImage": MessageLookupByLibrary.simpleMessage(
+      "Tap to change image",
+    ),
     "auctionTimeLeft": MessageLookupByLibrary.simpleMessage("Time Left"),
     "auctionTitle": MessageLookupByLibrary.simpleMessage("Title"),
     "auctionUsed": MessageLookupByLibrary.simpleMessage("Used"),

@@ -940,6 +940,32 @@
   "@auctionSaveEdits": {
     "description": "Save edits button label"
   },
+  "auctionTapToChangeImage": "Tap to change image",
+  "@auctionTapToChangeImage": {
+    "description": "Hint below the auction image picker"
+  },
+  "auctionTapToAddImages": "Tap to add images",
+  "@auctionTapToAddImages": {
+    "description": "Hint below the auction item images picker"
+  },
+  "auctionItemFieldsRequired": "Please fill all required fields for item {index}.",
+  "@auctionItemFieldsRequired": {
+    "description": "Validation when required item fields are empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionItemInvalidCount": "Please enter a valid count for item {index}.",
+  "@auctionItemInvalidCount": {
+    "description": "Validation when item count is invalid",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
   "auctionChangesSaved": "Changes saved successfully",
   "@auctionChangesSaved": {
     "description": "Edit auction success message"

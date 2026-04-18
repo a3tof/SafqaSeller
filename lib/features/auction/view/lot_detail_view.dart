@@ -176,11 +176,18 @@ class _LotDetailViewState extends State<LotDetailView> {
                 ),
                 if (canEdit) ...[
                   GestureDetector(
-                    onTap: () => Navigator.pushNamed(
-                      context,
-                      EditAuctionView.routeName,
-                      arguments: widget.args,
-                    ),
+                    onTap: () async {
+                      final result = await Navigator.pushNamed(
+                        context,
+                        EditAuctionView.routeName,
+                        arguments: widget.args,
+                      );
+                      if (result == true && context.mounted) {
+                        await context.read<AuctionDetailViewModel>().loadAuction(
+                          widget.args.item.auctionId,
+                        );
+                      }
+                    },
                     child: Text(
                       s.kEdit,
                       style: TextStyles.regular12(
