@@ -13,8 +13,8 @@ class SubscriptionView extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           getIt<SubscriptionViewModel>()..loadActivePlan(showLoading: true),
-      child: const Scaffold(
-        backgroundColor: Colors.white,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SubscriptionViewBody(),
       ),
     );

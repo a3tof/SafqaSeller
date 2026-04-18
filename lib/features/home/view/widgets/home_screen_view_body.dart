@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/auction/view/item_auction_view.dart';
@@ -105,7 +104,7 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
     return BlocProvider.value(
       value: getIt<NotificationsViewModel>(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: SafeArea(
           child: BlocBuilder<HomeViewModel, HomeViewModelState>(
             builder: (context, state) {
@@ -166,7 +165,7 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
                                         'Retry',
                                         style: TextStyles.semiBold13(context)
                                             .copyWith(
-                                              color: AppColors.primaryColor,
+                                              color: Theme.of(context).colorScheme.primary,
                                             ),
                                       ),
                                     ),
@@ -262,7 +261,7 @@ class _SafqaBusinessLogo extends StatelessWidget {
               fontFamily: 'AlegreyaSC',
               fontSize: 40.sp,
               fontWeight: FontWeight.normal,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
           TextSpan(
@@ -271,7 +270,7 @@ class _SafqaBusinessLogo extends StatelessWidget {
               fontFamily: 'AlegreyaSC',
               fontSize: 40.sp,
               fontWeight: FontWeight.normal,
-              color: const Color(0xFF808080),
+              color: Theme.of(context).hintColor,
             ),
           ),
           TextSpan(
@@ -280,7 +279,7 @@ class _SafqaBusinessLogo extends StatelessWidget {
               fontFamily: 'AlegreyaSC',
               fontSize: 24.sp,
               fontWeight: FontWeight.normal,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],
@@ -318,9 +317,9 @@ class _GreetingRow extends StatelessWidget {
                   height: 70.w,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColors.secondaryColor,
+                    color: Theme.of(context).colorScheme.secondary,
                     border: Border.all(
-                      color: const Color(0xFFCCDDEE),
+                      color: Theme.of(context).dividerColor,
                       width: 1.5,
                     ),
                   ),
@@ -329,7 +328,7 @@ class _GreetingRow extends StatelessWidget {
                         ? Image.memory(logoBytes!, fit: BoxFit.cover)
                         : Icon(
                             Icons.store_rounded,
-                            color: AppColors.primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             size: 38.sp,
                           ),
                   ),
@@ -347,7 +346,7 @@ class _GreetingRow extends StatelessWidget {
                         S.of(context).homeWelcomeGreeting,
                         style: TextStyles.regular18(
                           context,
-                        ).copyWith(color: const Color(0xFF808080)),
+                        ).copyWith(color: Theme.of(context).hintColor),
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(height: 2.h),
@@ -355,7 +354,7 @@ class _GreetingRow extends StatelessWidget {
                         storeName,
                         style: TextStyles.medium18(
                           context,
-                        ).copyWith(color: AppColors.primaryColor),
+                        ).copyWith(color: Theme.of(context).colorScheme.primary),
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
@@ -403,7 +402,7 @@ class _NotificationBadgeIcon extends StatelessWidget {
             children: [
               Icon(
                 Icons.notifications_outlined,
-                color: AppColors.primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 size: 28.sp,
               ),
               if (hasUnread)
@@ -437,7 +436,7 @@ class _HeaderIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Icon(icon, color: AppColors.primaryColor, size: 28.sp),
+      child: Icon(icon, color: Theme.of(context).colorScheme.primary, size: 28.sp),
     );
   }
 }

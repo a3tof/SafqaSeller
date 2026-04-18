@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/complete_profile/view/account_type_view.dart';
 
@@ -20,7 +19,7 @@ class CompleteProfileDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16.r),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
         child: Padding(
           padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 16.h),
@@ -51,7 +50,7 @@ class CompleteProfileDialog extends StatelessWidget {
                       text: 'To start your first deal, ',
                       style: TextStyles.semiBold16(
                         context,
-                      ).copyWith(color: AppColors.primaryColor, height: 1.4),
+                      ).copyWith(color: Theme.of(context).colorScheme.primary, height: 1.4),
                     ),
                     TextSpan(
                       text:
@@ -75,7 +74,7 @@ class CompleteProfileDialog extends StatelessWidget {
                     Navigator.of(context).pushNamed(AccountTypeView.routeName);
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryColor,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.r),

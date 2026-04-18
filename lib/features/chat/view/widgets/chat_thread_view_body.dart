@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/chat/model/models/chat_models.dart';
 import 'package:safqaseller/features/chat/view/chat_thread_view_args.dart';
@@ -63,7 +62,7 @@ class _ChatThreadViewBodyState extends State<ChatThreadViewBody> {
       child: Scaffold(
         backgroundColor: const Color(0xFFFAFAFA),
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           elevation: 0,
           centerTitle: true,
           surfaceTintColor: Colors.white,
@@ -71,7 +70,7 @@ class _ChatThreadViewBodyState extends State<ChatThreadViewBody> {
             onPressed: () => Navigator.of(context).maybePop(),
             icon: Icon(
               Icons.arrow_back_ios_new,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               size: 22.sp,
             ),
           ),
@@ -80,7 +79,7 @@ class _ChatThreadViewBodyState extends State<ChatThreadViewBody> {
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: TextStyles.bold22(context).copyWith(
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               fontFamily: Localizations.localeOf(context).languageCode == 'ar'
                   ? 'Cairo'
                   : 'AlegreyaSC',
@@ -123,7 +122,7 @@ class _ChatThreadViewBodyState extends State<ChatThreadViewBody> {
                                     .read<ChatThreadViewModel>()
                                     .loadMessages(widget.args.conversationId),
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: AppColors.primaryColor,
+                                  backgroundColor: Theme.of(context).colorScheme.primary,
                                   foregroundColor: Colors.white,
                                 ),
                                 child: Text(s.retry),
@@ -188,7 +187,7 @@ class _ChatThreadViewBodyState extends State<ChatThreadViewBody> {
                             width: 48.w,
                             height: 48.w,
                             decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                               borderRadius: BorderRadius.circular(14.r),
                             ),
                             child: isSending

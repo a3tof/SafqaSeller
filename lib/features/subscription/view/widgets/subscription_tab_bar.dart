@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 
 class SubscriptionTabBar extends StatelessWidget {
@@ -19,18 +18,18 @@ class SubscriptionTabBar extends StatelessWidget {
       height: 40.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: AppColors.primaryColor, width: 1),
+        border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
       ),
       child: TabBar(
         controller: tabController,
         indicator: BoxDecoration(
           borderRadius: BorderRadius.circular(20.r),
-          color: AppColors.primaryColor,
+          color: Theme.of(context).colorScheme.primary,
         ),
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         labelColor: Colors.white,
-        unselectedLabelColor: AppColors.primaryColor,
+        unselectedLabelColor: Theme.of(context).colorScheme.primary,
         labelStyle: TextStyles.semiBold13(context),
         unselectedLabelStyle: TextStyles.regular13(context),
         splashBorderRadius: BorderRadius.circular(20.r),

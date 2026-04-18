@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/chat/model/models/chat_models.dart';
 
@@ -30,7 +29,7 @@ class MessageBubble extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 12.h),
                 decoration: BoxDecoration(
                   color: isMine
-                      ? AppColors.primaryColor
+                      ? Theme.of(context).colorScheme.primary
                       : const Color(0xFFF1F1F1),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(16.r),

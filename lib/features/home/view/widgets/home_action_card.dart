@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 
 /// Action card used on the seller home screen.
@@ -35,7 +34,7 @@ class HomeActionCard extends StatelessWidget {
         height: 148.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16.r),
-          border: Border.all(color: AppColors.primaryColor, width: 2),
+          border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2),
           // Shadow from design: 0 2px 2px rgba(0,0,0,0.25)
           boxShadow: const [
             BoxShadow(

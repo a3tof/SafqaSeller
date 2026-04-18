@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/chat/model/models/chat_models.dart';
 import 'package:safqaseller/features/chat/view/chat_thread_view.dart';
@@ -70,9 +69,9 @@ class _ChatListViewBodyState extends State<ChatListViewBody> {
     final s = S.of(context);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: true,
         surfaceTintColor: Colors.white,
@@ -80,7 +79,7 @@ class _ChatListViewBodyState extends State<ChatListViewBody> {
           onPressed: () => Navigator.of(context).maybePop(),
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             size: 22.sp,
           ),
         ),
@@ -91,7 +90,7 @@ class _ChatListViewBodyState extends State<ChatListViewBody> {
                 onChanged: (_) => setState(() {}),
                 style: TextStyles.medium16(
                   context,
-                ).copyWith(color: AppColors.primaryColor),
+                ).copyWith(color: Theme.of(context).colorScheme.primary),
                 decoration: InputDecoration(
                   hintText: s.chatSearchHint,
                   hintStyle: TextStyles.regular14(
@@ -103,7 +102,7 @@ class _ChatListViewBodyState extends State<ChatListViewBody> {
             : Text(
                 s.chatTitle,
                 style: TextStyles.bold28(context).copyWith(
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontFamily:
                       Localizations.localeOf(context).languageCode == 'ar'
                       ? 'Cairo'
@@ -115,7 +114,7 @@ class _ChatListViewBodyState extends State<ChatListViewBody> {
             onPressed: _toggleSearch,
             icon: Icon(
               _isSearching ? Icons.close_rounded : Icons.search_rounded,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               size: 26.sp,
             ),
           ),
@@ -150,7 +149,7 @@ class _ChatListViewBodyState extends State<ChatListViewBody> {
                       onPressed: () =>
                           context.read<ChatListViewModel>().loadConversations(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         foregroundColor: Colors.white,
                       ),
                       child: Text(s.retry),

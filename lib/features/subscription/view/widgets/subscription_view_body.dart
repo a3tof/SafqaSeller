@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/features/subscription/model/subscription_plan_model.dart';
 import 'package:safqaseller/features/subscription/view/widgets/subscription_plan_card.dart';
 import 'package:safqaseller/features/subscription/view/widgets/subscription_tab_bar.dart';
@@ -118,7 +117,7 @@ class _SubscriptionViewBodyState extends State<SubscriptionViewBody>
               fontFamily: 'AlegreyaSC',
               fontSize: 40.sp,
               fontWeight: FontWeight.normal,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
           TextSpan(
@@ -127,7 +126,7 @@ class _SubscriptionViewBodyState extends State<SubscriptionViewBody>
               fontFamily: 'AlegreyaSC',
               fontSize: 40.sp,
               fontWeight: FontWeight.normal,
-              color: const Color(0xFF808080),
+              color: Theme.of(context).hintColor,
             ),
           ),
           TextSpan(
@@ -136,7 +135,7 @@ class _SubscriptionViewBodyState extends State<SubscriptionViewBody>
               fontFamily: 'AlegreyaSC',
               fontSize: 24.sp,
               fontWeight: FontWeight.normal,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
             ),
           ),
         ],

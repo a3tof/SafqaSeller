@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/chat/model/models/chat_models.dart';
 
@@ -40,12 +39,12 @@ class ConversationItem extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 24.r,
-              backgroundColor: AppColors.secondaryColor,
+              backgroundColor: Theme.of(context).colorScheme.secondary,
               child: Text(
                 initials,
                 style: TextStyles.semiBold15(
                   context,
-                ).copyWith(color: AppColors.primaryColor),
+                ).copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ),
             SizedBox(width: 12.w),
@@ -97,7 +96,7 @@ class ConversationItem extends StatelessWidget {
                             vertical: 4.h,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                             borderRadius: BorderRadius.circular(999.r),
                           ),
                           child: Text(

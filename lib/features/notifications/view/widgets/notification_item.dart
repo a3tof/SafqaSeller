@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/notifications/model/models/notification_model.dart';
 
@@ -27,11 +26,13 @@ class NotificationItem extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 10.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8.r),
         boxShadow: [
           BoxShadow(
-            color: const Color(0x0F000000),
+            color: Theme.of(context).brightness == Brightness.light
+                ? const Color(0x0F000000)
+                : Colors.transparent,
             blurRadius: 12,
             spreadRadius: 2,
             offset: const Offset(0, 4),
@@ -61,7 +62,7 @@ class NotificationItem extends StatelessWidget {
                             notification.title,
                             style: TextStyles.medium16(
                               context,
-                            ).copyWith(color: Colors.black),
+                            ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -100,7 +101,7 @@ class NotificationItem extends StatelessWidget {
                                 vertical: 8.h,
                               ),
                               decoration: BoxDecoration(
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                                 borderRadius: BorderRadius.circular(10.r),
                               ),
                               child: Text(
@@ -135,12 +136,12 @@ class _NotificationIcon extends StatelessWidget {
     return Container(
       width: 48.w,
       height: 48.h,
-      decoration: const BoxDecoration(
-        color: AppColors.secondaryColor,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.secondary,
         shape: BoxShape.circle,
       ),
       child: Center(
-        child: Icon(_iconData, color: AppColors.primaryColor, size: 24.sp),
+        child: Icon(_iconData, color: Theme.of(context).colorScheme.primary, size: 24.sp),
       ),
     );
   }

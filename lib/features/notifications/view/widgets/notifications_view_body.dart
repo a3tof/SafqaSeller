@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/chat/view/chat_thread_view.dart';
 import 'package:safqaseller/features/chat/view/chat_thread_view_args.dart';
@@ -35,7 +34,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: _buildAppBar(),
       body: BlocBuilder<NotificationsViewModel, NotificationsState>(
         builder: (context, state) {
@@ -83,7 +82,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
                       S.of(context).retry,
                       style: TextStyles.medium16(
                         context,
-                      ).copyWith(color: AppColors.primaryColor),
+                      ).copyWith(color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                 ],
@@ -107,7 +106,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
 
   AppBar _buildAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       elevation: 0,
       centerTitle: true,
       leading: IconButton(
@@ -116,7 +115,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
         },
         icon: Icon(
           Icons.arrow_back_ios_new,
-          color: AppColors.primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           size: 22.sp,
         ),
       ),
@@ -125,7 +124,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
         style: TextStyle(
           fontSize: 28.sp,
           fontWeight: FontWeight.w700,
-          color: AppColors.primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           fontFamily: Localizations.localeOf(context).languageCode == 'ar'
               ? 'Cairo'
               : 'AlegreyaSC',
@@ -143,7 +142,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
                   S.of(context).notificationsMarkAll,
                   style: TextStyles.medium14(
                     context,
-                  ).copyWith(color: AppColors.primaryColor),
+                  ).copyWith(color: Theme.of(context).colorScheme.primary),
                 ),
               );
             }
@@ -164,7 +163,7 @@ class _NotificationsList extends StatelessWidget {
   void _showDeleteMenu(BuildContext context, NotificationModel notification) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
       ),

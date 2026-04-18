@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/subscription/model/subscription_plan_model.dart';
 import 'package:safqaseller/features/subscription/view_model/subscription_view_model.dart';
@@ -60,8 +59,8 @@ class SubscriptionPlanCard extends StatelessWidget {
           isIncludedInHigherPlan: isIncludedInHigherPlan,
         );
         final buttonColor = canUpgrade
-            ? AppColors.primaryColor
-            : AppColors.primaryColor.withValues(alpha: 0.7);
+            ? Theme.of(context).colorScheme.primary
+            : Theme.of(context).colorScheme.primary.withValues(alpha: 0.7);
 
         return SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 24.w),
@@ -72,20 +71,20 @@ class SubscriptionPlanCard extends StatelessWidget {
                 plan.name,
                 style: TextStyles.bold22(
                   context,
-                ).copyWith(color: AppColors.primaryColor),
+                ).copyWith(color: Theme.of(context).colorScheme.primary),
               ),
               SizedBox(height: 20.h),
               Icon(
                 Icons.campaign_outlined,
                 size: 64.sp,
-                color: AppColors.primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               SizedBox(height: 16.h),
               Text(
                 plan.price,
                 style: TextStyles.bold28(
                   context,
-                ).copyWith(color: AppColors.primaryColor),
+                ).copyWith(color: Theme.of(context).colorScheme.primary),
               ),
               SizedBox(height: 32.h),
               ...plan.features.map(
@@ -96,7 +95,7 @@ class SubscriptionPlanCard extends StatelessWidget {
                     children: [
                       Icon(
                         Icons.check_circle,
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                         size: 20.sp,
                       ),
                       SizedBox(width: 10.w),
