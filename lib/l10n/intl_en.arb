@@ -615,6 +615,18 @@
   "@kEnglish": {
     "description": "Auto-generated"
   },
+  "kArabic": "Arabic",
+  "@kArabic": {
+    "description": "Auto-generated"
+  },
+  "profileLogoutDialogMessage": "Are you sure you want to log out?",
+  "@profileLogoutDialogMessage": {
+    "description": "Confirmation message shown before logging out from the profile screen"
+  },
+  "profileLanguageDialogMessage": "Choose the language you want to use.",
+  "@profileLanguageDialogMessage": {
+    "description": "Prompt shown in the language selection dialog on the profile screen"
+  },
   "kDepositSuccessful": "Deposit successful!",
   "@kDepositSuccessful": {
     "description": "Auto-generated"

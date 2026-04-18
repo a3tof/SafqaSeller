@@ -21,19 +21,22 @@ class SEn extends S {
   String get onBoardingTitle1 => 'Stop wasting time!';
 
   @override
-  String get onBoardingSubtitle1 => 'Safqa transforms the long auction process into a fast, guaranteed digital experience, manage your auctions wherever you are.';
+  String get onBoardingSubtitle1 =>
+      'Safqa transforms the long auction process into a fast, guaranteed digital experience, manage your auctions wherever you are.';
 
   @override
   String get onBoardingTitle2 => 'Smart Bidding';
 
   @override
-  String get onBoardingSubtitle2 => 'Participate in real-time bidding, or let the Proxy Bidding (Auto-Bid) system win automatically within your defined limit.';
+  String get onBoardingSubtitle2 =>
+      'Participate in real-time bidding, or let the Proxy Bidding (Auto-Bid) system win automatically within your defined limit.';
 
   @override
   String get onBoardingTitle3 => 'Experience Designed For You';
 
   @override
-  String get onBoardingSubtitle3 => 'A modern, bilingual (Arabic/English) design that allows you to navigate and bid seamlessly from any device.';
+  String get onBoardingSubtitle3 =>
+      'A modern, bilingual (Arabic/English) design that allows you to navigate and bid seamlessly from any device.';
 
   @override
   String get signIn => 'Sign In';
@@ -99,7 +102,8 @@ class SEn extends S {
   String get verificationCode => 'Verification Code';
 
   @override
-  String get verificationCodeDescription => 'Enter the verification code sent to your email';
+  String get verificationCodeDescription =>
+      'Enter the verification code sent to your email';
 
   @override
   String get emailConfirmedSuccessfully => 'Email confirmed successfully';
@@ -126,7 +130,8 @@ class SEn extends S {
   String get forgetPasswordTitle => 'Forgot Password';
 
   @override
-  String get forgetPasswordDescription => 'Enter your email address and we\'ll send you a code to reset your password';
+  String get forgetPasswordDescription =>
+      'Enter your email address and we\'ll send you a code to reset your password';
 
   @override
   String get sendCode => 'Send Code';
@@ -135,7 +140,8 @@ class SEn extends S {
   String get createPassword => 'Create Password';
 
   @override
-  String get createPasswordDescription => 'Create a new password for your account';
+  String get createPasswordDescription =>
+      'Create a new password for your account';
 
   @override
   String get newPassword => 'New Password';
@@ -150,16 +156,20 @@ class SEn extends S {
   String get passwordsDoNotMatch => 'Passwords do not match';
 
   @override
-  String get termsPlatformCompliance => 'All users must comply with the platform\'s rules and regulations at all times.';
+  String get termsPlatformCompliance =>
+      'All users must comply with the platform\'s rules and regulations at all times.';
 
   @override
-  String get termsAccurateInfo => 'Users are required to provide accurate and truthful information when using the platform.';
+  String get termsAccurateInfo =>
+      'Users are required to provide accurate and truthful information when using the platform.';
 
   @override
-  String get termsSuspendAccounts => 'Safqa reserves the right to suspend or terminate accounts that violate these terms.';
+  String get termsSuspendAccounts =>
+      'Safqa reserves the right to suspend or terminate accounts that violate these terms.';
 
   @override
-  String get termsMonitored => 'All activities on the platform are monitored to ensure compliance and security.';
+  String get termsMonitored =>
+      'All activities on the platform are monitored to ensure compliance and security.';
 
   @override
   String get termsBuyerAppTitle => 'Buyer Application';
@@ -168,49 +178,61 @@ class SEn extends S {
   String get termsAccountUsageTitle => 'Account Usage';
 
   @override
-  String get termsBuyerAge => 'Buyers must be at least 18 years of age to create an account and participate in auctions.';
+  String get termsBuyerAge =>
+      'Buyers must be at least 18 years of age to create an account and participate in auctions.';
 
   @override
-  String get termsBuyerCredentials => 'Buyers are responsible for maintaining the confidentiality of their account credentials.';
+  String get termsBuyerCredentials =>
+      'Buyers are responsible for maintaining the confidentiality of their account credentials.';
 
   @override
-  String get termsBuyerMultipleAccounts => 'Creating multiple accounts for the same individual is strictly prohibited.';
+  String get termsBuyerMultipleAccounts =>
+      'Creating multiple accounts for the same individual is strictly prohibited.';
 
   @override
   String get termsBiddingRulesTitle => 'Bidding Rules';
 
   @override
-  String get termsBindingBids => 'All bids placed on the platform are legally binding and cannot be retracted.';
+  String get termsBindingBids =>
+      'All bids placed on the platform are legally binding and cannot be retracted.';
 
   @override
-  String get termsHighestBidWins => 'The highest bid at the close of the auction wins the item.';
+  String get termsHighestBidWins =>
+      'The highest bid at the close of the auction wins the item.';
 
   @override
-  String get termsProxyBiddingRules => 'Proxy bidding allows the system to automatically bid on your behalf up to your maximum limit.';
+  String get termsProxyBiddingRules =>
+      'Proxy bidding allows the system to automatically bid on your behalf up to your maximum limit.';
 
   @override
-  String get termsManipulateBids => 'Any attempt to manipulate bids or collude with other bidders is strictly prohibited.';
+  String get termsManipulateBids =>
+      'Any attempt to manipulate bids or collude with other bidders is strictly prohibited.';
 
   @override
   String get termsPaymentsTitle => 'Payments';
 
   @override
-  String get termsWalletBalance => 'Buyers must maintain sufficient wallet balance to cover their bids and purchases.';
+  String get termsWalletBalance =>
+      'Buyers must maintain sufficient wallet balance to cover their bids and purchases.';
 
   @override
-  String get termsSecurityDeposits => 'Security deposits may be required for certain high-value auctions.';
+  String get termsSecurityDeposits =>
+      'Security deposits may be required for certain high-value auctions.';
 
   @override
-  String get termsRefundsPolicy => 'Refunds are processed within 7 business days after a valid dispute is resolved in the buyer\'s favor.';
+  String get termsRefundsPolicy =>
+      'Refunds are processed within 7 business days after a valid dispute is resolved in the buyer\'s favor.';
 
   @override
   String get termsDisputesTitle => 'Disputes';
 
   @override
-  String get termsRaiseDisputes => 'Buyers may raise a dispute within 48 hours of receiving an item that does not match the description.';
+  String get termsRaiseDisputes =>
+      'Buyers may raise a dispute within 48 hours of receiving an item that does not match the description.';
 
   @override
-  String get termsDisputeDecisions => 'Safqa\'s dispute resolution team will review all submitted evidence and make a final decision.';
+  String get termsDisputeDecisions =>
+      'Safqa\'s dispute resolution team will review all submitted evidence and make a final decision.';
 
   @override
   String get termsSellerAppTitle => 'Seller Application';
@@ -219,91 +241,113 @@ class SEn extends S {
   String get termsSellerRegTitle => 'Seller Registration';
 
   @override
-  String get termsSellerVerification => 'All sellers must complete identity verification before listing items for auction.';
+  String get termsSellerVerification =>
+      'All sellers must complete identity verification before listing items for auction.';
 
   @override
-  String get termsSellerApproval => 'Seller accounts are subject to approval by the Safqa team before becoming active.';
+  String get termsSellerApproval =>
+      'Seller accounts are subject to approval by the Safqa team before becoming active.';
 
   @override
-  String get termsSellerAccuracy => 'Sellers are responsible for the accuracy and completeness of their product listings.';
+  String get termsSellerAccuracy =>
+      'Sellers are responsible for the accuracy and completeness of their product listings.';
 
   @override
   String get termsAuctionMgmtTitle => 'Auction Management';
 
   @override
-  String get termsHonestDescriptions => 'Sellers must provide honest and accurate descriptions of all items listed for auction.';
+  String get termsHonestDescriptions =>
+      'Sellers must provide honest and accurate descriptions of all items listed for auction.';
 
   @override
-  String get termsAuctionRules => 'Sellers must adhere to all platform auction rules, including minimum pricing guidelines.';
+  String get termsAuctionRules =>
+      'Sellers must adhere to all platform auction rules, including minimum pricing guidelines.';
 
   @override
-  String get termsNoModifyActive => 'Active auction listings cannot be modified once bidding has commenced.';
+  String get termsNoModifyActive =>
+      'Active auction listings cannot be modified once bidding has commenced.';
 
   @override
   String get termsDeliveryTitle => 'Delivery';
 
   @override
-  String get termsTimelyDelivery => 'Sellers are obligated to deliver items to winning buyers within the agreed timeframe.';
+  String get termsTimelyDelivery =>
+      'Sellers are obligated to deliver items to winning buyers within the agreed timeframe.';
 
   @override
-  String get termsDeliveryInfo => 'Accurate delivery information must be provided to ensure smooth and timely shipments.';
+  String get termsDeliveryInfo =>
+      'Accurate delivery information must be provided to ensure smooth and timely shipments.';
 
   @override
-  String get termsFailureToDeliver => 'Failure to deliver items may result in account suspension and financial penalties.';
+  String get termsFailureToDeliver =>
+      'Failure to deliver items may result in account suspension and financial penalties.';
 
   @override
   String get termsFeesTitle => 'Fees';
 
   @override
-  String get termsPlatformFees => 'Safqa charges a platform fee on all successfully completed auction transactions.';
+  String get termsPlatformFees =>
+      'Safqa charges a platform fee on all successfully completed auction transactions.';
 
   @override
-  String get termsTrackEarnings => 'Sellers can track their earnings and fee deductions in real time through the seller dashboard.';
+  String get termsTrackEarnings =>
+      'Sellers can track their earnings and fee deductions in real time through the seller dashboard.';
 
   @override
   String get termsNotifPolicyTitle => 'Notification Policy';
 
   @override
-  String get termsNotifGenerated => 'Notifications are automatically generated for key events such as new bids, auction endings, and payments.';
+  String get termsNotifGenerated =>
+      'Notifications are automatically generated for key events such as new bids, auction endings, and payments.';
 
   @override
-  String get termsNotifInformational => 'Notifications are for informational purposes only and do not constitute legal or financial advice.';
+  String get termsNotifInformational =>
+      'Notifications are for informational purposes only and do not constitute legal or financial advice.';
 
   @override
-  String get termsReviewNotif => 'Users are responsible for reviewing all notifications and taking appropriate action in a timely manner.';
+  String get termsReviewNotif =>
+      'Users are responsible for reviewing all notifications and taking appropriate action in a timely manner.';
 
   @override
   String get termsPrivacyDataTitle => 'Privacy & Data';
 
   @override
-  String get termsDataCollected => 'Safqa collects personal data including name, email, phone number, and transaction history.';
+  String get termsDataCollected =>
+      'Safqa collects personal data including name, email, phone number, and transaction history.';
 
   @override
-  String get termsDataProtected => 'All collected data is stored securely and protected against unauthorized access.';
+  String get termsDataProtected =>
+      'All collected data is stored securely and protected against unauthorized access.';
 
   @override
-  String get termsNoShareData => 'Safqa does not share personal user data with third parties without explicit user consent.';
+  String get termsNoShareData =>
+      'Safqa does not share personal user data with third parties without explicit user consent.';
 
   @override
   String get termsLiabilityTitle => 'Liability';
 
   @override
-  String get termsNotResponsible => 'Safqa is not responsible for losses arising from user errors or third-party service failures.';
+  String get termsNotResponsible =>
+      'Safqa is not responsible for losses arising from user errors or third-party service failures.';
 
   @override
-  String get termsDowntime => 'The platform may experience scheduled or unscheduled downtime for maintenance purposes.';
+  String get termsDowntime =>
+      'The platform may experience scheduled or unscheduled downtime for maintenance purposes.';
 
   @override
-  String get termsIntermediary => 'Safqa acts solely as an intermediary between buyers and sellers and does not guarantee transaction outcomes.';
+  String get termsIntermediary =>
+      'Safqa acts solely as an intermediary between buyers and sellers and does not guarantee transaction outcomes.';
 
   @override
   String get termsChangesTitle => 'Changes to Terms';
 
   @override
-  String get termsUpdatedAnytime => 'Safqa reserves the right to update these terms and conditions at any time without prior notice.';
+  String get termsUpdatedAnytime =>
+      'Safqa reserves the right to update these terms and conditions at any time without prior notice.';
 
   @override
-  String get termsContinuedUse => 'Continued use of the platform after any changes constitutes acceptance of the updated terms.';
+  String get termsContinuedUse =>
+      'Continued use of the platform after any changes constitutes acceptance of the updated terms.';
 
   @override
   String get kNoPreviousPageTo => 'No previous page to navigate back to';
@@ -327,7 +371,8 @@ class SEn extends S {
   String get kPleaseSelectABank => 'Please select a bank';
 
   @override
-  String get kLegalDocumentsAre => 'Legal documents are missing. Please go back.';
+  String get kLegalDocumentsAre =>
+      'Legal documents are missing. Please go back.';
 
   @override
   String get kFinancialDetails => 'Financial Details';
@@ -471,6 +516,16 @@ class SEn extends S {
   String get kEnglish => 'English';
 
   @override
+  String get kArabic => 'Arabic';
+
+  @override
+  String get profileLogoutDialogMessage => 'Are you sure you want to log out?';
+
+  @override
+  String get profileLanguageDialogMessage =>
+      'Choose the language you want to use.';
+
+  @override
   String get kDepositSuccessful => 'Deposit successful!';
 
   @override
@@ -537,7 +592,8 @@ class SEn extends S {
   String get kGoElite => 'Go Elite';
 
   @override
-  String get kAppearsAtTheTop24 => 'Appears at the top of search results for 24 hours';
+  String get kAppearsAtTheTop24 =>
+      'Appears at the top of search results for 24 hours';
 
   @override
   String get kFeaturedBadge => 'Featured badge on your auction';
@@ -546,10 +602,12 @@ class SEn extends S {
   String get kHighlightedCard => 'Highlighted card color to attract buyers';
 
   @override
-  String get kAppearsAtTheTop3D => 'Appears at the top of search results for 3 days';
+  String get kAppearsAtTheTop3D =>
+      'Appears at the top of search results for 3 days';
 
   @override
-  String get kPushNotifications => 'Push notifications sent to interested buyers';
+  String get kPushNotifications =>
+      'Push notifications sent to interested buyers';
 
   @override
   String get kFeaturedBadgeHighl => 'Featured badge & highlighted card';
@@ -558,10 +616,12 @@ class SEn extends S {
   String get kBasicAnalytics => 'Basic Analytics';
 
   @override
-  String get kPinnedAsTopBanner => 'Pinned as a Top Banner on the homepage for 7 days';
+  String get kPinnedAsTopBanner =>
+      'Pinned as a Top Banner on the homepage for 7 days';
 
   @override
-  String get kInstantPushNotific => 'Instant push notifications to all interested buyers';
+  String get kInstantPushNotific =>
+      'Instant push notifications to all interested buyers';
 
   @override
   String get kDetailedAnalytics => 'Detailed Analytics';
@@ -690,10 +750,12 @@ class SEn extends S {
   String get auctionDraftMissing => 'Auction draft is missing.';
 
   @override
-  String get auctionValidStartingPriceError => 'Please enter a valid starting price.';
+  String get auctionValidStartingPriceError =>
+      'Please enter a valid starting price.';
 
   @override
-  String get auctionValidBidIncrementError => 'Please enter a valid bid increment.';
+  String get auctionValidBidIncrementError =>
+      'Please enter a valid bid increment.';
 
   @override
   String get auctionSelectStartDateError => 'Please select a start date.';
@@ -775,7 +837,8 @@ class SEn extends S {
   String get auctionDeleteButton => 'Delete Auction';
 
   @override
-  String get auctionDeleteConfirmMessage => 'Are you sure you want to delete this auction? This action cannot be undone.';
+  String get auctionDeleteConfirmMessage =>
+      'Are you sure you want to delete this auction? This action cannot be undone.';
 
   @override
   String get auctionDeleteSuccess => 'Auction deleted successfully';
@@ -844,13 +907,15 @@ class SEn extends S {
   String get enterValidAmount => 'Enter a valid amount';
 
   @override
-  String get verifyWithdrawalDescription => 'Enter the verification code sent to your email to continue your withdrawal.';
+  String get verifyWithdrawalDescription =>
+      'Enter the verification code sent to your email to continue your withdrawal.';
 
   @override
   String get confirmWithdrawal => 'Confirm withdrawal';
 
   @override
-  String get confirmWithdrawalDescription => 'Enter your password to confirm this withdrawal request.';
+  String get confirmWithdrawalDescription =>
+      'Enter your password to confirm this withdrawal request.';
 
   @override
   String get currentPassword => 'Current Password';
@@ -909,7 +974,8 @@ class SEn extends S {
   String get auctionLoadingCategories => 'Loading categories...';
 
   @override
-  String get auctionSelectCategoryPerItem => 'Select a category for each item below.';
+  String get auctionSelectCategoryPerItem =>
+      'Select a category for each item below.';
 
   @override
   String get auctionSaveContinue => 'Save & Continue';
@@ -1001,7 +1067,8 @@ class SEn extends S {
   }
 
   @override
-  String get auctionLoadCategoryAttributesForItemError => 'Could not load category attributes for this item. Try another category or retry later.';
+  String get auctionLoadCategoryAttributesForItemError =>
+      'Could not load category attributes for this item. Try another category or retry later.';
 
   @override
   String get auctionEnterItemTitleSingle => 'Please enter the item title.';
@@ -1019,7 +1086,8 @@ class SEn extends S {
   String get auctionEnterValidCountError => 'Please enter a valid count.';
 
   @override
-  String get auctionLoadCategoryAttributesError => 'Could not load category attributes. Try another category.';
+  String get auctionLoadCategoryAttributesError =>
+      'Could not load category attributes. Try another category.';
 
   @override
   String auctionInvalidNumberForAttribute(Object attribute) {
@@ -1032,8 +1100,10 @@ class SEn extends S {
   }
 
   @override
-  String get auctionLoadCategoryAttributesForThisItemError => 'Could not load category attributes for this item.';
+  String get auctionLoadCategoryAttributesForThisItemError =>
+      'Could not load category attributes for this item.';
 
   @override
-  String get withdrawalEmailMissing => 'We couldn\'t find your account email. Please refresh your profile and try again.';
+  String get withdrawalEmailMissing =>
+      'We couldn\'t find your account email. Please refresh your profile and try again.';
 }

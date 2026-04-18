@@ -21,19 +21,22 @@ class SAr extends S {
   String get onBoardingTitle1 => 'توقف عن إضاعة الوقت!';
 
   @override
-  String get onBoardingSubtitle1 => 'صفقة تحوّل عملية المزادات الطويلة إلى تجربة رقمية سريعة ومضمونة، أدر مزاداتك من أي مكان.';
+  String get onBoardingSubtitle1 =>
+      'صفقة تحوّل عملية المزادات الطويلة إلى تجربة رقمية سريعة ومضمونة، أدر مزاداتك من أي مكان.';
 
   @override
   String get onBoardingTitle2 => 'مزايدة ذكية';
 
   @override
-  String get onBoardingSubtitle2 => 'شارك في المزايدة الفورية، أو دع نظام المزايدة التلقائية يفوز نيابةً عنك ضمن حدك المحدد.';
+  String get onBoardingSubtitle2 =>
+      'شارك في المزايدة الفورية، أو دع نظام المزايدة التلقائية يفوز نيابةً عنك ضمن حدك المحدد.';
 
   @override
   String get onBoardingTitle3 => 'تجربة مصمّمة لك';
 
   @override
-  String get onBoardingSubtitle3 => 'تصميم عصري ثنائي اللغة (عربي/إنجليزي) يتيح لك التنقل والمزايدة بسلاسة من أي جهاز.';
+  String get onBoardingSubtitle3 =>
+      'تصميم عصري ثنائي اللغة (عربي/إنجليزي) يتيح لك التنقل والمزايدة بسلاسة من أي جهاز.';
 
   @override
   String get signIn => 'تسجيل الدخول';
@@ -99,7 +102,8 @@ class SAr extends S {
   String get verificationCode => 'رمز التحقق';
 
   @override
-  String get verificationCodeDescription => 'أدخل رمز التحقق المرسل إلى بريدك الإلكتروني';
+  String get verificationCodeDescription =>
+      'أدخل رمز التحقق المرسل إلى بريدك الإلكتروني';
 
   @override
   String get emailConfirmedSuccessfully => 'تم تأكيد البريد الإلكتروني بنجاح';
@@ -126,7 +130,8 @@ class SAr extends S {
   String get forgetPasswordTitle => 'نسيت كلمة المرور';
 
   @override
-  String get forgetPasswordDescription => 'أدخل عنوان بريدك الإلكتروني وسنرسل لك رمزاً لإعادة تعيين كلمة المرور';
+  String get forgetPasswordDescription =>
+      'أدخل عنوان بريدك الإلكتروني وسنرسل لك رمزاً لإعادة تعيين كلمة المرور';
 
   @override
   String get sendCode => 'إرسال الرمز';
@@ -150,16 +155,20 @@ class SAr extends S {
   String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
 
   @override
-  String get termsPlatformCompliance => 'يجب على جميع المستخدمين الالتزام بقواعد وأنظمة المنصة في جميع الأوقات.';
+  String get termsPlatformCompliance =>
+      'يجب على جميع المستخدمين الالتزام بقواعد وأنظمة المنصة في جميع الأوقات.';
 
   @override
-  String get termsAccurateInfo => 'يُلزَم المستخدمون بتقديم معلومات دقيقة وصادقة عند استخدام المنصة.';
+  String get termsAccurateInfo =>
+      'يُلزَم المستخدمون بتقديم معلومات دقيقة وصادقة عند استخدام المنصة.';
 
   @override
-  String get termsSuspendAccounts => 'تحتفظ صفقة بالحق في تعليق أو إنهاء الحسابات التي تنتهك هذه الشروط.';
+  String get termsSuspendAccounts =>
+      'تحتفظ صفقة بالحق في تعليق أو إنهاء الحسابات التي تنتهك هذه الشروط.';
 
   @override
-  String get termsMonitored => 'تتم مراقبة جميع الأنشطة على المنصة لضمان الامتثال والأمان.';
+  String get termsMonitored =>
+      'تتم مراقبة جميع الأنشطة على المنصة لضمان الامتثال والأمان.';
 
   @override
   String get termsBuyerAppTitle => 'تطبيق المشتري';
@@ -168,49 +177,61 @@ class SAr extends S {
   String get termsAccountUsageTitle => 'استخدام الحساب';
 
   @override
-  String get termsBuyerAge => 'يجب أن يكون عمر المشتري 18 عامًا على الأقل لإنشاء حساب والمشاركة في المزادات.';
+  String get termsBuyerAge =>
+      'يجب أن يكون عمر المشتري 18 عامًا على الأقل لإنشاء حساب والمشاركة في المزادات.';
 
   @override
-  String get termsBuyerCredentials => 'يتحمل المشترون مسؤولية الحفاظ على سرية بيانات اعتماد حساباتهم.';
+  String get termsBuyerCredentials =>
+      'يتحمل المشترون مسؤولية الحفاظ على سرية بيانات اعتماد حساباتهم.';
 
   @override
-  String get termsBuyerMultipleAccounts => 'يُحظر تمامًا إنشاء حسابات متعددة لنفس الشخص.';
+  String get termsBuyerMultipleAccounts =>
+      'يُحظر تمامًا إنشاء حسابات متعددة لنفس الشخص.';
 
   @override
   String get termsBiddingRulesTitle => 'قواعد المزايدة';
 
   @override
-  String get termsBindingBids => 'جميع العروض المقدمة على المنصة ملزمة قانونيًا ولا يمكن سحبها.';
+  String get termsBindingBids =>
+      'جميع العروض المقدمة على المنصة ملزمة قانونيًا ولا يمكن سحبها.';
 
   @override
-  String get termsHighestBidWins => 'يفوز بالعنصر أعلى عرض سعر عند إغلاق المزاد.';
+  String get termsHighestBidWins =>
+      'يفوز بالعنصر أعلى عرض سعر عند إغلاق المزاد.';
 
   @override
-  String get termsProxyBiddingRules => 'تتيح المزايدة التلقائية للنظام تقديم العروض نيابةً عنك حتى حدك الأقصى.';
+  String get termsProxyBiddingRules =>
+      'تتيح المزايدة التلقائية للنظام تقديم العروض نيابةً عنك حتى حدك الأقصى.';
 
   @override
-  String get termsManipulateBids => 'يُحظر تمامًا أي محاولة للتلاعب في العروض أو التواطؤ مع مزايدين آخرين.';
+  String get termsManipulateBids =>
+      'يُحظر تمامًا أي محاولة للتلاعب في العروض أو التواطؤ مع مزايدين آخرين.';
 
   @override
   String get termsPaymentsTitle => 'المدفوعات';
 
   @override
-  String get termsWalletBalance => 'يجب على المشترين الحفاظ على رصيد محفظة كافٍ لتغطية عروضهم ومشترياتهم.';
+  String get termsWalletBalance =>
+      'يجب على المشترين الحفاظ على رصيد محفظة كافٍ لتغطية عروضهم ومشترياتهم.';
 
   @override
-  String get termsSecurityDeposits => 'قد يُطلب تأمين مالي لبعض المزادات عالية القيمة.';
+  String get termsSecurityDeposits =>
+      'قد يُطلب تأمين مالي لبعض المزادات عالية القيمة.';
 
   @override
-  String get termsRefundsPolicy => 'تتم معالجة المبالغ المستردة في غضون 7 أيام عمل بعد حل نزاع صالح لصالح المشتري.';
+  String get termsRefundsPolicy =>
+      'تتم معالجة المبالغ المستردة في غضون 7 أيام عمل بعد حل نزاع صالح لصالح المشتري.';
 
   @override
   String get termsDisputesTitle => 'النزاعات';
 
   @override
-  String get termsRaiseDisputes => 'يمكن للمشترين رفع نزاع خلال 48 ساعة من استلام منتج لا يطابق الوصف.';
+  String get termsRaiseDisputes =>
+      'يمكن للمشترين رفع نزاع خلال 48 ساعة من استلام منتج لا يطابق الوصف.';
 
   @override
-  String get termsDisputeDecisions => 'سيراجع فريق تسوية النزاعات في صفقة جميع الأدلة المقدمة ويتخذ القرار النهائي.';
+  String get termsDisputeDecisions =>
+      'سيراجع فريق تسوية النزاعات في صفقة جميع الأدلة المقدمة ويتخذ القرار النهائي.';
 
   @override
   String get termsSellerAppTitle => 'تطبيق البائع';
@@ -219,91 +240,113 @@ class SAr extends S {
   String get termsSellerRegTitle => 'تسجيل البائع';
 
   @override
-  String get termsSellerVerification => 'يجب على جميع البائعين إكمال التحقق من الهوية قبل إدراج المنتجات للمزاد.';
+  String get termsSellerVerification =>
+      'يجب على جميع البائعين إكمال التحقق من الهوية قبل إدراج المنتجات للمزاد.';
 
   @override
-  String get termsSellerApproval => 'تخضع حسابات البائعين لموافقة فريق صفقة قبل تفعيلها.';
+  String get termsSellerApproval =>
+      'تخضع حسابات البائعين لموافقة فريق صفقة قبل تفعيلها.';
 
   @override
-  String get termsSellerAccuracy => 'يتحمل البائعون مسؤولية دقة واكتمال قوائم منتجاتهم.';
+  String get termsSellerAccuracy =>
+      'يتحمل البائعون مسؤولية دقة واكتمال قوائم منتجاتهم.';
 
   @override
   String get termsAuctionMgmtTitle => 'إدارة المزادات';
 
   @override
-  String get termsHonestDescriptions => 'يجب على البائعين تقديم أوصاف صادقة ودقيقة لجميع العناصر المدرجة للمزاد.';
+  String get termsHonestDescriptions =>
+      'يجب على البائعين تقديم أوصاف صادقة ودقيقة لجميع العناصر المدرجة للمزاد.';
 
   @override
-  String get termsAuctionRules => 'يجب على البائعين الالتزام بجميع قواعد مزادات المنصة، بما في ذلك إرشادات الحد الأدنى للأسعار.';
+  String get termsAuctionRules =>
+      'يجب على البائعين الالتزام بجميع قواعد مزادات المنصة، بما في ذلك إرشادات الحد الأدنى للأسعار.';
 
   @override
-  String get termsNoModifyActive => 'لا يمكن تعديل قوائم المزادات النشطة بعد بدء عملية المزايدة.';
+  String get termsNoModifyActive =>
+      'لا يمكن تعديل قوائم المزادات النشطة بعد بدء عملية المزايدة.';
 
   @override
   String get termsDeliveryTitle => 'التسليم';
 
   @override
-  String get termsTimelyDelivery => 'يلتزم البائعون بتسليم العناصر للمشترين الفائزين في الإطار الزمني المتفق عليه.';
+  String get termsTimelyDelivery =>
+      'يلتزم البائعون بتسليم العناصر للمشترين الفائزين في الإطار الزمني المتفق عليه.';
 
   @override
-  String get termsDeliveryInfo => 'يجب توفير معلومات توصيل دقيقة لضمان سلامة الشحنات وتوصيلها في الوقت المناسب.';
+  String get termsDeliveryInfo =>
+      'يجب توفير معلومات توصيل دقيقة لضمان سلامة الشحنات وتوصيلها في الوقت المناسب.';
 
   @override
-  String get termsFailureToDeliver => 'قد يؤدي الإخفاق في تسليم المنتجات إلى تعليق الحساب وفرض غرامات مالية.';
+  String get termsFailureToDeliver =>
+      'قد يؤدي الإخفاق في تسليم المنتجات إلى تعليق الحساب وفرض غرامات مالية.';
 
   @override
   String get termsFeesTitle => 'الرسوم';
 
   @override
-  String get termsPlatformFees => 'تفرض صفقة رسومًا على المنصة على جميع معاملات المزاد المكتملة بنجاح.';
+  String get termsPlatformFees =>
+      'تفرض صفقة رسومًا على المنصة على جميع معاملات المزاد المكتملة بنجاح.';
 
   @override
-  String get termsTrackEarnings => 'يمكن للبائعين تتبع أرباحهم وخصومات الرسوم في الوقت الفعلي من خلال لوحة تحكم البائع.';
+  String get termsTrackEarnings =>
+      'يمكن للبائعين تتبع أرباحهم وخصومات الرسوم في الوقت الفعلي من خلال لوحة تحكم البائع.';
 
   @override
   String get termsNotifPolicyTitle => 'سياسة الإشعارات';
 
   @override
-  String get termsNotifGenerated => 'تُنشأ الإشعارات تلقائيًا للأحداث الرئيسية كالعروض الجديدة ونهايات المزادات والمدفوعات.';
+  String get termsNotifGenerated =>
+      'تُنشأ الإشعارات تلقائيًا للأحداث الرئيسية كالعروض الجديدة ونهايات المزادات والمدفوعات.';
 
   @override
-  String get termsNotifInformational => 'الإشعارات لأغراض إعلامية فقط ولا تشكل نصيحة قانونية أو مالية.';
+  String get termsNotifInformational =>
+      'الإشعارات لأغراض إعلامية فقط ولا تشكل نصيحة قانونية أو مالية.';
 
   @override
-  String get termsReviewNotif => 'يتحمل المستخدمون مسؤولية مراجعة جميع الإشعارات واتخاذ الإجراء المناسب في الوقت المناسب.';
+  String get termsReviewNotif =>
+      'يتحمل المستخدمون مسؤولية مراجعة جميع الإشعارات واتخاذ الإجراء المناسب في الوقت المناسب.';
 
   @override
   String get termsPrivacyDataTitle => 'الخصوصية والبيانات';
 
   @override
-  String get termsDataCollected => 'تجمع صفقة البيانات الشخصية بما في ذلك الاسم والبريد الإلكتروني ورقم الهاتف وسجل المعاملات.';
+  String get termsDataCollected =>
+      'تجمع صفقة البيانات الشخصية بما في ذلك الاسم والبريد الإلكتروني ورقم الهاتف وسجل المعاملات.';
 
   @override
-  String get termsDataProtected => 'يتم تخزين جميع البيانات المجمعة بأمان وحمايتها من الوصول غير المصرح به.';
+  String get termsDataProtected =>
+      'يتم تخزين جميع البيانات المجمعة بأمان وحمايتها من الوصول غير المصرح به.';
 
   @override
-  String get termsNoShareData => 'لا تشارك صفقة البيانات الشخصية للمستخدمين مع أطراف ثالثة دون موافصة صريحة من المستخدم.';
+  String get termsNoShareData =>
+      'لا تشارك صفقة البيانات الشخصية للمستخدمين مع أطراف ثالثة دون موافصة صريحة من المستخدم.';
 
   @override
   String get termsLiabilityTitle => 'المسؤولية';
 
   @override
-  String get termsNotResponsible => 'لا تتحمل صفقة المسؤولية عن الخسائر الناجمة عن أخطاء المستخدمين أو إخفاقات الخدمات الخارجية.';
+  String get termsNotResponsible =>
+      'لا تتحمل صفقة المسؤولية عن الخسائر الناجمة عن أخطاء المستخدمين أو إخفاقات الخدمات الخارجية.';
 
   @override
-  String get termsDowntime => 'قد تعاني المنصة من توقف مجدول أو غير مجدول لأغراض الصيانة.';
+  String get termsDowntime =>
+      'قد تعاني المنصة من توقف مجدول أو غير مجدول لأغراض الصيانة.';
 
   @override
-  String get termsIntermediary => 'تعمل صفقة كوسيط فقط بين المشترين والبائعين ولا تضمن نتائج المعاملات.';
+  String get termsIntermediary =>
+      'تعمل صفقة كوسيط فقط بين المشترين والبائعين ولا تضمن نتائج المعاملات.';
 
   @override
   String get termsChangesTitle => 'التغييرات على الشروط';
 
   @override
-  String get termsUpdatedAnytime => 'تحتفظ صفقة بالحق في تحديث هذه الشروط والأحكام في أي وقت دون إشعار مسبق.';
+  String get termsUpdatedAnytime =>
+      'تحتفظ صفقة بالحق في تحديث هذه الشروط والأحكام في أي وقت دون إشعار مسبق.';
 
   @override
-  String get termsContinuedUse => 'يُعد الاستمرار في استخدام المنصة بعد أي تغييرات قبولًا للشروط المحدثة.';
+  String get termsContinuedUse =>
+      'يُعد الاستمرار في استخدام المنصة بعد أي تغييرات قبولًا للشروط المحدثة.';
 
   @override
   String get kNoPreviousPageTo => 'لا توجد صفحة سابقة للرجوع إليها';
@@ -471,6 +514,16 @@ class SAr extends S {
   String get kEnglish => 'English';
 
   @override
+  String get kArabic => 'العربية';
+
+  @override
+  String get profileLogoutDialogMessage =>
+      'هل أنت متأكد أنك تريد تسجيل الخروج؟';
+
+  @override
+  String get profileLanguageDialogMessage => 'اختر اللغة التي تريد استخدامها.';
+
+  @override
   String get kDepositSuccessful => 'تم الإيداع بنجاح!';
 
   @override
@@ -558,7 +611,8 @@ class SAr extends S {
   String get kBasicAnalytics => 'تحليلات أساسية';
 
   @override
-  String get kPinnedAsTopBanner => 'تثبيت كإعلان في الصفحة الرئيسية لمدة 7 أيام';
+  String get kPinnedAsTopBanner =>
+      'تثبيت كإعلان في الصفحة الرئيسية لمدة 7 أيام';
 
   @override
   String get kInstantPushNotific => 'إشعارات فورية لجميع المشترين المهتمين';
@@ -570,7 +624,8 @@ class SAr extends S {
   String get kSubscriptionUpgradeSuccess => 'تمت الترقية بنجاح!';
 
   @override
-  String get kSubscriptionUpgradeFailed => 'فشلت الترقية. يرجى المحاولة مرة أخرى.';
+  String get kSubscriptionUpgradeFailed =>
+      'فشلت الترقية. يرجى المحاولة مرة أخرى.';
 
   @override
   String get kActivePlan => 'الباقة الحالية';
@@ -606,7 +661,8 @@ class SAr extends S {
   String get kPasswordTooShort => 'يجب أن تكون كلمة المرور 8 أحرف على الأقل.';
 
   @override
-  String get kPasswordSameAsCurrent => 'يجب أن تختلف كلمة المرور الجديدة عن الحالية.';
+  String get kPasswordSameAsCurrent =>
+      'يجب أن تختلف كلمة المرور الجديدة عن الحالية.';
 
   @override
   String get historySearchHint => 'ابحث في السجل';
@@ -702,7 +758,8 @@ class SAr extends S {
   String get auctionSelectEndDateError => 'يرجى اختيار تاريخ النهاية.';
 
   @override
-  String get auctionEndDateAfterStart => 'يجب أن يكون تاريخ النهاية بعد تاريخ البداية.';
+  String get auctionEndDateAfterStart =>
+      'يجب أن يكون تاريخ النهاية بعد تاريخ البداية.';
 
   @override
   String get auctionValidDurationError => 'يرجى إدخال مدة صحيحة.';
@@ -775,7 +832,8 @@ class SAr extends S {
   String get auctionDeleteButton => 'حذف المزاد';
 
   @override
-  String get auctionDeleteConfirmMessage => 'هل أنت متأكد أنك تريد حذف هذا المزاد؟ لا يمكن التراجع عن هذا الإجراء.';
+  String get auctionDeleteConfirmMessage =>
+      'هل أنت متأكد أنك تريد حذف هذا المزاد؟ لا يمكن التراجع عن هذا الإجراء.';
 
   @override
   String get auctionDeleteSuccess => 'تم حذف المزاد بنجاح';
@@ -844,13 +902,15 @@ class SAr extends S {
   String get enterValidAmount => 'أدخل مبلغًا صحيحًا';
 
   @override
-  String get verifyWithdrawalDescription => 'أدخل رمز التحقق المرسل إلى بريدك الإلكتروني للمتابعة في عملية السحب.';
+  String get verifyWithdrawalDescription =>
+      'أدخل رمز التحقق المرسل إلى بريدك الإلكتروني للمتابعة في عملية السحب.';
 
   @override
   String get confirmWithdrawal => 'تأكيد السحب';
 
   @override
-  String get confirmWithdrawalDescription => 'أدخل كلمة المرور لتأكيد طلب السحب هذا.';
+  String get confirmWithdrawalDescription =>
+      'أدخل كلمة المرور لتأكيد طلب السحب هذا.';
 
   @override
   String get currentPassword => 'كلمة المرور الحالية';
@@ -1001,7 +1061,8 @@ class SAr extends S {
   }
 
   @override
-  String get auctionLoadCategoryAttributesForItemError => 'تعذر تحميل خصائص الفئة لهذا العنصر. جرّب فئة أخرى أو أعد المحاولة لاحقًا.';
+  String get auctionLoadCategoryAttributesForItemError =>
+      'تعذر تحميل خصائص الفئة لهذا العنصر. جرّب فئة أخرى أو أعد المحاولة لاحقًا.';
 
   @override
   String get auctionEnterItemTitleSingle => 'يرجى إدخال عنوان العنصر.';
@@ -1019,7 +1080,8 @@ class SAr extends S {
   String get auctionEnterValidCountError => 'يرجى إدخال عدد صحيح.';
 
   @override
-  String get auctionLoadCategoryAttributesError => 'تعذر تحميل خصائص الفئة. جرّب فئة أخرى.';
+  String get auctionLoadCategoryAttributesError =>
+      'تعذر تحميل خصائص الفئة. جرّب فئة أخرى.';
 
   @override
   String auctionInvalidNumberForAttribute(Object attribute) {
@@ -1032,8 +1094,10 @@ class SAr extends S {
   }
 
   @override
-  String get auctionLoadCategoryAttributesForThisItemError => 'تعذر تحميل خصائص الفئة لهذا العنصر.';
+  String get auctionLoadCategoryAttributesForThisItemError =>
+      'تعذر تحميل خصائص الفئة لهذا العنصر.';
 
   @override
-  String get withdrawalEmailMissing => 'تعذر العثور على البريد الإلكتروني للحساب. يرجى تحديث الملف الشخصي ثم المحاولة مرة أخرى.';
+  String get withdrawalEmailMissing =>
+      'تعذر العثور على البريد الإلكتروني للحساب. يرجى تحديث الملف الشخصي ثم المحاولة مرة أخرى.';
 }
