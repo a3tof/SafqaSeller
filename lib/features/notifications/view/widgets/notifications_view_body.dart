@@ -80,7 +80,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
                   TextButton(
                     onPressed: _loadNotifications,
                     child: Text(
-                      'Retry',
+                      S.of(context).retry,
                       style: TextStyles.medium16(
                         context,
                       ).copyWith(color: AppColors.primaryColor),
@@ -121,7 +121,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
         ),
       ),
       title: Text(
-        'Notifications',
+        S.of(context).notificationsTitle,
         style: TextStyle(
           fontSize: 28.sp,
           fontWeight: FontWeight.w700,
@@ -140,7 +140,7 @@ class _NotificationsViewBodyState extends State<NotificationsViewBody> {
                 onPressed: () =>
                     context.read<NotificationsViewModel>().markAllAsRead(),
                 child: Text(
-                  'Mark all',
+                  S.of(context).notificationsMarkAll,
                   style: TextStyles.medium14(
                     context,
                   ).copyWith(color: AppColors.primaryColor),
@@ -185,7 +185,7 @@ class _NotificationsList extends StatelessWidget {
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  'Notification Options',
+                  S.of(context).notificationsOptionsTitle,
                   style: TextStyles.medium16(
                     context,
                   ).copyWith(fontWeight: FontWeight.bold),
@@ -194,7 +194,7 @@ class _NotificationsList extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.delete_outline, color: Colors.red),
                   title: Text(
-                    'Delete',
+                    S.of(context).notificationsDelete,
                     style: TextStyles.medium16(
                       context,
                     ).copyWith(color: Colors.red),
@@ -208,7 +208,10 @@ class _NotificationsList extends StatelessWidget {
                 ),
                 ListTile(
                   leading: const Icon(Icons.close),
-                  title: Text('Cancel', style: TextStyles.medium16(context)),
+                  title: Text(
+                    S.of(context).notificationsCancel,
+                    style: TextStyles.medium16(context),
+                  ),
                   onTap: () => Navigator.pop(bottomSheetContext),
                 ),
               ],
@@ -297,7 +300,7 @@ class _EmptyNotificationsPlaceholder extends StatelessWidget {
           ),
           SizedBox(height: 16.h),
           Text(
-            'No notifications yet',
+            S.of(context).notificationsEmpty,
             style: TextStyles.medium16(context).copyWith(color: Colors.grey),
           ),
         ],

@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 enum NotificationType { auctionReminder, newAuction, report, orderOnTheWay }
 
 class NotificationModel {
@@ -70,10 +72,20 @@ class NotificationModel {
     try {
       final dt = DateTime.parse(rawDate);
       final diff = DateTime.now().difference(dt);
-      if (diff.inSeconds < 60) return 'Just now';
-      if (diff.inMinutes < 60) return '${diff.inMinutes} min ago';
-      if (diff.inHours < 24) return '${diff.inHours} hr ago';
-      return '${diff.inDays} day${diff.inDays == 1 ? '' : 's'} ago';
+      final locale = Intl.getCurrentLocale();
+      final isArabic = locale.toLowerCase().startsWith('ar');
+      if (diff.inSeconds < 60) {
+        return isArabic ? 'الآن' : 'Just now';
+      }
+      if (diff.inMinutes < 60) {
+        return isArabic
+            ? 'منذ ${diff.inMinutes} دقيقة'
+            : '${diff.inMinutes} min ago';
+      }
+      if (diff.inHours < 24) {
+        return isArabic ? 'منذ ${diff.inHours} ساعة' : '${diff.inHours} hr ago';
+      }
+      return isArabic ? 'منذ ${diff.inDays} يوم' : '${diff.inDays} day(s) ago';
     } catch (_) {
       return '';
     }

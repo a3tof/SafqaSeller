@@ -1082,6 +1082,278 @@
   "@currentPassword": {
     "description": "Current password field label"
   },
+  "notificationsTitle": "الإشعارات",
+  "@notificationsTitle": {
+    "description": "Notifications screen title"
+  },
+  "notificationsMarkAll": "تحديد الكل",
+  "@notificationsMarkAll": {
+    "description": "Mark all notifications as read action"
+  },
+  "notificationsOptionsTitle": "خيارات الإشعار",
+  "@notificationsOptionsTitle": {
+    "description": "Bottom sheet title for notification actions"
+  },
+  "notificationsDelete": "حذف",
+  "@notificationsDelete": {
+    "description": "Delete notification action"
+  },
+  "notificationsCancel": "إلغاء",
+  "@notificationsCancel": {
+    "description": "Cancel notification action"
+  },
+  "notificationsEmpty": "لا توجد إشعارات حتى الآن",
+  "@notificationsEmpty": {
+    "description": "Empty state text on notifications screen"
+  },
+  "notificationsJustNow": "الآن",
+  "@notificationsJustNow": {
+    "description": "Relative time label for notifications created moments ago"
+  },
+  "notificationsMinutesAgo": "منذ {count} دقيقة",
+  "@notificationsMinutesAgo": {
+    "description": "Relative time label for notifications created minutes ago",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsHoursAgo": "منذ {count} ساعة",
+  "@notificationsHoursAgo": {
+    "description": "Relative time label for notifications created hours ago",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsDaysAgo": "منذ {count} يوم",
+  "@notificationsDaysAgo": {
+    "description": "Relative time label for notifications created days ago",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionLotAuctionTitle": "مزاد لوت",
+  "@auctionLotAuctionTitle": {
+    "description": "Lot auction creation screen title"
+  },
+  "auctionItemAuctionTitle": "مزاد عنصر",
+  "@auctionItemAuctionTitle": {
+    "description": "Item auction creation screen title"
+  },
+  "auctionHeadImage": "الصورة الرئيسية +",
+  "@auctionHeadImage": {
+    "description": "Auction image picker label before selecting an image"
+  },
+  "auctionSelectedFile": "تم اختيار: {name}",
+  "@auctionSelectedFile": {
+    "description": "Auction file selected label",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "auctionLoadingCategories": "جاري تحميل الفئات...",
+  "@auctionLoadingCategories": {
+    "description": "Hint shown while auction categories are loading"
+  },
+  "auctionSelectCategoryPerItem": "اختر فئة لكل عنصر بالأسفل.",
+  "@auctionSelectCategoryPerItem": {
+    "description": "Hint telling the seller to choose a category for each lot item"
+  },
+  "auctionSaveContinue": "حفظ ومتابعة",
+  "@auctionSaveContinue": {
+    "description": "Auction save and continue button label"
+  },
+  "auctionRemove": "إزالة",
+  "@auctionRemove": {
+    "description": "Remove item action in auction forms"
+  },
+  "auctionAddImages": "إضافة صور +",
+  "@auctionAddImages": {
+    "description": "Auction item image picker label before selecting images"
+  },
+  "auctionSelectedImagesCount": "تم اختيار {count} صورة",
+  "@auctionSelectedImagesCount": {
+    "description": "Auction selected images count label",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionAttributes": "الخصائص",
+  "@auctionAttributes": {
+    "description": "Auction attributes section title"
+  },
+  "auctionNoCategoriesFound": "لا توجد فئات",
+  "@auctionNoCategoriesFound": {
+    "description": "Auction category dropdown empty hint"
+  },
+  "auctionSelectCategoryHint": "اختر الفئة",
+  "@auctionSelectCategoryHint": {
+    "description": "Auction category dropdown hint"
+  },
+  "auctionSelectValue": "اختر القيمة",
+  "@auctionSelectValue": {
+    "description": "Auction attribute dropdown hint"
+  },
+  "auctionTrue": "نعم",
+  "@auctionTrue": {
+    "description": "Boolean true option in auction attribute dropdown"
+  },
+  "auctionFalse": "لا",
+  "@auctionFalse": {
+    "description": "Boolean false option in auction attribute dropdown"
+  },
+  "auctionSelectDate": "اختر التاريخ",
+  "@auctionSelectDate": {
+    "description": "Auction date selection label"
+  },
+  "auctionSelectDateTime": "اختر التاريخ والوقت",
+  "@auctionSelectDateTime": {
+    "description": "Auction date and time selection label"
+  },
+  "auctionEnterLotTitle": "يرجى إدخال عنوان اللوت.",
+  "@auctionEnterLotTitle": {
+    "description": "Validation when lot title is empty"
+  },
+  "auctionEnterLotDescription": "يرجى إدخال وصف اللوت.",
+  "@auctionEnterLotDescription": {
+    "description": "Validation when lot description is empty"
+  },
+  "auctionEnterItemTitle": "يرجى إدخال عنوان للعنصر {index}.",
+  "@auctionEnterItemTitle": {
+    "description": "Validation when a lot item title is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterItemCount": "يرجى إدخال عدد للعنصر {index}.",
+  "@auctionEnterItemCount": {
+    "description": "Validation when a lot item count is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterValidItemCount": "يرجى إدخال عدد صحيح للعنصر {index}.",
+  "@auctionEnterValidItemCount": {
+    "description": "Validation when a lot item count is invalid",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterItemDescription": "يرجى إدخال وصف للعنصر {index}.",
+  "@auctionEnterItemDescription": {
+    "description": "Validation when a lot item description is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterItemWarrantyInfo": "يرجى إدخال معلومات الضمان للعنصر {index}.",
+  "@auctionEnterItemWarrantyInfo": {
+    "description": "Validation when a lot item warranty info is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionSelectItemCategory": "يرجى اختيار فئة للعنصر {index}.",
+  "@auctionSelectItemCategory": {
+    "description": "Validation when a lot item category is missing",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionItemAttributesLoadError": "تعذر تحميل خصائص العنصر {index}. يرجى إعادة المحاولة أو اختيار فئة أخرى.",
+  "@auctionItemAttributesLoadError": {
+    "description": "Validation when lot item attributes could not be loaded",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionInvalidNumberForItemAttribute": "يرجى إدخال رقم صحيح للحقل {attribute} في العنصر {index}.",
+  "@auctionInvalidNumberForItemAttribute": {
+    "description": "Validation when a numeric lot item attribute is invalid",
+    "placeholders": {
+      "attribute": {},
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionProvideItemAttribute": "يرجى إدخال {attribute} للعنصر {index}.",
+  "@auctionProvideItemAttribute": {
+    "description": "Validation when a required lot item attribute is missing",
+    "placeholders": {
+      "attribute": {},
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionLoadCategoryAttributesForItemError": "تعذر تحميل خصائص الفئة لهذا العنصر. جرّب فئة أخرى أو أعد المحاولة لاحقًا.",
+  "@auctionLoadCategoryAttributesForItemError": {
+    "description": "Error shown when item category attributes fail to load"
+  },
+  "auctionEnterItemTitleSingle": "يرجى إدخال عنوان العنصر.",
+  "@auctionEnterItemTitleSingle": {
+    "description": "Validation when single item auction title is empty"
+  },
+  "auctionSelectCategoryError": "يرجى اختيار فئة.",
+  "@auctionSelectCategoryError": {
+    "description": "Validation when auction category is missing"
+  },
+  "auctionEnterWarrantyInfoError": "يرجى إدخال معلومات الضمان.",
+  "@auctionEnterWarrantyInfoError": {
+    "description": "Validation when warranty info is empty"
+  },
+  "auctionEnterDescriptionError": "يرجى إدخال الوصف.",
+  "@auctionEnterDescriptionError": {
+    "description": "Validation when description is empty"
+  },
+  "auctionEnterValidCountError": "يرجى إدخال عدد صحيح.",
+  "@auctionEnterValidCountError": {
+    "description": "Validation when auction count is invalid"
+  },
+  "auctionLoadCategoryAttributesError": "تعذر تحميل خصائص الفئة. جرّب فئة أخرى.",
+  "@auctionLoadCategoryAttributesError": {
+    "description": "Validation when category attributes could not be loaded"
+  },
+  "auctionInvalidNumberForAttribute": "يرجى إدخال رقم صحيح للحقل {attribute}.",
+  "@auctionInvalidNumberForAttribute": {
+    "description": "Validation when a numeric auction attribute is invalid",
+    "placeholders": {
+      "attribute": {}
+    }
+  },
+  "auctionProvideAttribute": "يرجى إدخال {attribute}.",
+  "@auctionProvideAttribute": {
+    "description": "Validation when a required auction attribute is missing",
+    "placeholders": {
+      "attribute": {}
+    }
+  },
+  "auctionLoadCategoryAttributesForThisItemError": "تعذر تحميل خصائص الفئة لهذا العنصر.",
+  "@auctionLoadCategoryAttributesForThisItemError": {
+    "description": "Error shown when category attributes fail to load for the single item auction form"
+  },
   "withdrawalEmailMissing": "تعذر العثور على البريد الإلكتروني للحساب. يرجى تحديث الملف الشخصي ثم المحاولة مرة أخرى.",
   "@withdrawalEmailMissing": {
     "description": "Shown when email is missing before starting withdrawal verification"

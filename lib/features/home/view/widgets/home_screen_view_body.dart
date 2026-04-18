@@ -146,11 +146,10 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
                                           .loadHomeData(),
                                       child: Text(
                                         'Retry',
-                                        style: TextStyles.semiBold13(
-                                          context,
-                                        ).copyWith(
-                                          color: AppColors.primaryColor,
-                                        ),
+                                        style: TextStyles.semiBold13(context)
+                                            .copyWith(
+                                              color: AppColors.primaryColor,
+                                            ),
                                       ),
                                     ),
                                   ],
@@ -373,7 +372,9 @@ class _NotificationBadgeIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<NotificationsViewModel, NotificationsState>(
       builder: (context, state) {
-        final hasUnread = context.read<NotificationsViewModel>().hasUnreadOrUnseen;
+        final hasUnread = context
+            .read<NotificationsViewModel>()
+            .hasUnreadOrUnseen;
 
         return GestureDetector(
           onTap: onTap,

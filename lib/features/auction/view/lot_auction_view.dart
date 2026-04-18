@@ -12,6 +12,7 @@ import 'package:safqaseller/features/auction/model/models/create_auction_request
 import 'package:safqaseller/features/auction/view/price_duration_view.dart';
 import 'package:safqaseller/features/auction/view_model/create_auction/create_auction_view_model.dart';
 import 'package:safqaseller/features/auction/view_model/create_auction/create_auction_view_model_state.dart';
+import 'package:safqaseller/generated/l10n.dart';
 
 class LotAuctionView extends StatelessWidget {
   const LotAuctionView({super.key});
@@ -142,12 +143,13 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
   }
 
   bool _validateAndStoreDraft() {
+    final s = S.of(context);
     if (_lotTitleController.text.trim().isEmpty) {
-      _showMessage('Please enter the lot title.');
+      _showMessage(s.auctionEnterLotTitle);
       return false;
     }
     if (_descriptionController.text.trim().isEmpty) {
-      _showMessage('Please enter the lot description.');
+      _showMessage(s.auctionEnterLotDescription);
       return false;
     }
 
@@ -165,34 +167,32 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
       final attributeError = cubit.attributeErrorForItem(index);
 
       if (title.isEmpty) {
-        _showMessage('Please enter a title for item ${index + 1}.');
+        _showMessage(s.auctionEnterItemTitle(index + 1));
         return false;
       }
       if (countText.isEmpty) {
-        _showMessage('Please enter a count for item ${index + 1}.');
+        _showMessage(s.auctionEnterItemCount(index + 1));
         return false;
       }
       final count = int.tryParse(countText);
       if (count == null || count <= 0) {
-        _showMessage('Please enter a valid count for item ${index + 1}.');
+        _showMessage(s.auctionEnterValidItemCount(index + 1));
         return false;
       }
       if (itemDescription.isEmpty) {
-        _showMessage('Please enter a description for item ${index + 1}.');
+        _showMessage(s.auctionEnterItemDescription(index + 1));
         return false;
       }
       if (warrantyInfo.isEmpty) {
-        _showMessage('Please enter warranty info for item ${index + 1}.');
+        _showMessage(s.auctionEnterItemWarrantyInfo(index + 1));
         return false;
       }
       if (categoryId == null) {
-        _showMessage('Please select a category for item ${index + 1}.');
+        _showMessage(s.auctionSelectItemCategory(index + 1));
         return false;
       }
       if (attributeError != null) {
-        _showMessage(
-          'Could not load attributes for item ${index + 1}. Please retry or choose another category.',
-        );
+        _showMessage(s.auctionItemAttributesLoadError(index + 1));
         return false;
       }
 
@@ -210,7 +210,10 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
             final normalizedValue = value.replaceAll(',', '');
             if (double.tryParse(normalizedValue) == null) {
               _showMessage(
-                'Please enter a valid number for ${attribute.name} in item ${index + 1}.',
+                s.auctionInvalidNumberForItemAttribute(
+                  attribute.name,
+                  index + 1,
+                ),
               );
               return false;
             }
@@ -219,9 +222,7 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
         }
 
         if (attribute.isRequired && (value == null || value.isEmpty)) {
-          _showMessage(
-            'Please provide ${attribute.name} for item ${index + 1}.',
-          );
+          _showMessage(s.auctionProvideItemAttribute(attribute.name, index + 1));
           return false;
         }
 
@@ -269,6 +270,7 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
   Widget build(BuildContext context) {
     return BlocConsumer<CreateAuctionViewModel, CreateAuctionViewModelState>(
       listener: (context, state) {
+        final s = S.of(context);
         if (state is AttributesLoaded) {
           setState(() {
             _syncAttributesForItem(state.itemIndex, state.attributes);
@@ -277,44 +279,43 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
           setState(() {
             _syncAttributesForItem(state.itemIndex, const []);
           });
-          _showMessage(
-            'Could not load category attributes for this item. Try another category or retry later.',
-          );
+          _showMessage(s.auctionLoadCategoryAttributesForItemError);
         } else if (state is CreateAuctionFailure) {
           _showMessage(state.message);
         }
       },
       builder: (context, state) {
+        final s = S.of(context);
         final cubit = context.read<CreateAuctionViewModel>();
         final categories = cubit.categories;
 
         return Scaffold(
           backgroundColor: Colors.white,
-          appBar: buildAppBar(context: context, title: 'Lot Auction'),
+          appBar: buildAppBar(context: context, title: s.auctionLotAuctionTitle),
           body: SafeArea(
             child: SingleChildScrollView(
               padding: EdgeInsets.fromLTRB(16.w, 12.h, 16.w, 24.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const _SectionLabel(label: 'Lot Details'),
+                  _SectionLabel(label: s.auctionLotDetails),
                   SizedBox(height: 8.h),
                   _UploadBox(
                     label: _headImage == null
-                        ? 'Head Image +'
-                        : 'Selected: ${_headImage!.name}',
+                        ? s.auctionHeadImage
+                        : s.auctionSelectedFile(_headImage!.name),
                     height: 88,
                     onTap: _pickHeadImage,
                   ),
                   SizedBox(height: 10.h),
-                  const _FieldLabel(label: 'Lot Title'),
+                  _FieldLabel(label: s.auctionTitle),
                   SizedBox(height: 4.h),
                   _AuctionTextField(controller: _lotTitleController),
                   SizedBox(height: 8.h),
                   Text(
                     categories.isEmpty && state is CategoriesLoading
-                        ? 'Loading categories...'
-                        : 'Select a category for each item below.',
+                        ? s.auctionLoadingCategories
+                        : s.auctionSelectCategoryPerItem,
                     style: TextStyles.regular11(
                       context,
                     ).copyWith(color: const Color(0xFF8A8A8A)),
@@ -372,7 +373,7 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
                         color: AppColors.primaryColor,
                       ),
                       label: Text(
-                        'Add Item',
+                        s.auctionAddItem,
                         style: TextStyles.semiBold13(
                           context,
                         ).copyWith(color: AppColors.primaryColor),
@@ -380,7 +381,7 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
                     ),
                   ),
                   SizedBox(height: 10.h),
-                  const _SectionLabel(label: 'Lot Description'),
+                  _SectionLabel(label: s.auctionLotDescription),
                   SizedBox(height: 8.h),
                   _AuctionTextField(
                     controller: _descriptionController,
@@ -406,7 +407,7 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
                   ),
                   SizedBox(height: 12.h),
                   _PrimaryButton(
-                    label: 'Save & Continue',
+                    label: s.auctionSaveContinue,
                     onTap: () {
                       if (!_validateAndStoreDraft()) {
                         return;
@@ -455,6 +456,7 @@ class _LotItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
@@ -467,12 +469,12 @@ class _LotItemCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              Expanded(child: _SectionLabel(label: 'Item ($index)')),
+              Expanded(child: _SectionLabel(label: '${s.auctionItem} ($index)')),
               if (onRemove != null)
                 TextButton(
                   onPressed: onRemove,
                   child: Text(
-                    'Remove',
+                    s.auctionRemove,
                     style: TextStyles.regular12(
                       context,
                     ).copyWith(color: Colors.red),
@@ -483,24 +485,24 @@ class _LotItemCard extends StatelessWidget {
           SizedBox(height: 8.h),
           _UploadBox(
             label: item.images.isEmpty
-                ? 'Add Images +'
-                : '${item.images.length} image(s) selected',
+                ? s.auctionAddImages
+                : s.auctionSelectedImagesCount(item.images.length),
             height: 82,
             onTap: onPickImages,
           ),
           SizedBox(height: 8.h),
-          const _FieldLabel(label: 'Title'),
+          _FieldLabel(label: s.auctionTitle),
           SizedBox(height: 4.h),
           _AuctionTextField(controller: item.titleController),
           SizedBox(height: 8.h),
-          const _FieldLabel(label: 'Count'),
+          _FieldLabel(label: s.auctionCount),
           SizedBox(height: 4.h),
           _AuctionTextField(
             controller: item.countController,
             keyboardType: TextInputType.number,
           ),
           SizedBox(height: 8.h),
-          const _FieldLabel(label: 'Description'),
+          _FieldLabel(label: s.kDescription),
           SizedBox(height: 4.h),
           _AuctionTextField(
             controller: item.descriptionController,
@@ -508,11 +510,11 @@ class _LotItemCard extends StatelessWidget {
             maxLines: 2,
           ),
           SizedBox(height: 8.h),
-          const _FieldLabel(label: 'Warranty Info'),
+          _FieldLabel(label: s.auctionWarrantyInfo),
           SizedBox(height: 4.h),
           _AuctionTextField(controller: item.warrantyController),
           SizedBox(height: 8.h),
-          const _FieldLabel(label: 'Category'),
+          _FieldLabel(label: s.auctionCategory),
           SizedBox(height: 4.h),
           _CategoryDropdown(
             categories: categories,
@@ -520,7 +522,7 @@ class _LotItemCard extends StatelessWidget {
             onChanged: onCategoryChanged,
           ),
           SizedBox(height: 8.h),
-          const _FieldLabel(label: 'Condition'),
+          _FieldLabel(label: s.auctionCondition),
           SizedBox(height: 4.h),
           _ConditionRow(
             selected: item.condition,
@@ -528,7 +530,7 @@ class _LotItemCard extends StatelessWidget {
           ),
           if (attributes.isNotEmpty) ...[
             SizedBox(height: 10.h),
-            const _FieldLabel(label: 'Attributes'),
+            _FieldLabel(label: s.auctionAttributes),
             SizedBox(height: 6.h),
             ...attributes.map(
               (attribute) => Padding(
@@ -659,6 +661,7 @@ class _ConditionRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     return Wrap(
       spacing: 10.w,
       runSpacing: 6.h,
@@ -693,7 +696,10 @@ class _ConditionRow extends StatelessWidget {
                     : null,
               ),
               SizedBox(width: 6.w),
-              Text(condition.label, style: TextStyles.regular12(context)),
+              Text(
+                condition.localizedLabel(s),
+                style: TextStyles.regular12(context),
+              ),
             ],
           ),
         );
@@ -731,13 +737,20 @@ class _PrimaryButton extends StatelessWidget {
 }
 
 enum _Condition {
-  newItem('New'),
-  usedLikeNew('Used-Like New'),
-  used('Used');
+  newItem,
+  usedLikeNew,
+  used;
 
-  const _Condition(this.label);
-
-  final String label;
+  String localizedLabel(S s) {
+    switch (this) {
+      case _Condition.newItem:
+        return s.auctionNew;
+      case _Condition.usedLikeNew:
+        return s.auctionUsedLikeNew;
+      case _Condition.used:
+        return s.auctionUsed;
+    }
+  }
 
   int get apiValue {
     switch (this) {
@@ -775,7 +788,9 @@ class _CategoryDropdown extends StatelessWidget {
           value: value,
           isExpanded: true,
           hint: Text(
-            categories.isEmpty ? 'No categories found' : 'Select category',
+            categories.isEmpty
+                ? S.of(context).auctionNoCategoriesFound
+                : S.of(context).auctionSelectCategoryHint,
             style: TextStyles.regular13(
               context,
             ).copyWith(color: const Color(0xFF8A8A8A)),
@@ -813,6 +828,7 @@ class _AttributeField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final s = S.of(context);
     final label = attribute.unitLabel.isEmpty
         ? attribute.name
         : '${attribute.name} (${attribute.unitLabel})';
@@ -834,14 +850,17 @@ class _AttributeField extends StatelessWidget {
                 value: item.booleanAttributes[attribute.id],
                 isExpanded: true,
                 hint: Text(
-                  'Select value',
+                  s.auctionSelectValue,
                   style: TextStyles.regular13(
                     context,
                   ).copyWith(color: const Color(0xFF8A8A8A)),
                 ),
-                items: const [
-                  DropdownMenuItem<bool>(value: true, child: Text('True')),
-                  DropdownMenuItem<bool>(value: false, child: Text('False')),
+                items: [
+                  DropdownMenuItem<bool>(value: true, child: Text(s.auctionTrue)),
+                  DropdownMenuItem<bool>(
+                    value: false,
+                    child: Text(s.auctionFalse),
+                  ),
                 ],
                 onChanged: (value) => onBooleanChanged(attribute.id, value),
               ),
@@ -862,8 +881,8 @@ class _AttributeField extends StatelessWidget {
             label: currentValue?.isNotEmpty == true
                 ? currentValue!
                 : attribute.isDateTime
-                ? 'Select date & time'
-                : 'Select date',
+                ? s.auctionSelectDateTime
+                : s.auctionSelectDate,
             height: 50,
             onTap: onPickDate,
           ),

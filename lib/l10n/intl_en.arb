@@ -1082,6 +1082,278 @@
   "@currentPassword": {
     "description": "Current password field label"
   },
+  "notificationsTitle": "Notifications",
+  "@notificationsTitle": {
+    "description": "Notifications screen title"
+  },
+  "notificationsMarkAll": "Mark all",
+  "@notificationsMarkAll": {
+    "description": "Mark all notifications as read action"
+  },
+  "notificationsOptionsTitle": "Notification Options",
+  "@notificationsOptionsTitle": {
+    "description": "Bottom sheet title for notification actions"
+  },
+  "notificationsDelete": "Delete",
+  "@notificationsDelete": {
+    "description": "Delete notification action"
+  },
+  "notificationsCancel": "Cancel",
+  "@notificationsCancel": {
+    "description": "Cancel notification action"
+  },
+  "notificationsEmpty": "No notifications yet",
+  "@notificationsEmpty": {
+    "description": "Empty state text on notifications screen"
+  },
+  "notificationsJustNow": "Just now",
+  "@notificationsJustNow": {
+    "description": "Relative time label for notifications created moments ago"
+  },
+  "notificationsMinutesAgo": "{count} min ago",
+  "@notificationsMinutesAgo": {
+    "description": "Relative time label for notifications created minutes ago",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsHoursAgo": "{count} hr ago",
+  "@notificationsHoursAgo": {
+    "description": "Relative time label for notifications created hours ago",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationsDaysAgo": "{count} day(s) ago",
+  "@notificationsDaysAgo": {
+    "description": "Relative time label for notifications created days ago",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionLotAuctionTitle": "Lot Auction",
+  "@auctionLotAuctionTitle": {
+    "description": "Lot auction creation screen title"
+  },
+  "auctionItemAuctionTitle": "Item Auction",
+  "@auctionItemAuctionTitle": {
+    "description": "Item auction creation screen title"
+  },
+  "auctionHeadImage": "Head Image +",
+  "@auctionHeadImage": {
+    "description": "Auction image picker label before selecting an image"
+  },
+  "auctionSelectedFile": "Selected: {name}",
+  "@auctionSelectedFile": {
+    "description": "Auction file selected label",
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "auctionLoadingCategories": "Loading categories...",
+  "@auctionLoadingCategories": {
+    "description": "Hint shown while auction categories are loading"
+  },
+  "auctionSelectCategoryPerItem": "Select a category for each item below.",
+  "@auctionSelectCategoryPerItem": {
+    "description": "Hint telling the seller to choose a category for each lot item"
+  },
+  "auctionSaveContinue": "Save & Continue",
+  "@auctionSaveContinue": {
+    "description": "Auction save and continue button label"
+  },
+  "auctionRemove": "Remove",
+  "@auctionRemove": {
+    "description": "Remove item action in auction forms"
+  },
+  "auctionAddImages": "Add Images +",
+  "@auctionAddImages": {
+    "description": "Auction item image picker label before selecting images"
+  },
+  "auctionSelectedImagesCount": "{count} image(s) selected",
+  "@auctionSelectedImagesCount": {
+    "description": "Auction selected images count label",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionAttributes": "Attributes",
+  "@auctionAttributes": {
+    "description": "Auction attributes section title"
+  },
+  "auctionNoCategoriesFound": "No categories found",
+  "@auctionNoCategoriesFound": {
+    "description": "Auction category dropdown empty hint"
+  },
+  "auctionSelectCategoryHint": "Select category",
+  "@auctionSelectCategoryHint": {
+    "description": "Auction category dropdown hint"
+  },
+  "auctionSelectValue": "Select value",
+  "@auctionSelectValue": {
+    "description": "Auction attribute dropdown hint"
+  },
+  "auctionTrue": "True",
+  "@auctionTrue": {
+    "description": "Boolean true option in auction attribute dropdown"
+  },
+  "auctionFalse": "False",
+  "@auctionFalse": {
+    "description": "Boolean false option in auction attribute dropdown"
+  },
+  "auctionSelectDate": "Select date",
+  "@auctionSelectDate": {
+    "description": "Auction date selection label"
+  },
+  "auctionSelectDateTime": "Select date & time",
+  "@auctionSelectDateTime": {
+    "description": "Auction date and time selection label"
+  },
+  "auctionEnterLotTitle": "Please enter the lot title.",
+  "@auctionEnterLotTitle": {
+    "description": "Validation when lot title is empty"
+  },
+  "auctionEnterLotDescription": "Please enter the lot description.",
+  "@auctionEnterLotDescription": {
+    "description": "Validation when lot description is empty"
+  },
+  "auctionEnterItemTitle": "Please enter a title for item {index}.",
+  "@auctionEnterItemTitle": {
+    "description": "Validation when a lot item title is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterItemCount": "Please enter a count for item {index}.",
+  "@auctionEnterItemCount": {
+    "description": "Validation when a lot item count is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterValidItemCount": "Please enter a valid count for item {index}.",
+  "@auctionEnterValidItemCount": {
+    "description": "Validation when a lot item count is invalid",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterItemDescription": "Please enter a description for item {index}.",
+  "@auctionEnterItemDescription": {
+    "description": "Validation when a lot item description is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionEnterItemWarrantyInfo": "Please enter warranty info for item {index}.",
+  "@auctionEnterItemWarrantyInfo": {
+    "description": "Validation when a lot item warranty info is empty",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionSelectItemCategory": "Please select a category for item {index}.",
+  "@auctionSelectItemCategory": {
+    "description": "Validation when a lot item category is missing",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionItemAttributesLoadError": "Could not load attributes for item {index}. Please retry or choose another category.",
+  "@auctionItemAttributesLoadError": {
+    "description": "Validation when lot item attributes could not be loaded",
+    "placeholders": {
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionInvalidNumberForItemAttribute": "Please enter a valid number for {attribute} in item {index}.",
+  "@auctionInvalidNumberForItemAttribute": {
+    "description": "Validation when a numeric lot item attribute is invalid",
+    "placeholders": {
+      "attribute": {},
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionProvideItemAttribute": "Please provide {attribute} for item {index}.",
+  "@auctionProvideItemAttribute": {
+    "description": "Validation when a required lot item attribute is missing",
+    "placeholders": {
+      "attribute": {},
+      "index": {
+        "type": "int"
+      }
+    }
+  },
+  "auctionLoadCategoryAttributesForItemError": "Could not load category attributes for this item. Try another category or retry later.",
+  "@auctionLoadCategoryAttributesForItemError": {
+    "description": "Error shown when item category attributes fail to load"
+  },
+  "auctionEnterItemTitleSingle": "Please enter the item title.",
+  "@auctionEnterItemTitleSingle": {
+    "description": "Validation when single item auction title is empty"
+  },
+  "auctionSelectCategoryError": "Please select a category.",
+  "@auctionSelectCategoryError": {
+    "description": "Validation when auction category is missing"
+  },
+  "auctionEnterWarrantyInfoError": "Please enter warranty info.",
+  "@auctionEnterWarrantyInfoError": {
+    "description": "Validation when warranty info is empty"
+  },
+  "auctionEnterDescriptionError": "Please enter the description.",
+  "@auctionEnterDescriptionError": {
+    "description": "Validation when description is empty"
+  },
+  "auctionEnterValidCountError": "Please enter a valid count.",
+  "@auctionEnterValidCountError": {
+    "description": "Validation when auction count is invalid"
+  },
+  "auctionLoadCategoryAttributesError": "Could not load category attributes. Try another category.",
+  "@auctionLoadCategoryAttributesError": {
+    "description": "Validation when category attributes could not be loaded"
+  },
+  "auctionInvalidNumberForAttribute": "Please enter a valid number for {attribute}.",
+  "@auctionInvalidNumberForAttribute": {
+    "description": "Validation when a numeric auction attribute is invalid",
+    "placeholders": {
+      "attribute": {}
+    }
+  },
+  "auctionProvideAttribute": "Please provide {attribute}.",
+  "@auctionProvideAttribute": {
+    "description": "Validation when a required auction attribute is missing",
+    "placeholders": {
+      "attribute": {}
+    }
+  },
+  "auctionLoadCategoryAttributesForThisItemError": "Could not load category attributes for this item.",
+  "@auctionLoadCategoryAttributesForThisItemError": {
+    "description": "Error shown when category attributes fail to load for the single item auction form"
+  },
   "withdrawalEmailMissing": "We couldn't find your account email. Please refresh your profile and try again.",
   "@withdrawalEmailMissing": {
     "description": "Shown when email is missing before starting withdrawal verification"

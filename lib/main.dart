@@ -144,7 +144,7 @@ class _SafqaSellerState extends State<SafqaSeller> with WidgetsBindingObserver {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: S.delegate.supportedLocales,
+            supportedLocales: S.supportedLocales,
             initialRoute: AdaptiveLayoutView.routeName,
             onGenerateRoute: onGenerateRoutes,
             home: const AdaptiveLayoutView(),
