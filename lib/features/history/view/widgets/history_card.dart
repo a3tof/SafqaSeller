@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/history/model/models/history_models.dart';
@@ -23,12 +21,14 @@ class HistoryCard extends StatelessWidget {
       constraints: BoxConstraints(minHeight: 130.h),
       padding: EdgeInsets.all(4.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8.r),
         border: Border.all(color: const Color(0xFFCCCCCC), width: 0.5),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0x0D000000),
+            color: Theme.of(context).brightness == Brightness.light
+                ? const Color(0x0D000000)
+                : Colors.transparent,
             blurRadius: 8,
             offset: Offset(0, 2),
           ),
@@ -84,7 +84,7 @@ class HistoryCard extends StatelessWidget {
                     item.title,
                     style: TextStyles.medium16(
                       context,
-                    ).copyWith(color: AppColors.primaryColor),
+                    ).copyWith(color: Theme.of(context).colorScheme.primary),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -140,7 +140,7 @@ class HistoryCard extends StatelessWidget {
                     _formatPrice(item.price),
                     style: TextStyles.semiBold14(
                       context,
-                    ).copyWith(color: Colors.black),
+                    ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                   ),
                 ],
               ),
@@ -176,7 +176,7 @@ class HistoryCard extends StatelessWidget {
         return _StatusStyle(
           label: s.historyStatusFinished,
           backgroundColor: Color(0x1A808080),
-          textColor: Color(0xFF808080),
+          textColor: Theme.of(context).hintColor,
         );
       case AuctionStatus.canceled:
         return _StatusStyle(

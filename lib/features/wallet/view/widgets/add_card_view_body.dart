@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
 import 'package:safqaseller/features/wallet/view_model/add_card/add_card_view_model.dart';
@@ -117,9 +116,9 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
           return Skeletonizer(
             enabled: isLoading,
             child: Scaffold(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               appBar: AppBar(
-                backgroundColor: Colors.white,
+                backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                 elevation: 0,
                 centerTitle: true,
                 automaticallyImplyLeading: false,
@@ -133,7 +132,7 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                     fontFamily: 'AlegreyaSC',
                     fontSize: 28.sp,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),
@@ -213,7 +212,7 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                         child: ElevatedButton(
                           onPressed: isLoading ? null : _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.r),
@@ -300,7 +299,7 @@ class _CardField extends StatelessWidget {
           hintStyle: TextStyle(
             fontSize: 12.sp,
             fontWeight: FontWeight.w600,
-            color: const Color(0xFF808080),
+            color: Theme.of(context).hintColor,
           ),
           border: InputBorder.none,
           contentPadding:

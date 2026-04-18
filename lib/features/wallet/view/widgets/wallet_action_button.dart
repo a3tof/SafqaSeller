@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 
 /// Circular action button (Deposit / Withdrawal) used on the wallet screen.
@@ -25,8 +24,8 @@ class WalletActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayLabel = label.replaceAll(r'\n', '\n');
-    final circleColor = backgroundColor ?? AppColors.secondaryColor;
-    final foregroundColor = iconColor ?? AppColors.primaryColor;
+    final circleColor = backgroundColor ?? Theme.of(context).colorScheme.secondary;
+    final foregroundColor = iconColor ?? Theme.of(context).colorScheme.primary;
 
     return GestureDetector(
       onTap: onTap,
@@ -55,7 +54,7 @@ class WalletActionButton extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
               style: TextStyles.medium14(context)
-                  .copyWith(color: AppColors.primaryColor, height: 1.15),
+                  .copyWith(color: Theme.of(context).colorScheme.primary, height: 1.15),
             ),
           ),
         ],

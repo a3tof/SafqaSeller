@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
 
@@ -106,7 +105,7 @@ class CardListItem extends StatelessWidget {
           ],
           icon: Icon(
             Icons.more_vert_rounded,
-            color: AppColors.primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             size: 28.sp,
           ),
         ),

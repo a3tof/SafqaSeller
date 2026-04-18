@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/wallet/view/add_card_view.dart';
 import 'package:safqaseller/features/wallet/view/widgets/card_list_item.dart';
@@ -27,15 +26,15 @@ class SavedCardsViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
           icon: Icon(Icons.arrow_back_ios_new,
-              color: AppColors.primaryColor, size: 22.sp),
+              color: Theme.of(context).colorScheme.primary, size: 22.sp),
         ),
         title: Text(
           'Saved Cards',
@@ -43,14 +42,14 @@ class SavedCardsViewBody extends StatelessWidget {
             fontFamily: 'AlegreyaSC',
             fontSize: 28.sp,
             fontWeight: FontWeight.w700,
-            color: AppColors.primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         actions: [
           IconButton(
             onPressed: () => _openAddCard(context),
             icon: Icon(Icons.add_rounded,
-                color: AppColors.primaryColor, size: 28.sp),
+                color: Theme.of(context).colorScheme.primary, size: 28.sp),
           ),
         ],
       ),
@@ -95,7 +94,7 @@ class SavedCardsViewBody extends StatelessWidget {
                       ElevatedButton(
                         onPressed: () => _openAddCard(context),
                         style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor),
+                            backgroundColor: Theme.of(context).colorScheme.primary),
                         child: Text(S.of(context).kAddCard,
                             style: TextStyles.semiBold16(context)
                                 .copyWith(color: Colors.white)),

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/features/wallet/view/deposit_view.dart';
@@ -50,7 +49,7 @@ class _WalletViewBodyState extends State<WalletViewBody> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: buildAppBar(context: context, title: S.of(context).kWallet),
       body: BlocBuilder<WalletViewModel, WalletState>(
         builder: (context, state) {
@@ -72,7 +71,7 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                     ElevatedButton(
                       onPressed: () => context.read<WalletViewModel>().loadWallet(),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                       ),
                       child: Text(
                         S.of(context).retry,
@@ -140,7 +139,7 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                     icon: Icons.arrow_upward_rounded,
                                     label: S.of(context).kDepositNmoney,
                                     onTap: () => _openRoute(DepositView.routeName),
-                                    backgroundColor: const Color(0xFFE7F6EC),
+                                    backgroundColor: const Color(0xFF00762E).withOpacity(0.1),
                                     iconColor: const Color(0xFF00762E),
                                   ),
                                   WalletActionButton(
@@ -148,7 +147,7 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                     label: S.of(context).kWithdrawalNmoney,
                                     onTap: () =>
                                         _openRoute(WithdrawalView.routeName),
-                                    backgroundColor: const Color(0xFFFDEBEC),
+                                    backgroundColor: const Color(0xFFBA1A1A).withOpacity(0.1),
                                     iconColor: const Color(0xFFBA1A1A),
                                   ),
                                   WalletActionButton(
@@ -156,8 +155,8 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                     label: S.of(context).savedCards,
                                     onTap: () =>
                                         _openRoute(SavedCardsView.routeName),
-                                    backgroundColor: AppColors.secondaryColor,
-                                    iconColor: AppColors.primaryColor,
+                                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                                    iconColor: Theme.of(context).colorScheme.primary,
                                   ),
                                 ],
                               ),
@@ -171,7 +170,7 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                     S.of(context).kTransactionHistory,
                                     style: TextStyles.medium20(
                                       context,
-                                    ).copyWith(color: Colors.black),
+                                    ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                                   ),
                                 ),
                                 TextButton(
@@ -183,7 +182,7 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                     style: TextStyles.regular14(
                                       context,
                                     ).copyWith(
-                                      color: AppColors.primaryColor,
+                                      color: Theme.of(context).colorScheme.primary,
                                       decoration: TextDecoration.underline,
                                     ),
                                   ),
@@ -265,7 +264,7 @@ class _BalanceSection extends StatelessWidget {
               title,
               style: TextStyles.regular16(
                 context,
-              ).copyWith(color: AppColors.primaryColor),
+              ).copyWith(color: Theme.of(context).colorScheme.primary),
             ),
             SizedBox(width: 8.w),
             InkWell(
@@ -276,7 +275,7 @@ class _BalanceSection extends StatelessWidget {
                 child: Icon(
                   isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
                   size: 20.sp,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -287,7 +286,7 @@ class _BalanceSection extends StatelessWidget {
           formattedBalance,
           textAlign: TextAlign.center,
           style: TextStyles.bold28(context).copyWith(
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.onSurface,
             fontSize: 34.sp,
           ),
         ),

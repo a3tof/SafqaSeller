@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
@@ -116,7 +115,7 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
         }
       },
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: buildAppBar(context: context, title: S.of(context).kWithdrawal),
         body: FutureBuilder<List<CardModel>>(
           future: _cardsFuture,
@@ -143,7 +142,7 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
                         ElevatedButton(
                           onPressed: _refreshCards,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primaryColor,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                           ),
                           child: Text(
                             S.of(context).retry,
@@ -209,7 +208,7 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
                                     ElevatedButton(
                                       onPressed: _openAddCard,
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: AppColors.primaryColor,
+                                        backgroundColor: Theme.of(context).colorScheme.primary,
                                       ),
                                       child: Text(
                                         S.of(context).kAddCard,
@@ -259,12 +258,12 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(12.r),
                                 border: Border.all(
-                                  color: AppColors.primaryColor,
+                                  color: Theme.of(context).colorScheme.primary,
                                   width: 1.5,
                                 ),
                                 boxShadow: [
                                   BoxShadow(
-                                    color: AppColors.primaryColor.withValues(
+                                    color: Theme.of(context).colorScheme.primary.withValues(
                                       alpha: 0.08,
                                     ),
                                     blurRadius: 12,
@@ -306,7 +305,7 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
                                   prefixStyle: TextStyle(
                                     fontSize: 20.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: AppColors.primaryColor,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -321,7 +320,7 @@ class _WithdrawalViewBodyState extends State<WithdrawalViewBody> {
                                   child: ElevatedButton(
                                     onPressed: isLoading ? null : () => _submit(cards),
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: AppColors.primaryColor,
+                                      backgroundColor: Theme.of(context).colorScheme.primary,
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(16.r),

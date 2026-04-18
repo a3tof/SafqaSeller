@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/features/auction/view/lot_detail_route_args.dart';
 import 'package:safqaseller/features/auction/view/lot_detail_view.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
@@ -94,9 +93,9 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
   Widget build(BuildContext context) {
     final s = S.of(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         centerTitle: true,
         elevation: 0,
         surfaceTintColor: Colors.white,
@@ -104,7 +103,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
           onPressed: () => Navigator.of(context).maybePop(),
           icon: Icon(
             Icons.arrow_back_ios_new,
-            color: AppColors.primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             size: 22.sp,
           ),
         ),
@@ -116,7 +115,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
                 textInputAction: TextInputAction.search,
                 style: TextStyles.medium16(
                   context,
-                ).copyWith(color: AppColors.primaryColor),
+                ).copyWith(color: Theme.of(context).colorScheme.primary),
                 decoration: InputDecoration(
                   hintText: s.historySearchHint,
                   hintStyle: TextStyles.regular14(
@@ -128,7 +127,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
             : Text(
                 s.kHistory,
                 style: TextStyles.bold28(context).copyWith(
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   fontFamily:
                       Localizations.localeOf(context).languageCode == 'ar'
                       ? 'Cairo'
@@ -140,7 +139,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
             onPressed: _toggleSearch,
             icon: Icon(
               _isSearching ? Icons.close_rounded : Icons.search_rounded,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               size: 26.sp,
             ),
           ),
@@ -182,7 +181,7 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
                       onPressed: () =>
                           context.read<HistoryViewModel>().loadPage(1),
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         foregroundColor: Colors.white,
                       ),
                       child: Text(s.historyRetry),
@@ -375,18 +374,22 @@ class _PaginationButton extends StatelessWidget {
         height: 38.w,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primaryColor : Colors.white,
+          color: isSelected
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(
             color: isSelected
-                ? AppColors.primaryColor
-                : const Color(0xFFD9D9D9),
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).colorScheme.outline,
           ),
         ),
         child: Text(
           '$page',
           style: TextStyles.semiBold13(context).copyWith(
-            color: isSelected ? Colors.white : const Color(0xFF666666),
+            color: isSelected
+                ? Colors.white
+                : Theme.of(context).colorScheme.onSurface,
           ),
         ),
       ),
@@ -414,13 +417,15 @@ class _PaginationArrowButton extends StatelessWidget {
         width: 38.w,
         height: 38.w,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(10.r),
-          border: Border.all(color: const Color(0xFFD9D9D9)),
+          border: Border.all(color: Theme.of(context).colorScheme.outline),
         ),
         child: Icon(
           icon,
-          color: isEnabled ? AppColors.primaryColor : const Color(0xFFBDBDBD),
+          color: isEnabled
+              ? Theme.of(context).colorScheme.primary
+              : Color(0xFFBDBDBD),
           size: 22.sp,
         ),
       ),
@@ -441,22 +446,22 @@ class _HistoryHeader extends StatelessWidget {
         Container(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
           decoration: BoxDecoration(
-            color: const Color(0xFFF1F1F1),
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20.r),
           ),
           child: Text(
             '$totalCount ${s.historyAuctions}',
             style: TextStyles.regular11(
               context,
-            ).copyWith(color: const Color(0xFF444444)),
+            ).copyWith(color: Theme.of(context).colorScheme.onSurface),
           ),
         ),
-        const Spacer(),
+        Spacer(),
         //* Export button is not implemented yet
         // ElevatedButton.icon(
         //   onPressed: () {},
         //   style: ElevatedButton.styleFrom(
-        //     backgroundColor: AppColors.primaryColor,
+        //     backgroundColor: Theme.of(context).colorScheme.primary,
         //     foregroundColor: Colors.white,
         //     elevation: 0,
         //     padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),

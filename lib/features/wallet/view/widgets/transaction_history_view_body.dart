@@ -18,7 +18,7 @@ class TransactionHistoryViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: buildAppBar(context: context, title: S.of(context).kTransactions),
       body: BlocBuilder<WalletViewModel, WalletState>(
         builder: (context, state) {

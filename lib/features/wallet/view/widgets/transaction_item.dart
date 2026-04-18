@@ -11,14 +11,13 @@ class TransactionItem extends StatelessWidget {
 
   final TransactionModel transaction;
 
-  static const _titleColor = Color(0xFF064061);
   static const _dateColor = Color(0xFFAAAAAA);
   // Amount colours per type
   static const _withdrawalColor = Color(0xFFBA1A1A);
   static const _depositColor = Color(0xFF00762E);
   static const _auctionColor = Color(0xFF00762E);
 
-  Color get _amountColor {
+  Color _amountColor(BuildContext context) {
     switch (transaction.type) {
       case TransactionType.withdrawal:
         return _withdrawalColor;
@@ -27,7 +26,7 @@ class TransactionItem extends StatelessWidget {
       case TransactionType.auctionDeposit:
         return _auctionColor;
       case TransactionType.other:
-        return Colors.black;
+        return Theme.of(context).colorScheme.onSurface;
     }
   }
 
@@ -48,7 +47,7 @@ class TransactionItem extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
-        color: const Color(0xFFFAFAFA),
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
@@ -60,7 +59,7 @@ class TransactionItem extends StatelessWidget {
               Text(
                 transaction.title,
                 style: TextStyles.medium15(context)
-                    .copyWith(color: _titleColor),
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
               SizedBox(height: 6.h),
               Text(
@@ -72,7 +71,7 @@ class TransactionItem extends StatelessWidget {
           ),
           Text(
             amountStr,
-            style: TextStyles.semiBold16(context).copyWith(color: _amountColor),
+            style: TextStyles.semiBold16(context).copyWith(color: _amountColor(context)),
           ),
         ],
       ),
