@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/auction/model/models/auction_detail_model.dart';
@@ -99,23 +98,23 @@ class _LotDetailViewState extends State<LotDetailView> {
         };
 
         if (state is AuctionDetailLoading && detail == null) {
-          return const Scaffold(
-            backgroundColor: Colors.white,
+          return Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
         if (detail == null) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               surfaceTintColor: Colors.white,
               leading: IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: Icon(
                   Icons.arrow_back_ios_new,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   size: 20.sp,
                 ),
               ),
@@ -150,15 +149,15 @@ class _LotDetailViewState extends State<LotDetailView> {
             : item.price;
 
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Colors.white,
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: Icon(
                 Icons.arrow_back_ios_new,
-                color: AppColors.primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 size: 20.sp,
               ),
             ),
@@ -170,7 +169,7 @@ class _LotDetailViewState extends State<LotDetailView> {
                     _formatLotNumber(context, item.lotNumber),
                     style: TextStyles.semiBold14(
                       context,
-                    ).copyWith(color: AppColors.primaryColor),
+                    ).copyWith(color: Theme.of(context).colorScheme.primary),
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
@@ -192,7 +191,7 @@ class _LotDetailViewState extends State<LotDetailView> {
                       s.kEdit,
                       style: TextStyles.regular12(
                         context,
-                      ).copyWith(color: AppColors.primaryColor),
+                      ).copyWith(color: Theme.of(context).colorScheme.primary),
                     ),
                   ),
                   SizedBox(width: 12.w),
@@ -223,7 +222,7 @@ class _LotDetailViewState extends State<LotDetailView> {
                           detail.title,
                           style: TextStyles.semiBold15(
                             context,
-                          ).copyWith(color: Colors.black),
+                          ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                         ),
                         SizedBox(height: 8.h),
                         Row(
@@ -248,7 +247,7 @@ class _LotDetailViewState extends State<LotDetailView> {
                           s.auctionLotDescription,
                           style: TextStyles.semiBold16(
                             context,
-                          ).copyWith(color: Colors.black),
+                          ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                         ),
                         SizedBox(height: 6.h),
                         Text(
@@ -275,8 +274,8 @@ class _LotDetailViewState extends State<LotDetailView> {
                 ),
                 Container(
                   padding: EdgeInsets.fromLTRB(16.w, 10.h, 16.w, 16.h),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).cardColor,
                     boxShadow: [
                       BoxShadow(
                         color: Color(0x14000000),
@@ -302,7 +301,7 @@ class _LotDetailViewState extends State<LotDetailView> {
                               item.timeLeft ?? '--',
                               style: TextStyles.semiBold13(
                                 context,
-                              ).copyWith(color: Colors.black),
+                              ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                             ),
                           ],
                         ),
@@ -321,7 +320,7 @@ class _LotDetailViewState extends State<LotDetailView> {
                             _formatPrice(displayPrice),
                             style: TextStyles.bold16(
                               context,
-                            ).copyWith(color: Colors.black),
+                            ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                           ),
                         ],
                       ),
@@ -380,9 +379,9 @@ class _DateInfo extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: const Color(0xFFF8FBFF),
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(8.r),
-        border: Border.all(color: const Color(0xFFE0E6EF)),
+        border: Border.all(color: Theme.of(context).colorScheme.outline),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -391,14 +390,14 @@ class _DateInfo extends StatelessWidget {
             title,
             style: TextStyles.regular11(
               context,
-            ).copyWith(color: const Color(0xFF7D7D7D)),
+            ).copyWith(color: Theme.of(context).hintColor),
           ),
           SizedBox(height: 2.h),
           Text(
             value,
             style: TextStyles.semiBold13(
               context,
-            ).copyWith(color: AppColors.primaryColor),
+            ).copyWith(color: Theme.of(context).colorScheme.primary),
           ),
         ],
       ),
@@ -425,13 +424,13 @@ class _AuctionItemTile extends StatelessWidget {
       children: [
         Text(
           '${S.of(context).auctionItem} ($index)',
-          style: TextStyles.regular12(context).copyWith(color: Colors.black),
+          style: TextStyles.regular12(context).copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         SizedBox(height: 6.h),
         Container(
           padding: EdgeInsets.all(8.w),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(10.r),
             border: Border.all(color: const Color(0xFFE6E6E6)),
           ),
@@ -455,7 +454,7 @@ class _AuctionItemTile extends StatelessWidget {
                       item.title,
                       style: TextStyles.semiBold13(
                         context,
-                      ).copyWith(color: Colors.black),
+                      ).copyWith(color: Theme.of(context).colorScheme.onSurface),
                     ),
                     SizedBox(height: 2.h),
                     Text(

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/features/auction/model/models/category_attribute_model.dart';
@@ -290,7 +289,7 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
         final categories = cubit.categories;
 
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: buildAppBar(context: context, title: s.auctionLotAuctionTitle),
           body: SafeArea(
             child: SingleChildScrollView(
@@ -370,13 +369,13 @@ class _LotAuctionViewBodyState extends State<_LotAuctionViewBody> {
                       icon: Icon(
                         Icons.add_circle_outline_rounded,
                         size: 18.sp,
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                       label: Text(
                         s.auctionAddItem,
                         style: TextStyles.semiBold13(
                           context,
-                        ).copyWith(color: AppColors.primaryColor),
+                        ).copyWith(color: Theme.of(context).colorScheme.primary),
                       ),
                     ),
                   ),
@@ -460,7 +459,7 @@ class _LotItemCard extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),
         border: Border.all(color: const Color(0xFFE4E4E4)),
       ),
@@ -559,7 +558,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: TextStyles.semiBold16(context).copyWith(color: Colors.black),
+      style: TextStyles.semiBold16(context).copyWith(color: Theme.of(context).colorScheme.onSurface),
     );
   }
 }
@@ -599,7 +598,7 @@ class _UploadBox extends StatelessWidget {
         width: double.infinity,
         height: height.h,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(10.r),
           border: Border.all(color: const Color(0xFFE0E0E0)),
         ),
@@ -642,11 +641,11 @@ class _AuctionTextField extends StatelessWidget {
         contentPadding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.r),
-          borderSide: const BorderSide(color: Color(0xFFE4E4E4)),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.outline),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.r),
-          borderSide: const BorderSide(color: AppColors.primaryColor),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -678,7 +677,7 @@ class _ConditionRow extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: selected == condition
-                        ? AppColors.primaryColor
+                        ? Theme.of(context).colorScheme.primary
                         : const Color(0xFFBDBDBD),
                   ),
                 ),
@@ -687,9 +686,9 @@ class _ConditionRow extends StatelessWidget {
                         child: Container(
                           width: 8.w,
                           height: 8.w,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: AppColors.primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       )
@@ -722,7 +721,7 @@ class _PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.r),
           ),

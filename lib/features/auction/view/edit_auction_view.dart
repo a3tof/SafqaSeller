@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/auction/model/models/auction_detail_model.dart';
@@ -246,23 +245,23 @@ class _EditAuctionViewState extends State<EditAuctionView> {
         };
 
         if (state is EditAuctionLoading && detail == null) {
-          return const Scaffold(
-            backgroundColor: Colors.white,
+          return Scaffold(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             body: Center(child: CircularProgressIndicator()),
           );
         }
 
         if (detail == null) {
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               surfaceTintColor: Colors.white,
               leading: IconButton(
                 onPressed: () => Navigator.pop(context),
                 icon: Icon(
                   Icons.arrow_back_ios_new,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   size: 20.sp,
                 ),
               ),
@@ -279,15 +278,15 @@ class _EditAuctionViewState extends State<EditAuctionView> {
         final isSaving = state is EditAuctionSaving;
 
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             surfaceTintColor: Colors.white,
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: Icon(
                 Icons.arrow_back_ios_new,
-                color: AppColors.primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 size: 20.sp,
               ),
             ),
@@ -295,7 +294,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
               s.auctionEditTitle,
               style: TextStyles.semiBold20(
                 context,
-              ).copyWith(color: AppColors.primaryColor),
+              ).copyWith(color: Theme.of(context).colorScheme.primary),
             ),
             centerTitle: true,
           ),
@@ -317,7 +316,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
                             width: 156.w,
                             padding: EdgeInsets.all(12.w),
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).cardColor,
                               borderRadius: BorderRadius.circular(12.r),
                               border: Border.all(color: const Color(0xFFE4E4E4)),
                             ),
@@ -337,7 +336,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
                           s.auctionTapToChangeImage,
                           style: TextStyles.regular12(
                             context,
-                          ).copyWith(color: Colors.black54),
+                          ).copyWith(color: Theme.of(context).hintColor),
                         ),
                       ],
                     ),
@@ -393,7 +392,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
                     child: ElevatedButton(
                       onPressed: isSaving ? null : _saveAuction,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryColor,
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.r),
                         ),
@@ -455,13 +454,13 @@ class _EditItemCardState extends State<_EditItemCard> {
       children: [
         Text(
           '${s.auctionItem} (${widget.index})',
-          style: TextStyles.semiBold16(context).copyWith(color: Colors.black),
+          style: TextStyles.semiBold16(context).copyWith(color: Theme.of(context).colorScheme.onSurface),
         ),
         SizedBox(height: 8.h),
         Container(
           padding: EdgeInsets.all(12.w),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(12.r),
             border: Border.all(color: const Color(0xFFE4E4E4)),
           ),
@@ -521,7 +520,7 @@ class _EditItemCardState extends State<_EditItemCard> {
                   s.auctionTapToAddImages,
                   style: TextStyles.regular12(
                     context,
-                  ).copyWith(color: AppColors.primaryColor),
+                  ).copyWith(color: Theme.of(context).colorScheme.primary),
                 ),
               ),
               SizedBox(height: 10.h),
@@ -534,7 +533,7 @@ class _EditItemCardState extends State<_EditItemCard> {
                 s.auctionCategory,
                 style: TextStyles.regular12(
                   context,
-                ).copyWith(color: Colors.black),
+                ).copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
               SizedBox(height: 8.h),
               _CategoryDropdown(
@@ -565,7 +564,7 @@ class _EditItemCardState extends State<_EditItemCard> {
                 s.auctionCondition,
                 style: TextStyles.regular12(
                   context,
-                ).copyWith(color: Colors.black),
+                ).copyWith(color: Theme.of(context).colorScheme.onSurface),
               ),
               SizedBox(height: 8.h),
               Wrap(
@@ -586,7 +585,7 @@ class _EditItemCardState extends State<_EditItemCard> {
                             shape: BoxShape.circle,
                             border: Border.all(
                               color: widget.data.selectedCondition == condition
-                                  ? AppColors.primaryColor
+                                  ? Theme.of(context).colorScheme.primary
                                   : const Color(0xFFBDBDBD),
                             ),
                           ),
@@ -595,9 +594,9 @@ class _EditItemCardState extends State<_EditItemCard> {
                                   child: Container(
                                     width: 8.w,
                                     height: 8.w,
-                                    decoration: const BoxDecoration(
+                                    decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      color: AppColors.primaryColor,
+                                      color: Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 )
@@ -642,7 +641,7 @@ class _SectionLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: TextStyles.semiBold16(context).copyWith(color: Colors.black),
+      style: TextStyles.semiBold16(context).copyWith(color: Theme.of(context).colorScheme.onSurface),
     );
   }
 }
@@ -683,7 +682,7 @@ class _AuctionTextField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(6.r),
-          borderSide: const BorderSide(color: AppColors.primaryColor),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );

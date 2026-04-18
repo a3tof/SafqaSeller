@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/features/history/view/history_view.dart';
@@ -195,7 +194,7 @@ class _PriceDurationViewState extends State<PriceDurationView> {
         final isSubmitting = state is CreateAuctionSubmitting;
 
         return Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           appBar: buildAppBar(context: context, title: s.auctionPriceDuration),
           body: SafeArea(
             child: Padding(
@@ -298,7 +297,7 @@ class _PriceDurationViewState extends State<PriceDurationView> {
                           _durationLabel(s),
                           style: TextStyles.semiBold14(
                             context,
-                          ).copyWith(color: AppColors.primaryColor),
+                          ).copyWith(color: Theme.of(context).colorScheme.primary),
                         ),
                       ],
                     ),
@@ -339,7 +338,7 @@ class _DateField extends StatelessWidget {
       onTap: onTap,
       style: TextStyles.semiBold14(
         context,
-      ).copyWith(color: AppColors.primaryColor),
+      ).copyWith(color: Theme.of(context).colorScheme.primary),
       decoration: InputDecoration(
         hintText: hintText,
         hintStyle: TextStyles.regular12(
@@ -347,7 +346,7 @@ class _DateField extends StatelessWidget {
         ).copyWith(color: const Color(0xFF9A9A9A)),
         suffixIcon: Icon(
           Icons.calendar_today_outlined,
-          color: AppColors.primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           size: 20.sp,
         ),
         isDense: true,
@@ -358,7 +357,7 @@ class _DateField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),
-          borderSide: const BorderSide(color: AppColors.primaryColor),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -393,7 +392,7 @@ class _InputField extends StatelessWidget {
       keyboardType: keyboardType,
       style: TextStyles.semiBold14(
         context,
-      ).copyWith(color: AppColors.primaryColor),
+      ).copyWith(color: Theme.of(context).colorScheme.primary),
       decoration: InputDecoration(
         hintText: hintText,
         isDense: true,
@@ -404,7 +403,7 @@ class _InputField extends StatelessWidget {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(4.r),
-          borderSide: const BorderSide(color: AppColors.primaryColor),
+          borderSide: BorderSide(color: Theme.of(context).colorScheme.primary),
         ),
       ),
     );
@@ -431,16 +430,16 @@ class _ChoiceChipBox extends StatelessWidget {
         height: 32.h,
         padding: EdgeInsets.symmetric(horizontal: 8.w),
         decoration: BoxDecoration(
-          color: selected ? AppColors.secondaryColor : Colors.white,
+          color: selected ? Theme.of(context).colorScheme.secondary : Colors.white,
           borderRadius: BorderRadius.circular(4.r),
           border: Border.all(
-            color: selected ? AppColors.primaryColor : const Color(0xFFE4E4E4),
+            color: selected ? Theme.of(context).colorScheme.primary : Color(0xFFE4E4E4),
           ),
         ),
         child: Text(
           label,
           style: TextStyles.regular11(context).copyWith(
-            color: selected ? AppColors.primaryColor : const Color(0xFF888888),
+            color: selected ? Theme.of(context).colorScheme.primary : Color(0xFF888888),
           ),
         ),
       ),
@@ -462,7 +461,7 @@ class _PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onTap,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8.r),
           ),
