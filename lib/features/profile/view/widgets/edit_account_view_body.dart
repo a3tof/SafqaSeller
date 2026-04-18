@@ -1,4 +1,4 @@
-import 'dart:convert';
+﻿import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/location_picker_field.dart';
@@ -187,7 +186,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
       ),
@@ -240,7 +239,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
                       S.of(context).kCity,
                       style: TextStyles.bold18(
                         context,
-                      ).copyWith(color: AppColors.primaryColor),
+                      ).copyWith(color: Theme.of(context).colorScheme.primary),
                     ),
                     SizedBox(height: 16.h),
                     Text(
@@ -269,11 +268,11 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
                     ),
                     SizedBox(height: 8.h),
                     if (isLoadingCities)
-                      const Center(
+                      Center(
                         child: Padding(
                           padding: EdgeInsets.all(12),
                           child: CircularProgressIndicator(
-                            color: AppColors.primaryColor,
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       )
@@ -293,7 +292,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
                       height: 44.h,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primaryColor,
+                          backgroundColor: Theme.of(context).colorScheme.primary,
                           foregroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.r),
@@ -363,7 +362,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
     final isProfileLoading = profileState is ProfileInitial;
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: buildAppBar(context: context, title: S.of(context).kEditAccount),
       body: BlocListener<ProfileViewModel, ProfileViewModelState>(
         listener: (context, state) {
@@ -393,7 +392,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
               child: Skeletonizer(
                 enabled: isProfileLoading,
                 child: RefreshIndicator(
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   onRefresh: _refreshProfile,
                   child: Form(
                     key: _formKey,
@@ -476,7 +475,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
                             S.of(context).kDescription,
                             style: TextStyles.semiBold16(
                               context,
-                            ).copyWith(color: AppColors.primaryColor),
+                            ).copyWith(color: Theme.of(context).colorScheme.primary),
                           ),
                           SizedBox(height: 10.h),
                           Container(
@@ -517,7 +516,7 @@ class _EditAccountViewBodyState extends State<EditAccountViewBody> {
                             height: 40.h,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor,
+                                backgroundColor: Theme.of(context).colorScheme.primary,
                                 foregroundColor: Colors.white,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
@@ -590,7 +589,7 @@ class _EditableAvatar extends StatelessWidget {
                   : Icon(
                       Icons.store_rounded,
                       size: 56.sp,
-                      color: AppColors.primaryColor,
+                      color: Theme.of(context).colorScheme.primary,
                     ),
             ),
           ),
@@ -606,7 +605,7 @@ class _EditableAvatar extends StatelessWidget {
                 width: 38.w,
                 height: 38.w,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white, width: 2),
                 ),
@@ -647,7 +646,7 @@ class _EditFieldRow extends StatelessWidget {
       children: [
         Row(
           children: [
-            Icon(icon, color: AppColors.primaryColor, size: 22.sp),
+            Icon(icon, color: Theme.of(context).colorScheme.primary, size: 22.sp),
             SizedBox(width: 14.w),
             Expanded(
               child: TextFormField(
@@ -699,7 +698,7 @@ class _PickerFieldRow extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(icon, color: AppColors.primaryColor, size: 22.sp),
+              Icon(icon, color: Theme.of(context).colorScheme.primary, size: 22.sp),
               SizedBox(width: 14.w),
               Expanded(
                 child: Text(
@@ -707,7 +706,7 @@ class _PickerFieldRow extends StatelessWidget {
                   style: TextStyles.semiBold16(context).copyWith(
                     color: isPlaceholder
                         ? const Color(0xFF939393)
-                        : AppColors.primaryColor,
+                        : Theme.of(context).colorScheme.primary,
                   ),
                 ),
               ),

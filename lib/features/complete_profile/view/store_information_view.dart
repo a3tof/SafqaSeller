@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/custom_button.dart';
@@ -54,7 +53,7 @@ class _StoreInformationViewState extends State<StoreInformationView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: buildAppBar(context: context, title: S.of(context).kStoreInformation),
       body: SafeArea(
         child: Form(
@@ -141,7 +140,7 @@ class _StoreInformationViewState extends State<StoreInformationView> {
                   },
                   text: 'Save & Continue',
                   textColor: Colors.white,
-                  backgroundColor: AppColors.primaryColor,
+                  backgroundColor: Theme.of(context).colorScheme.primary,
                 ),
                 SizedBox(height: 16.h),
               ],
@@ -177,7 +176,7 @@ class _FieldLabel extends StatelessWidget {
     return Text(
       label,
       style: TextStyles.semiBold16(context)
-          .copyWith(color: AppColors.primaryColor),
+          .copyWith(color: Theme.of(context).colorScheme.primary),
     );
   }
 }

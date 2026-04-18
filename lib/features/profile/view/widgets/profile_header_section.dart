@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/profile/view/edit_account_view.dart';
 import 'package:safqaseller/features/profile/view_model/profile_view_model.dart';
@@ -31,7 +30,7 @@ class ProfileHeaderSection extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  _buildAvatar(),
+                  _buildAvatar(context),
                   if (activePlanLabel != null) ...[
                     SizedBox(height: 12.h),
                     _PlanBadge(
@@ -48,7 +47,7 @@ class ProfileHeaderSection extends StatelessWidget {
             children: [
               _ActionButton(
                 label: S.of(context).kUpgrade,
-                backgroundColor: AppColors.secondaryColor,
+                backgroundColor: Theme.of(context).colorScheme.secondary,
                 onTap: () async {
                   await Navigator.pushNamed(
                     context,
@@ -61,7 +60,7 @@ class ProfileHeaderSection extends StatelessWidget {
               SizedBox(height: 8.h),
               _ActionButton(
                 label: S.of(context).kEdit,
-                backgroundColor: const Color(0xFFF5F5F5),
+                backgroundColor: Theme.of(context).colorScheme.surface,
                 onTap: () async {
                   final result = await Navigator.pushNamed(
                     context,
@@ -97,7 +96,7 @@ class ProfileHeaderSection extends StatelessWidget {
     }
   }
 
-  Widget _buildAvatar() {
+  Widget _buildAvatar(BuildContext context) {
     return Stack(
       children: [
         Container(
@@ -105,7 +104,7 @@ class ProfileHeaderSection extends StatelessWidget {
           height: 90.w,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.secondaryColor,
+            color: Theme.of(context).colorScheme.secondary,
             border: Border.all(color: const Color(0xFFCCDDEE), width: 2),
           ),
           child: ClipOval(
@@ -113,7 +112,7 @@ class ProfileHeaderSection extends StatelessWidget {
                 ? Image.memory(logoBytes!, fit: BoxFit.cover)
                 : Icon(
                     Icons.store_rounded,
-                    color: AppColors.primaryColor,
+                    color: Theme.of(context).colorScheme.primary,
                     size: 50.sp,
                   ),
           ),
@@ -126,7 +125,7 @@ class ProfileHeaderSection extends StatelessWidget {
             height: 24.w,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               border: Border.all(color: Colors.white, width: 2),
             ),
             child: Icon(Icons.check, color: Colors.white, size: 14.sp),
@@ -164,7 +163,7 @@ class _ActionButton extends StatelessWidget {
             label,
             style: TextStyles.semiBold13(
               context,
-            ).copyWith(color: AppColors.primaryColor),
+            ).copyWith(color: Theme.of(context).colorScheme.primary),
             textAlign: TextAlign.center,
           ),
         ),
@@ -184,14 +183,14 @@ class _PlanBadge extends StatelessWidget {
       constraints: BoxConstraints(maxWidth: 170.w),
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
       decoration: BoxDecoration(
-        color: AppColors.primaryColor.withValues(alpha: 0.08),
+        color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.08),
         borderRadius: BorderRadius.circular(14.r),
       ),
       child: Text(
         label,
         style: TextStyles.semiBold13(
           context,
-        ).copyWith(color: AppColors.primaryColor),
+        ).copyWith(color: Theme.of(context).colorScheme.primary),
         textAlign: TextAlign.center,
       ),
     );

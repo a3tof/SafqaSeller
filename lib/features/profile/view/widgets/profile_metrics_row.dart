@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 
 class ProfileMetricsRow extends StatelessWidget {
@@ -30,13 +29,13 @@ class ProfileMetricsRow extends StatelessWidget {
           SizedBox(width: 32.w),
           _MetricItem(
             icon: Icons.groups_outlined,
-            iconColor: AppColors.primaryColor,
+            iconColor: Theme.of(context).colorScheme.primary,
             value: followersCount,
           ),
           SizedBox(width: 32.w),
           _MetricItem(
             icon: Icons.gavel_outlined,
-            iconColor: AppColors.primaryColor,
+            iconColor: Theme.of(context).colorScheme.primary,
             value: auctionsCount,
           ),
         ],
@@ -66,7 +65,7 @@ class _MetricItem extends StatelessWidget {
         Text(
           value,
           style: TextStyles.semiBold14(context).copyWith(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
       ],

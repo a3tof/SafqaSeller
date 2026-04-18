@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 
 class ProfileInfoField extends StatelessWidget {
@@ -19,19 +18,19 @@ class ProfileInfoField extends StatelessWidget {
       width: double.infinity,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: const Color(0xFFE6E9E9), width: 1),
+        border: Border.all(color: Theme.of(context).dividerColor, width: 1),
       ),
       child: Row(
         children: [
-          Icon(icon, color: AppColors.primaryColor, size: 22.sp),
+          Icon(icon, color: Theme.of(context).colorScheme.primary, size: 22.sp),
           SizedBox(width: 12.w),
           Expanded(
             child: Text(
               value,
               style: TextStyles.regular14(context).copyWith(
-                color: AppColors.primaryColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               overflow: TextOverflow.ellipsis,
             ),

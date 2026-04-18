@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/auth/view_model/auth/auth_view_model.dart';
 import 'package:safqaseller/features/auth/view_model/auth/auth_view_model_state.dart';
@@ -20,7 +19,7 @@ class SellerHomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => getIt<SellerViewModel>()..getSellerHome(),
-      child: const _SellerHomeBody(),
+      child: _SellerHomeBody(),
     );
   }
 }
@@ -31,14 +30,14 @@ class _SellerHomeBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: BlocBuilder<SellerViewModel, SellerViewModelState>(
           builder: (context, state) {
             if (state is SellerLoading) {
-              return const Center(
+              return Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               );
             }
@@ -60,7 +59,7 @@ class _SellerHomeBody extends StatelessWidget {
                         state.message,
                         textAlign: TextAlign.center,
                         style: TextStyles.regular16(context)
-                            .copyWith(color: const Color(0xFF444444)),
+                            .copyWith(color: Theme.of(context).colorScheme.onSurface.withValues(alpha: 0.7)),
                       ),
                       SizedBox(height: 24.h),
                       TextButton(
@@ -70,7 +69,7 @@ class _SellerHomeBody extends StatelessWidget {
                         child: Text(
                           'Retry',
                           style: TextStyles.semiBold16(context)
-                              .copyWith(color: AppColors.primaryColor),
+                              .copyWith(color: Theme.of(context).colorScheme.primary),
                         ),
                       ),
                     ],
@@ -94,7 +93,7 @@ class _SellerHomeBody extends StatelessWidget {
                         Text(
                           data.storeName,
                           style: TextStyles.bold22(context)
-                              .copyWith(color: AppColors.primaryColor),
+                              .copyWith(color: Theme.of(context).colorScheme.primary),
                         ),
                       ],
                     ),
@@ -109,13 +108,13 @@ class _SellerHomeBody extends StatelessWidget {
                         Text(
                           'Welcome to your store!',
                           style: TextStyles.semiBold20(context)
-                              .copyWith(color: AppColors.primaryColor),
+                              .copyWith(color: Theme.of(context).colorScheme.primary),
                         ),
                         SizedBox(height: 8.h),
                         Text(
                           'Your seller account is active. Start managing your auctions and products from here.',
                           style: TextStyles.regular14(context).copyWith(
-                            color: const Color(0xFF666666),
+                            color: Theme.of(context).hintColor,
                             height: 1.5,
                           ),
                         ),
@@ -131,7 +130,7 @@ class _SellerHomeBody extends StatelessWidget {
                               );
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryColor,
+                              backgroundColor: Theme.of(context).colorScheme.primary,
                               foregroundColor: Colors.white,
                               padding: EdgeInsets.symmetric(vertical: 14.h),
                               shape: RoundedRectangleBorder(
@@ -148,7 +147,7 @@ class _SellerHomeBody extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Spacer(),
+                  Spacer(),
                   // Logout hint
                   Padding(
                     padding: EdgeInsets.all(16.w),
@@ -160,7 +159,7 @@ class _SellerHomeBody extends StatelessWidget {
                               : '',
                           textAlign: TextAlign.center,
                           style: TextStyles.regular12(context)
-                              .copyWith(color: const Color(0xFF999999)),
+                              .copyWith(color: Theme.of(context).hintColor),
                         );
                       },
                     ),
@@ -214,15 +213,15 @@ class _StoreLogo extends StatelessWidget {
       height: 80.w,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        color: AppColors.secondaryColor,
+        color: Theme.of(context).colorScheme.secondary,
         border: Border.all(
-          color: const Color(0xFFCCDDEE),
+          color: Theme.of(context).dividerColor,
           width: 1.5,
         ),
       ),
       child: Icon(
         Icons.storefront_rounded,
-        color: AppColors.primaryColor,
+        color: Theme.of(context).colorScheme.primary,
         size: 40.sp,
       ),
     );

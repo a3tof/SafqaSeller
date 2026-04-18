@@ -32,7 +32,7 @@ class _ProfileViewState extends State<ProfileView> {
     return BlocProvider(
       create: (context) => getIt<LogoutViewModel>(),
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         appBar: buildAppBar(context: context, title: S.of(context).kBusinessAccount),
         body: BlocConsumer<LogoutViewModel, LogoutState>(
           listener: (context, state) {

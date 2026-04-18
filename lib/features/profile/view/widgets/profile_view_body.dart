@@ -7,8 +7,8 @@ import 'package:safqaseller/core/services/notification_service.dart';
 import 'package:safqaseller/core/service_locator.dart';
 import 'package:safqaseller/core/storage/cache_helper.dart';
 import 'package:safqaseller/core/storage/cache_keys.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
+import 'package:safqaseller/core/utils/theme_view_model.dart';
 import 'package:safqaseller/features/auth/view_model/logout/logout_view_model.dart';
 import 'package:safqaseller/features/change_password/view/change_password_view.dart';
 import 'package:safqaseller/features/profile/view/widgets/profile_header_section.dart';
@@ -111,7 +111,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Dialog(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
             insetPadding: EdgeInsets.symmetric(horizontal: 16.w),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.r),
@@ -134,7 +134,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     textAlign: TextAlign.center,
                     style: TextStyles.regular20(
                       context,
-                    ).copyWith(color: const Color(0xFF6B7280), height: 1.4),
+                    ).copyWith(color: Theme.of(context).hintColor, height: 1.4),
                   ),
                   SizedBox(height: 28.h),
                   Row(
@@ -184,7 +184,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
       actions: [
         _ProfileDialogAction(
           label: S.of(context).kLogout,
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           foregroundColor: Colors.white,
           onPressed: () {
             Navigator.of(context).pop();
@@ -193,8 +193,8 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
         ),
         _ProfileDialogAction(
           label: S.of(context).notificationsCancel,
-          backgroundColor: const Color(0xFFDCE9FB),
-          foregroundColor: AppColors.primaryColor,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          foregroundColor: Theme.of(context).colorScheme.primary,
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],
@@ -212,7 +212,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
         return BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Dialog(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).dialogTheme.backgroundColor,
             insetPadding: EdgeInsets.symmetric(horizontal: 28.w),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(20.r),
@@ -227,7 +227,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     textAlign: TextAlign.center,
                     style: TextStyles.bold28(
                       context,
-                    ).copyWith(color: AppColors.primaryColor),
+                    ).copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                   SizedBox(height: 10.h),
                   Text(
@@ -235,7 +235,7 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     textAlign: TextAlign.center,
                     style: TextStyles.regular20(
                       context,
-                    ).copyWith(color: const Color(0xFF6B7280), height: 1.4),
+                    ).copyWith(color: Theme.of(context).hintColor, height: 1.4),
                   ),
                   SizedBox(height: 24.h),
                   _LanguageOptionTile(
@@ -400,6 +400,32 @@ class _ProfileViewBodyState extends State<ProfileViewBody> {
                     onTap: () => _toggleNotifications(!_notificationsEnabled),
                   ),
                   SizedBox(height: 12.h),
+                  BlocBuilder<ThemeViewModel, ThemeMode>(
+                    builder: (context, themeMode) {
+                      final isDark = themeMode == ThemeMode.dark ||
+                          (themeMode == ThemeMode.system &&
+                              MediaQuery.platformBrightnessOf(context) == Brightness.dark);
+                      return ProfileMenuItem(
+                        icon: isDark ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
+                        label: S.of(context).kChangeLanguage.replaceAll(
+                          S.of(context).kChangeLanguage,
+                          isDark ? 'Dark Mode' : 'Light Mode',
+                        ),
+                        trailing: IgnorePointer(
+                          child: Switch.adaptive(
+                            value: isDark,
+                            onChanged: (_) {},
+                            activeTrackColor: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        onTap: () {
+                          final vm = context.read<ThemeViewModel>();
+                          vm.setThemeMode(isDark ? ThemeMode.light : ThemeMode.dark);
+                        },
+                      );
+                    },
+                  ),
+                  SizedBox(height: 12.h),
                   ProfileMenuItem(
                     icon: Icons.logout_rounded,
                     label: S.of(context).kLogout,
@@ -457,12 +483,12 @@ class _LanguageOptionTile extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 6.h),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFDCE9FB) : Colors.white,
+          color: isSelected ? Theme.of(context).colorScheme.secondary : Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(14.r),
           border: Border.all(
             color: isSelected
-                ? AppColors.primaryColor
-                : const Color(0xFFE5E7EB),
+                ? Theme.of(context).colorScheme.primary
+                : Theme.of(context).dividerColor,
           ),
         ),
         child: Row(
@@ -472,14 +498,14 @@ class _LanguageOptionTile extends StatelessWidget {
                 label,
                 style: TextStyles.semiBold16(
                   context,
-                ).copyWith(color: AppColors.primaryColor),
+                ).copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ),
             Icon(
               isSelected
                   ? Icons.radio_button_checked_rounded
                   : Icons.radio_button_off_rounded,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               size: 22.sp,
             ),
           ],

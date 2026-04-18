@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/custom_button.dart';
@@ -156,7 +155,7 @@ class _FinancialDetailsViewState extends State<FinancialDetailsView> {
           final isLoading = state is SellerLoading;
 
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar:
                 buildAppBar(context: context, title: S.of(context).kFinancialDetails),
             body: SafeArea(
@@ -244,7 +243,7 @@ class _FinancialDetailsViewState extends State<FinancialDetailsView> {
                                 text: 'Note: ',
                                 style: TextStyles.semiBold13(context)
                                     .copyWith(
-                                        color: AppColors.primaryColor),
+                                        color: Theme.of(context).colorScheme.primary),
                               ),
                               TextSpan(
                                 text:
@@ -262,9 +261,9 @@ class _FinancialDetailsViewState extends State<FinancialDetailsView> {
                       SizedBox(height: 32.h),
 
                       isLoading
-                          ? const Center(
+                          ? Center(
                               child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             )
                           : CustomButton(
@@ -274,7 +273,7 @@ class _FinancialDetailsViewState extends State<FinancialDetailsView> {
                               },
                               text: 'Submit for Review',
                               textColor: Colors.white,
-                              backgroundColor: AppColors.primaryColor,
+                              backgroundColor: Theme.of(context).colorScheme.primary,
                             ),
                       SizedBox(height: 16.h),
                     ],
@@ -300,7 +299,7 @@ class _FieldLabel extends StatelessWidget {
     return Text(
       label,
       style: TextStyles.semiBold16(context)
-          .copyWith(color: AppColors.primaryColor),
+          .copyWith(color: Theme.of(context).colorScheme.primary),
     );
   }
 }

@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/custom_button.dart';
@@ -21,7 +20,7 @@ class _AccountTypeViewState extends State<AccountTypeView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: buildAppBar(context: context, title: S.of(context).kAccountType),
       body: SafeArea(
         child: Padding(
@@ -62,8 +61,8 @@ class _AccountTypeViewState extends State<AccountTypeView> {
                 text: 'Continue',
                 textColor: Colors.white,
                 backgroundColor: _selected != null
-                    ? AppColors.primaryColor
-                    : AppColors.primaryColor.withValues(alpha: 0.5),
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.primary.withValues(alpha: 0.5),
               ),
               SizedBox(height: 24.h),
             ],
@@ -102,10 +101,10 @@ class _AccountTypeCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
         decoration: BoxDecoration(
-          color: selected ? AppColors.secondaryColor : Colors.white,
+          color: selected ? Theme.of(context).colorScheme.secondary : Colors.white,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
-            color: selected ? AppColors.primaryColor : const Color(0xFFDDE3EE),
+            color: selected ? Theme.of(context).colorScheme.primary : Color(0xFFDDE3EE),
             width: selected ? 1.5 : 1.0,
           ),
         ),
@@ -114,7 +113,7 @@ class _AccountTypeCard extends StatelessWidget {
           children: [
             Icon(
               icon,
-              color: AppColors.primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               size: 32.sp,
             ),
             SizedBox(width: 12.w),
@@ -125,7 +124,7 @@ class _AccountTypeCard extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyles.semiBold16(context)
-                        .copyWith(color: AppColors.primaryColor),
+                        .copyWith(color: Theme.of(context).colorScheme.primary),
                   ),
                   SizedBox(height: 4.h),
                   Text(

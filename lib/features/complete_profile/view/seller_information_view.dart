@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/custom_button.dart';
@@ -162,7 +161,7 @@ class _SellerInformationViewState extends State<SellerInformationView> {
           final isLoading = state is SellerLoading;
 
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar:
                 buildAppBar(context: context, title: S.of(context).kSellerInformation),
             body: SafeArea(
@@ -250,9 +249,9 @@ class _SellerInformationViewState extends State<SellerInformationView> {
                       SizedBox(height: 32.h),
 
                       isLoading
-                          ? const Center(
+                          ? Center(
                               child: CircularProgressIndicator(
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             )
                           : CustomButton(
@@ -262,7 +261,7 @@ class _SellerInformationViewState extends State<SellerInformationView> {
                               },
                               text: 'Save & Continue',
                               textColor: Colors.white,
-                              backgroundColor: AppColors.primaryColor,
+                              backgroundColor: Theme.of(context).colorScheme.primary,
                             ),
                       SizedBox(height: 16.h),
                     ],
@@ -288,7 +287,7 @@ class _FieldLabel extends StatelessWidget {
     return Text(
       label,
       style: TextStyles.semiBold16(context).copyWith(
-        color: AppColors.primaryColor,
+        color: Theme.of(context).colorScheme.primary,
       ),
     );
   }
@@ -407,11 +406,11 @@ class _ImagePickerBox extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(
             color: file != null
-                ? AppColors.primaryColor
+                ? Theme.of(context).colorScheme.primary
                 : const Color(0xFFDDE3EE),
           ),
           borderRadius: BorderRadius.circular(8.r),
-          color: file != null ? AppColors.secondaryColor : Colors.white,
+          color: file != null ? Theme.of(context).colorScheme.secondary : Colors.white,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -423,7 +422,7 @@ class _ImagePickerBox extends StatelessWidget {
               Text(
                 'Image selected',
                 style: TextStyles.regular14(context)
-                    .copyWith(color: AppColors.primaryColor),
+                    .copyWith(color: Theme.of(context).colorScheme.primary),
               ),
             ] else ...[
               Text(

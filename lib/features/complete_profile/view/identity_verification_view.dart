@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:safqaseller/core/service_locator.dart';
-import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/core/widgets/custom_app_bar.dart';
 import 'package:safqaseller/core/widgets/custom_button.dart';
@@ -123,7 +122,7 @@ class _IdentityVerificationViewState extends State<IdentityVerificationView> {
           final isLoading = state is SellerLoading;
 
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: buildAppBar(
                 context: context, title: S.of(context).kIdentityVerificatio),
             body: SafeArea(
@@ -164,11 +163,11 @@ class _IdentityVerificationViewState extends State<IdentityVerificationView> {
                         source: ImageSource.camera,
                       ),
                     ),
-                    const Spacer(),
+                    Spacer(),
                     isLoading
-                        ? const Center(
+                        ? Center(
                             child: CircularProgressIndicator(
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           )
                         : CustomButton(
@@ -179,7 +178,7 @@ class _IdentityVerificationViewState extends State<IdentityVerificationView> {
                                 ? 'Continue'
                                 : 'Submit for Review',
                             textColor: Colors.white,
-                            backgroundColor: AppColors.primaryColor,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                           ),
                     SizedBox(height: 24.h),
                   ],
@@ -215,11 +214,11 @@ class _UploadTile extends StatelessWidget {
         width: double.infinity,
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
         decoration: BoxDecoration(
-          color: uploaded ? AppColors.secondaryColor : Colors.white,
+          color: uploaded ? Theme.of(context).colorScheme.secondary : Colors.white,
           borderRadius: BorderRadius.circular(12.r),
           border: Border.all(
             color: uploaded
-                ? AppColors.primaryColor
+                ? Theme.of(context).colorScheme.primary
                 : const Color(0xFFDDE3EE),
             width: uploaded ? 1.5 : 1.0,
           ),
@@ -230,12 +229,12 @@ class _UploadTile extends StatelessWidget {
               width: 40.w,
               height: 40.w,
               decoration: BoxDecoration(
-                color: AppColors.secondaryColor,
+                color: Theme.of(context).colorScheme.secondary,
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 uploaded ? Icons.check_rounded : icon,
-                color: AppColors.primaryColor,
+                color: Theme.of(context).colorScheme.primary,
                 size: 22.sp,
               ),
             ),
@@ -244,7 +243,7 @@ class _UploadTile extends StatelessWidget {
               child: Text(
                 label,
                 style: TextStyles.medium15(context).copyWith(
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
