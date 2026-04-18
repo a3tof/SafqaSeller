@@ -9,6 +9,8 @@ import 'package:safqaseller/core/utils/app_color.dart';
 import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/auction/model/models/auction_detail_model.dart';
+import 'package:safqaseller/features/auction/model/models/category_attribute_model.dart';
+import 'package:safqaseller/features/auction/model/models/category_model.dart';
 import 'package:safqaseller/features/auction/model/models/create_auction_request_model.dart';
 import 'package:safqaseller/features/auction/view/lot_detail_route_args.dart';
 import 'package:safqaseller/features/auction/view_model/edit_auction/edit_auction_view_model.dart';
@@ -40,9 +42,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
     _lotTitleController = TextEditingController();
     _descriptionController = TextEditingController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<EditAuctionViewModel>().loadAuction(
-        widget.args.item.auctionId,
-      );
+      _loadInitialData();
     });
   }
 
@@ -60,6 +60,23 @@ class _EditAuctionViewState extends State<EditAuctionView> {
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  Future<void> _loadInitialData() async {
+    final cubit = context.read<EditAuctionViewModel>();
+    try {
+      await cubit.loadCategories();
+    } catch (e) {
+      if (mounted) {
+        _showMessage(_cleanError(e));
+      }
+    }
+
+    if (!mounted) {
+      return;
+    }
+
+    await cubit.loadAuction(widget.args.item.auctionId);
   }
 
   Future<void> _pickHeadImage() async {
@@ -91,6 +108,50 @@ class _EditAuctionViewState extends State<EditAuctionView> {
       ..addAll(detail.items.map(_EditableItemData.fromDetail));
     _didPrefill = true;
     setState(() {});
+    for (var index = 0; index < _items.length; index++) {
+      final categoryId = _items[index].categoryId;
+      if (categoryId > 0) {
+        _loadAttributesForItem(
+          itemIndex: index,
+          categoryId: categoryId,
+          preserveExistingValues: true,
+        );
+      }
+    }
+  }
+
+  Future<void> _loadAttributesForItem({
+    required int itemIndex,
+    required int categoryId,
+    bool preserveExistingValues = false,
+  }) async {
+    final cubit = context.read<EditAuctionViewModel>();
+    try {
+      await cubit.loadAttributes(itemIndex: itemIndex, categoryId: categoryId);
+      if (!mounted || itemIndex >= _items.length) {
+        return;
+      }
+      setState(() {
+        _items[itemIndex].syncAttributes(
+          cubit.attributesForItem(itemIndex),
+          preserveExistingValues: preserveExistingValues,
+        );
+      });
+    } catch (_) {
+      if (!mounted || itemIndex >= _items.length) {
+        return;
+      }
+      setState(() {
+        _items[itemIndex].syncAttributes(
+          const [],
+          preserveExistingValues: preserveExistingValues,
+        );
+      });
+      final error =
+          cubit.attributeErrorForItem(itemIndex) ??
+          'Could not load category attributes.';
+      _showMessage(error);
+    }
   }
 
   Future<void> _saveAuction() async {
@@ -117,6 +178,10 @@ class _EditAuctionViewState extends State<EditAuctionView> {
       }
       if (count == null || count <= 0) {
         _showMessage(s.auctionItemInvalidCount(itemNumber));
+        return;
+      }
+      if (item.categoryId <= 0) {
+        _showMessage('Please select a category for item $itemNumber.');
         return;
       }
 
@@ -158,6 +223,8 @@ class _EditAuctionViewState extends State<EditAuctionView> {
   @override
   Widget build(BuildContext context) {
     final s = S.of(context);
+    final cubit = context.read<EditAuctionViewModel>();
+    final categories = cubit.categories;
     return BlocConsumer<EditAuctionViewModel, EditAuctionViewModelState>(
       listener: (context, state) {
         if (state is EditAuctionLoaded && !_didPrefill) {
@@ -172,7 +239,6 @@ class _EditAuctionViewState extends State<EditAuctionView> {
         }
       },
       builder: (context, state) {
-        final cubit = context.read<EditAuctionViewModel>();
         final detail = switch (state) {
           EditAuctionSaving(:final detail) => detail,
           EditAuctionLoaded(:final detail) => detail,
@@ -203,7 +269,7 @@ class _EditAuctionViewState extends State<EditAuctionView> {
             ),
             body: Center(
               child: ElevatedButton(
-                onPressed: () => cubit.loadAuction(widget.args.item.auctionId),
+                onPressed: _loadInitialData,
                 child: Text(s.retry),
               ),
             ),
@@ -289,7 +355,22 @@ class _EditAuctionViewState extends State<EditAuctionView> {
                       child: _EditItemCard(
                         index: index + 1,
                         data: _items[index],
+                        categories: categories,
                         onPickImages: () => _pickItemImages(index),
+                        onCategoryChanged: (value) {
+                          setState(() {
+                            _items[index].categoryId = value ?? 0;
+                            _items[index].syncAttributes(const []);
+                          });
+                          if (value != null) {
+                            _loadAttributesForItem(
+                              itemIndex: index,
+                              categoryId: value,
+                            );
+                          } else {
+                            cubit.clearItemAttributes(index);
+                          }
+                        },
                         imageUrl: _items[index].previewImages.isNotEmpty
                             ? _items[index].previewImages.first
                             : detail.image ?? widget.args.item.imageUrl,
@@ -333,20 +414,32 @@ class _EditAuctionViewState extends State<EditAuctionView> {
       },
     );
   }
+
+  String _cleanError(Object error) {
+    final message = error.toString();
+    if (message.startsWith('Exception: ')) {
+      return message.replaceFirst('Exception: ', '');
+    }
+    return message;
+  }
 }
 
 class _EditItemCard extends StatefulWidget {
   const _EditItemCard({
     required this.index,
     required this.data,
+    required this.categories,
     required this.imageUrl,
     required this.onPickImages,
+    required this.onCategoryChanged,
   });
 
   final int index;
   final _EditableItemData data;
+  final List<CategoryModel> categories;
   final String? imageUrl;
   final Future<void> Function() onPickImages;
+  final ValueChanged<int?> onCategoryChanged;
 
   @override
   State<_EditItemCard> createState() => _EditItemCardState();
@@ -438,10 +531,16 @@ class _EditItemCardState extends State<_EditItemCard> {
               ),
               SizedBox(height: 8.h),
               Text(
-                '${s.auctionCategory}: ${widget.data.categoryId}',
+                s.auctionCategory,
                 style: TextStyles.regular12(
                   context,
-                ).copyWith(color: Colors.black54),
+                ).copyWith(color: Colors.black),
+              ),
+              SizedBox(height: 8.h),
+              _CategoryDropdown(
+                categories: widget.categories,
+                value: widget.data.categoryId > 0 ? widget.data.categoryId : null,
+                onChanged: widget.onCategoryChanged,
               ),
               SizedBox(height: 8.h),
               _AuctionTextField(
@@ -516,12 +615,12 @@ class _EditItemCardState extends State<_EditItemCard> {
               ),
               if (widget.data.attributeControllers.isNotEmpty) ...[
                 SizedBox(height: 10.h),
-                ...widget.data.attributeControllers.entries.map(
+                ...widget.data.attributeEntries.map(
                   (entry) => Padding(
                     padding: EdgeInsets.only(bottom: 8.h),
                     child: _AuctionTextField(
-                      controller: entry.value,
-                      hintText: entry.key.toString(),
+                      controller: entry.controller,
+                      hintText: entry.label,
                     ),
                   ),
                 ),
@@ -591,6 +690,53 @@ class _AuctionTextField extends StatelessWidget {
   }
 }
 
+class _CategoryDropdown extends StatelessWidget {
+  const _CategoryDropdown({
+    required this.categories,
+    required this.value,
+    required this.onChanged,
+  });
+
+  final List<CategoryModel> categories;
+  final int? value;
+  final ValueChanged<int?> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6.r),
+        border: Border.all(color: const Color(0xFFE4E4E4)),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<int>(
+          value: value,
+          isExpanded: true,
+          hint: Text(
+            categories.isEmpty ? 'No categories found' : 'Select category',
+            style: TextStyles.regular13(
+              context,
+            ).copyWith(color: const Color(0xFF8A8A8A)),
+          ),
+          items: categories
+              .map(
+                (category) => DropdownMenuItem<int>(
+                  value: category.id,
+                  child: Text(
+                    category.name,
+                    style: TextStyles.regular13(context),
+                  ),
+                ),
+              )
+              .toList(),
+          onChanged: categories.isEmpty ? null : onChanged,
+        ),
+      ),
+    );
+  }
+}
+
 class _EditableItemData {
   _EditableItemData({
     required this.id,
@@ -602,7 +748,8 @@ class _EditableItemData {
     required this.selectedCondition,
     required this.previewImages,
     required this.attributeControllers,
-  }) : titleController = TextEditingController(text: title),
+  }) : attributesMeta = const [],
+       titleController = TextEditingController(text: title),
        countController = TextEditingController(text: count),
        warrantyController = TextEditingController(text: warrantyInfo),
        descriptionController = TextEditingController(text: description),
@@ -628,7 +775,7 @@ class _EditableItemData {
   }
 
   final int id;
-  final int categoryId;
+  int categoryId;
   final TextEditingController titleController;
   final TextEditingController countController;
   final TextEditingController warrantyController;
@@ -636,7 +783,61 @@ class _EditableItemData {
   final List<String> previewImages;
   final List<XFile> pickedImages;
   final Map<int, TextEditingController> attributeControllers;
+  List<CategoryAttributeModel> attributesMeta;
   _AuctionCondition selectedCondition;
+
+  List<_EditableAttributeEntry> get attributeEntries {
+    if (attributesMeta.isEmpty) {
+      return attributeControllers.entries
+          .map(
+            (entry) => _EditableAttributeEntry(
+              label: entry.key.toString(),
+              controller: entry.value,
+            ),
+          )
+          .toList();
+    }
+
+    return attributesMeta
+        .where((attribute) => attributeControllers.containsKey(attribute.id))
+        .map(
+          (attribute) => _EditableAttributeEntry(
+            label: attribute.unitLabel.isEmpty
+                ? attribute.name
+                : '${attribute.name} (${attribute.unitLabel})',
+            controller: attributeControllers[attribute.id]!,
+          ),
+        )
+        .toList();
+  }
+
+  void syncAttributes(
+    List<CategoryAttributeModel> attributes, {
+    bool preserveExistingValues = false,
+  }) {
+    final existingValues = {
+      for (final entry in attributeControllers.entries) entry.key: entry.value.text,
+    };
+    final allowedIds = attributes.map((attribute) => attribute.id).toSet();
+    attributeControllers.removeWhere((key, controller) {
+      final shouldRemove = !allowedIds.contains(key);
+      if (shouldRemove) {
+        controller.dispose();
+      }
+      return shouldRemove;
+    });
+
+    for (final attribute in attributes) {
+      attributeControllers.putIfAbsent(
+        attribute.id,
+        () => TextEditingController(
+          text: preserveExistingValues ? (existingValues[attribute.id] ?? '') : '',
+        ),
+      );
+    }
+
+    attributesMeta = List<CategoryAttributeModel>.from(attributes);
+  }
 
   void dispose() {
     titleController.dispose();
@@ -647,6 +848,16 @@ class _EditableItemData {
       controller.dispose();
     }
   }
+}
+
+class _EditableAttributeEntry {
+  final String label;
+  final TextEditingController controller;
+
+  const _EditableAttributeEntry({
+    required this.label,
+    required this.controller,
+  });
 }
 
 enum _AuctionCondition {

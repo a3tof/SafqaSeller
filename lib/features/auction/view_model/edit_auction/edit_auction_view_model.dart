@@ -1,14 +1,51 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safqaseller/features/auction/model/models/auction_detail_model.dart';
+import 'package:safqaseller/features/auction/model/models/category_attribute_model.dart';
+import 'package:safqaseller/features/auction/model/models/category_model.dart';
 import 'package:safqaseller/features/auction/model/repositories/auction_repository.dart';
 import 'package:safqaseller/features/auction/view_model/edit_auction/edit_auction_view_model_state.dart';
 
 class EditAuctionViewModel extends Cubit<EditAuctionViewModelState> {
   final AuctionRepository auctionRepository;
+  List<CategoryModel> categories = const [];
+  final Map<int, List<CategoryAttributeModel>> _attributesByItemIndex = {};
+  final Map<int, String> _attributeErrorsByItemIndex = {};
 
   EditAuctionViewModel(this.auctionRepository) : super(EditAuctionInitial());
 
   AuctionDetailModel? detail;
+
+  List<CategoryAttributeModel> attributesForItem(int itemIndex) {
+    return _attributesByItemIndex[itemIndex] ?? const [];
+  }
+
+  String? attributeErrorForItem(int itemIndex) {
+    return _attributeErrorsByItemIndex[itemIndex];
+  }
+
+  Future<void> loadCategories() async {
+    categories = await auctionRepository.getCategories();
+  }
+
+  Future<void> loadAttributes({
+    required int itemIndex,
+    required int categoryId,
+  }) async {
+    try {
+      final attributes = await auctionRepository.getAttributes(categoryId);
+      _attributesByItemIndex[itemIndex] = attributes;
+      _attributeErrorsByItemIndex.remove(itemIndex);
+    } catch (e) {
+      _attributesByItemIndex[itemIndex] = const [];
+      _attributeErrorsByItemIndex[itemIndex] = _clean(e);
+      rethrow;
+    }
+  }
+
+  void clearItemAttributes(int itemIndex) {
+    _attributesByItemIndex.remove(itemIndex);
+    _attributeErrorsByItemIndex.remove(itemIndex);
+  }
 
   Future<void> loadAuction(int id) async {
     emit(EditAuctionLoading());

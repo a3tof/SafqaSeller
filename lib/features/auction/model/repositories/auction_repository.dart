@@ -163,18 +163,12 @@ class AuctionRepository {
     final rootCategoryId = request.items.isNotEmpty
         ? request.items.first.categoryId
         : null;
-    final queryParams = <String, dynamic>{
-      'Title': request.title,
-      'Description': request.description,
-    };
-    // Swagger lists CategoryId as optional query; sending 0 often breaks server binding.
-    if (rootCategoryId != null && rootCategoryId > 0) {
-      queryParams['CategoryId'] = rootCategoryId;
-    }
 
     formData.fields.addAll([
       MapEntry('title', request.title),
       MapEntry('Description', request.description),
+      if (rootCategoryId != null && rootCategoryId > 0)
+        MapEntry('categoryId', rootCategoryId.toString()),
     ]);
 
     if (request.image != null) {
@@ -232,7 +226,6 @@ class AuctionRepository {
     final response = await dioHelper.putFormData(
       endPoint: 'Auction/edit/$id',
       data: formData,
-      queryParams: queryParams,
       requiresAuth: true,
     );
     _requireSuccess(response);
