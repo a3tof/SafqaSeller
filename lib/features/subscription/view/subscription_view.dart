@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:safqaseller/core/service_locator.dart';
 import 'package:safqaseller/features/subscription/view/widgets/subscription_view_body.dart';
 import 'package:safqaseller/features/subscription/view_model/subscription_view_model.dart';
+import 'package:safqaseller/generated/l10n.dart';
 
 class SubscriptionView extends StatelessWidget {
   const SubscriptionView({super.key});
@@ -10,12 +11,22 @@ class SubscriptionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BlocProvider(
       create: (_) =>
           getIt<SubscriptionViewModel>()..loadActivePlan(showLoading: true),
       child: Scaffold(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        body: SubscriptionViewBody(),
+        backgroundColor: theme.scaffoldBackgroundColor,
+        appBar: AppBar(
+          title: Text(S.of(context).kUpgrade),
+          centerTitle: true,
+          backgroundColor: theme.scaffoldBackgroundColor,
+          foregroundColor: theme.colorScheme.onSurface,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: theme.scaffoldBackgroundColor,
+        ),
+        body: const SubscriptionViewBody(),
       ),
     );
   }

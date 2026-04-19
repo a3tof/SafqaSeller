@@ -14,26 +14,43 @@ class SubscriptionTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20.r),
-        border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1),
-      ),
-      child: TabBar(
-        controller: tabController,
-        indicator: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.r),
-          color: Theme.of(context).colorScheme.primary,
+    final theme = Theme.of(context);
+    final primary = theme.colorScheme.primary;
+    final radius = BorderRadius.circular(22.r);
+
+    return Material(
+      color: primary.withValues(alpha: 0.08),
+      borderRadius: radius,
+      child: Container(
+        height: 44.h,
+        padding: EdgeInsets.all(4.w),
+        decoration: BoxDecoration(
+          borderRadius: radius,
+          border: Border.all(color: primary.withValues(alpha: 0.22)),
         ),
-        indicatorSize: TabBarIndicatorSize.tab,
-        dividerColor: Colors.transparent,
-        labelColor: Colors.white,
-        unselectedLabelColor: Theme.of(context).colorScheme.primary,
-        labelStyle: TextStyles.semiBold13(context),
-        unselectedLabelStyle: TextStyles.regular13(context),
-        splashBorderRadius: BorderRadius.circular(20.r),
-        tabs: labels.map((label) => Tab(text: label)).toList(),
+        child: TabBar(
+          controller: tabController,
+          indicator: BoxDecoration(
+            borderRadius: BorderRadius.circular(18.r),
+            color: primary,
+            boxShadow: [
+              BoxShadow(
+                color: theme.colorScheme.shadow.withValues(alpha: 0.12),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          indicatorSize: TabBarIndicatorSize.tab,
+          dividerColor: theme.colorScheme.surface.withValues(alpha: 0),
+          labelColor: theme.colorScheme.onPrimary,
+          unselectedLabelColor: primary,
+          labelStyle: TextStyles.semiBold13(context),
+          unselectedLabelStyle: TextStyles.regular13(context),
+          splashBorderRadius: BorderRadius.circular(18.r),
+          overlayColor: WidgetStatePropertyAll(primary.withValues(alpha: 0.06)),
+          tabs: labels.map((label) => Tab(text: label)).toList(),
+        ),
       ),
     );
   }

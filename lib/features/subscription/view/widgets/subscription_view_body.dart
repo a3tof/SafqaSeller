@@ -39,60 +39,69 @@ class _SubscriptionViewBodyState extends State<SubscriptionViewBody>
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SubscriptionViewModel, SubscriptionState>(
-      builder: (context, state) {
-        final plans = SubscriptionPlanModel.plans(context);
-        final isSkeletonLoading = state is SubscriptionScreenLoading;
+    return BlocListener<SubscriptionViewModel, SubscriptionState>(
+      listenWhen: (previous, current) =>
+          previous is SubscriptionScreenLoading &&
+          current is SubscriptionInitial,
+      listener: (context, state) {
+        _jumpToActivePlanTab(state.activePlanId);
+      },
+      child: BlocBuilder<SubscriptionViewModel, SubscriptionState>(
+        builder: (context, state) {
+          final plans = SubscriptionPlanModel.plans(context);
+          final isSkeletonLoading = state is SubscriptionScreenLoading;
 
-        return Skeletonizer(
-          enabled: isSkeletonLoading,
-          child: RefreshIndicator(
-            onRefresh: () async {
-              final viewModel = context.read<SubscriptionViewModel>();
-              await viewModel.loadActivePlan();
-              if (!context.mounted) return;
-              _jumpToActivePlanTab(viewModel.state.activePlanId);
-            },
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      children: [
-                        SizedBox(height: 4.h),
-                        Center(child: _buildLogo()),
-                        SizedBox(height: 24.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 40.w),
-                          child: SubscriptionTabBar(
-                            tabController: _tabController,
-                            labels: [
-                              S.of(context).kBasic,
-                              S.of(context).kPremium,
-                              S.of(context).kElite,
-                            ],
+          return Skeletonizer(
+            enabled: isSkeletonLoading,
+            child: RefreshIndicator(
+              onRefresh: () async {
+                final viewModel = context.read<SubscriptionViewModel>();
+                await viewModel.loadActivePlan();
+                if (!context.mounted) return;
+                _jumpToActivePlanTab(viewModel.state.activePlanId);
+              },
+              child: SafeArea(
+                top: false,
+                child: CustomScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          SizedBox(height: 8.h),
+                          Center(child: _buildLogo()),
+                          SizedBox(height: 20.h),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 24.w),
+                            child: SubscriptionTabBar(
+                              tabController: _tabController,
+                              labels: [
+                                S.of(context).kBasic,
+                                S.of(context).kPremium,
+                                S.of(context).kElite,
+                              ],
+                            ),
                           ),
-                        ),
-                        SizedBox(height: 24.h),
-                        SizedBox(
-                          height: MediaQuery.sizeOf(context).height * 0.72,
-                          child: TabBarView(
-                            controller: _tabController,
-                            children: plans
-                                .map((plan) => SubscriptionPlanCard(plan: plan))
-                                .toList(),
-                          ),
-                        ),
-                      ],
+                          SizedBox(height: 16.h),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                    SliverFillRemaining(
+                      hasScrollBody: true,
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: plans
+                            .map((plan) => SubscriptionPlanCard(plan: plan))
+                            .toList(),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

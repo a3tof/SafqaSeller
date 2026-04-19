@@ -58,60 +58,92 @@ class SubscriptionPlanCard extends StatelessWidget {
           isCurrentPlan: isCurrentPlan,
           isIncludedInHigherPlan: isIncludedInHigherPlan,
         );
+        final theme = Theme.of(context);
+        final primary = theme.colorScheme.primary;
+        final onPrimary = theme.colorScheme.onPrimary;
         final buttonColor = canUpgrade
-            ? Theme.of(context).colorScheme.primary
-            : Theme.of(context).colorScheme.primary.withValues(alpha: 0.7);
+            ? primary
+            : primary.withValues(alpha: 0.55);
 
         return SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 24.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: Column(
             children: [
-              SizedBox(height: 16.h),
-              Text(
-                plan.name,
-                style: TextStyles.bold22(
-                  context,
-                ).copyWith(color: Theme.of(context).colorScheme.primary),
-              ),
-              SizedBox(height: 20.h),
-              Icon(
-                Icons.campaign_outlined,
-                size: 64.sp,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              SizedBox(height: 16.h),
-              Text(
-                plan.price,
-                style: TextStyles.bold28(
-                  context,
-                ).copyWith(color: Theme.of(context).colorScheme.primary),
-              ),
-              SizedBox(height: 32.h),
-              ...plan.features.map(
-                (feature) => Padding(
-                  padding: EdgeInsets.only(bottom: 14.h),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.check_circle,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 20.sp,
+              SizedBox(height: 8.h),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: theme.cardColor,
+                  borderRadius: BorderRadius.circular(18.r),
+                  border: Border.all(
+                    color: primary.withValues(alpha: 0.12),
+                  ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: theme.colorScheme.shadow.withValues(
+                        alpha: 0.08,
                       ),
-                      SizedBox(width: 10.w),
-                      Expanded(
-                        child: Text(
-                          feature,
-                          style: TextStyles.regular13(
-                            context,
-                          ).copyWith(color: const Color(0xFF4A4A4A)),
+                      blurRadius: 24,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 22.h),
+                  child: Column(
+                    children: [
+                      Text(
+                        plan.name,
+                        style: TextStyles.bold22(
+                          context,
+                        ).copyWith(color: primary),
+                      ),
+                      SizedBox(height: 18.h),
+                      Icon(
+                        Icons.campaign_outlined,
+                        size: 56.sp,
+                        color: primary,
+                      ),
+                      SizedBox(height: 14.h),
+                      Text(
+                        plan.price,
+                        style: TextStyles.bold28(
+                          context,
+                        ).copyWith(color: primary),
+                      ),
+                      SizedBox(height: 28.h),
+                      ...plan.features.map(
+                        (feature) => Padding(
+                          padding: EdgeInsets.only(bottom: 12.h),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.check_circle_rounded,
+                                color: primary,
+                                size: 20.sp,
+                              ),
+                              SizedBox(width: 12.w),
+                              Expanded(
+                                child: Text(
+                                  feature,
+                                  style: TextStyles.regular14(
+                                    context,
+                                  ).copyWith(
+                                    color: theme.colorScheme.onSurface,
+                                    height: 1.35,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              SizedBox(height: 32.h),
+              SizedBox(height: 24.h),
               SizedBox(
                 width: double.infinity,
                 height: 50.h,
@@ -125,22 +157,22 @@ class SubscriptionPlanCard extends StatelessWidget {
                       : null,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: buttonColor,
-                    foregroundColor: Colors.white,
+                    foregroundColor: onPrimary,
                     disabledBackgroundColor: buttonColor,
-                    disabledForegroundColor: Colors.white,
+                    disabledForegroundColor: onPrimary,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25.r),
+                      borderRadius: BorderRadius.circular(12.r),
                     ),
                     elevation: 0,
                   ),
                   child: isLoading
                       ? SizedBox(
-                          width: 20.w,
-                          height: 20.w,
+                          width: 22.w,
+                          height: 22.w,
                           child: CircularProgressIndicator(
-                            strokeWidth: 2.2,
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              Colors.white,
+                            strokeWidth: 2.4,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              onPrimary,
                             ),
                           ),
                         )
@@ -148,11 +180,11 @@ class SubscriptionPlanCard extends StatelessWidget {
                           buttonLabel,
                           style: TextStyles.semiBold16(
                             context,
-                          ).copyWith(color: Colors.white),
+                          ).copyWith(color: onPrimary),
                         ),
                 ),
               ),
-              SizedBox(height: 24.h),
+              SizedBox(height: 20.h),
             ],
           ),
         );
