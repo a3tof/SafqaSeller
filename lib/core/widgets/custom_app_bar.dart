@@ -7,6 +7,7 @@ AppBar buildAppBar({required BuildContext context, required String title}) {
   final theme = Theme.of(context);
 
   return AppBar(
+    surfaceTintColor: Colors.transparent,
     backgroundColor: theme.appBarTheme.backgroundColor,
     centerTitle: true,
     leading: IconButton(
