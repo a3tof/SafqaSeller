@@ -7,6 +7,7 @@ jobs:
   build-ios:
     name: 🎉 iOS Build
     runs-on: macos-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -15,31 +16,16 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          architecture: x64
 
       - name: Install dependencies
         run: flutter pub get
 
-      - name: Force iOS Deployment Target to 13.0 in Podfile
-        run: |
-          echo "Checking Podfile..."
-          if [ -f "ios/Podfile" ]; then
-            sed -i '' 's/platform :ios, .*/platform :ios, "13.0"/' ios/Podfile
-          else
-            echo "platform :ios, '13.0'" > ios/Podfile
-          fi
-          echo "Updated Podfile:"
-          cat ios/Podfile  # Debugging: Verify changes
-
-      - name: Force iOS 13.0 in Xcode project
-        run: |
-          sed -i '' 's/IPHONEOS_DEPLOYMENT_TARGET = .*/IPHONEOS_DEPLOYMENT_TARGET = 13.0;/g' ios/Runner.xcodeproj/project.pbxproj
-          echo "Updated Xcode project deployment target."
+      - name: Clean project
+        run: flutter clean
 
       - name: Install CocoaPods dependencies
         run: |
           cd ios
-          rm -rf Pods Podfile.lock
           pod install --repo-update
 
       - name: Build iOS App
