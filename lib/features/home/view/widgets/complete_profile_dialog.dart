@@ -6,10 +6,21 @@ import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/complete_profile/view/account_type_view.dart';
 
 /// Dialog shown when the seller has not yet completed their profile.
+///
+/// When [forcedMode] is `true`, the dismiss (×) button is hidden and the
+/// background barrier is non-dismissible, forcing the seller to either
+/// start profile completion or close the app.
 class CompleteProfileDialog extends StatelessWidget {
-  const CompleteProfileDialog({super.key, required this.onComplete});
+  const CompleteProfileDialog({
+    super.key,
+    required this.onComplete,
+    this.forcedMode = false,
+  });
 
   final VoidCallback onComplete;
+
+  /// When true, the close button is hidden so the dialog cannot be dismissed.
+  final bool forcedMode;
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +37,23 @@ class CompleteProfileDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Close button
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: Icon(
-                    Icons.close_rounded,
-                    color: Colors.red,
-                    size: 24.sp,
+              // Close button — hidden in forced mode
+              if (!forcedMode)
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    icon: Icon(
+                      Icons.close_rounded,
+                      color: Colors.red,
+                      size: 24.sp,
+                    ),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
                   ),
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                ),
-              ),
+                )
+              else
+                SizedBox(height: 8.h),
               SizedBox(height: 4.h),
               // Description with partial blue highlight
               RichText(

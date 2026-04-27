@@ -9,8 +9,6 @@ import 'package:safqaseller/core/utils/app_images.dart';
 import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/auction/view/item_auction_view.dart';
 import 'package:safqaseller/features/auction/view/lot_auction_view.dart';
-import 'package:safqaseller/features/auth/view_model/auth/auth_view_model.dart';
-import 'package:safqaseller/features/auth/view_model/auth/auth_view_model_state.dart';
 import 'package:safqaseller/features/history/view/history_view.dart';
 import 'package:safqaseller/features/home/view/widgets/complete_profile_dialog.dart';
 import 'package:safqaseller/features/home/view/widgets/home_action_card.dart';
@@ -36,6 +34,8 @@ class HomeScreenViewBody extends StatefulWidget {
 }
 
 class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
+  bool _dialogShown = false;
+
   @override
   void initState() {
     super.initState();
@@ -45,24 +45,34 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
     });
   }
 
-  void _maybeShowDialog() {
-    if (!mounted) return;
-
-    final showFromLogin = widget.showCompleteProfile;
-    final authState = context.read<AuthViewModel>().state;
+  /// Returns true when the seller has not yet completed their profile,
+  /// either because the cache says so or because the API returned "Seller not found".
+  bool _isProfileIncomplete(HomeViewModelState homeState) {
+    if (widget.showCompleteProfile) return true;
     final profileVM = context.read<ProfileViewModel>();
-    final showFromRole =
-        authState is AuthAuthenticated &&
-        authState.role == 'User' &&
-        !profileVM.isProfileCompleted;
-
-    if (showFromLogin || showFromRole) {
-      showDialog<void>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) => CompleteProfileDialog(onComplete: () {}),
-      );
+    if (!profileVM.isProfileCompleted) return true;
+    if (homeState is HomeFailure &&
+        homeState.error.toLowerCase().contains('seller not found')) {
+      return true;
     }
+    return false;
+  }
+
+  void _maybeShowDialog({HomeViewModelState? homeState}) {
+    if (!mounted || _dialogShown) return;
+
+    final state = homeState ?? context.read<HomeViewModel>().state;
+    if (!_isProfileIncomplete(state)) return;
+
+    _dialogShown = true;
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => CompleteProfileDialog(
+        forcedMode: true,
+        onComplete: () {},
+      ),
+    ).whenComplete(() => _dialogShown = false);
   }
 
   Future<void> _refreshHome() async {
@@ -115,6 +125,14 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
               final logoBytes = state is HomeSuccess
                   ? state.data.logoBytes
                   : null;
+              final profileLocked = !isLoading && _isProfileIncomplete(state);
+
+              // Show the dialog once when the state first resolves as incomplete.
+              if (profileLocked) {
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (_) => _maybeShowDialog(homeState: state),
+                );
+              }
 
               return Skeletonizer(
                 enabled: isLoading,
@@ -143,7 +161,8 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
                                 onNotificationTap: _openNotifications,
                               ),
                             ),
-                            if (state is HomeFailure) ...[
+                            if (state is HomeFailure &&
+                                !_isProfileIncomplete(state)) ...[
                               SizedBox(height: 8.h),
                               Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -174,62 +193,102 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
                               ),
                             ],
                             SizedBox(height: 32.h),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              child: Column(
-                                children: [
-                                  HomeActionCard(
-                                    label: S.of(context).kNewLotAuction,
-                                    showAddIcon: true,
-                                    backgroundImage: Assets.imagesFrame1,
-                                    onTap: () async {
-                                      await Navigator.pushNamed(
-                                        context,
-                                        LotAuctionView.routeName,
-                                      );
-                                      await _refreshHome();
-                                    },
-                                  ),
-                                  SizedBox(height: 16.h),
-                                  HomeActionCard(
-                                    label: S.of(context).kNewSingleAuction,
-                                    showAddIcon: true,
-                                    backgroundImage: Assets.imagesFrame1,
-                                      onTap: () async {
-                                        await Navigator.pushNamed(
-                                          context,
-                                          ItemAuctionView.routeName,
-                                        );
-                                        await _refreshHome();
-                                    },
-                                  ),
-                                  SizedBox(height: 16.h),
-                                  Row(
+                            // ── Action cards ─────────────────────────────────
+                            // When the profile is incomplete, overlay a dim
+                            // shield and absorb all taps so nothing is reachable.
+                            Stack(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                  child: Column(
                                     children: [
-                                      Expanded(
-                                        child: HomeActionCard(
-                                          label: S.of(context).kHistory,
-                                          backgroundImage: Assets.imagesFrame1,
-                                          onTap: () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              HistoryView.routeName,
-                                            );
-                                          },
-                                        ),
+                                      HomeActionCard(
+                                        label: S.of(context).kNewLotAuction,
+                                        showAddIcon: true,
+                                        backgroundImage: Assets.imagesFrame1,
+                                        onTap: () async {
+                                          await Navigator.pushNamed(
+                                            context,
+                                            LotAuctionView.routeName,
+                                          );
+                                          await _refreshHome();
+                                        },
                                       ),
-                                      SizedBox(width: 8.w),
-                                      Expanded(
-                                        child: HomeActionCard(
-                                          label: S.of(context).kStatistics,
-                                          backgroundImage: Assets.imagesFrame2,
-                                          onTap: _openStatistics,
-                                        ),
+                                      SizedBox(height: 16.h),
+                                      HomeActionCard(
+                                        label: S.of(context).kNewSingleAuction,
+                                        showAddIcon: true,
+                                        backgroundImage: Assets.imagesFrame1,
+                                        onTap: () async {
+                                          await Navigator.pushNamed(
+                                            context,
+                                            ItemAuctionView.routeName,
+                                          );
+                                          await _refreshHome();
+                                        },
+                                      ),
+                                      SizedBox(height: 16.h),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: HomeActionCard(
+                                              label: S.of(context).kHistory,
+                                              backgroundImage: Assets.imagesFrame1,
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  HistoryView.routeName,
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          Expanded(
+                                            child: HomeActionCard(
+                                              label: S.of(context).kStatistics,
+                                              backgroundImage: Assets.imagesFrame2,
+                                              onTap: _openStatistics,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
+                                ),
+                                // Translucent lock overlay — absorbs all taps
+                                // when profile completion is required.
+                                if (profileLocked)
+                                  Positioned.fill(
+                                    child: GestureDetector(
+                                      onTap: () => _maybeShowDialog(homeState: state),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.black.withOpacity(0.45),
+                                          borderRadius: BorderRadius.circular(12.r),
+                                        ),
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.lock_rounded,
+                                                color: Colors.white.withOpacity(0.9),
+                                                size: 40.sp,
+                                              ),
+                                              SizedBox(height: 8.h),
+                                              Text(
+                                                'Complete your profile to unlock',
+                                                style: TextStyles.semiBold14(context)
+                                                    .copyWith(color: Colors.white),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
                           ],
                         ),
