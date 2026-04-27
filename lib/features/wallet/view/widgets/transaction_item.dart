@@ -11,7 +11,6 @@ class TransactionItem extends StatelessWidget {
 
   final TransactionModel transaction;
 
-  static const _dateColor = Color(0xFFAAAAAA);
   // Amount colours per type
   static const _withdrawalColor = Color(0xFFBA1A1A);
   static const _depositColor = Color(0xFF00762E);
@@ -53,25 +52,38 @@ class TransactionItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                transaction.title,
-                style: TextStyles.medium15(context)
-                    .copyWith(color: Theme.of(context).colorScheme.primary),
-              ),
-              SizedBox(height: 6.h),
-              Text(
-                dateStr,
-                style: TextStyles.regular14(context)
-                    .copyWith(color: _dateColor),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  transaction.title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyles.medium15(
+                    context,
+                  ).copyWith(color: Theme.of(context).colorScheme.primary),
+                ),
+                SizedBox(height: 6.h),
+                Text(
+                  dateStr,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyles.regular14(
+                    context,
+                  ).copyWith(color: Theme.of(context).hintColor),
+                ),
+              ],
+            ),
           ),
+          SizedBox(width: 12.w),
           Text(
             amountStr,
-            style: TextStyles.semiBold16(context).copyWith(color: _amountColor(context)),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyles.semiBold16(
+              context,
+            ).copyWith(color: _amountColor(context)),
           ),
         ],
       ),

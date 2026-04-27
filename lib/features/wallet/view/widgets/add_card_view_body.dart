@@ -6,6 +6,7 @@ import 'package:safqaseller/core/utils/app_text_styles.dart';
 import 'package:safqaseller/features/wallet/model/models/wallet_models.dart';
 import 'package:safqaseller/features/wallet/view_model/add_card/add_card_view_model.dart';
 import 'package:safqaseller/features/wallet/view_model/add_card/add_card_view_model_state.dart';
+import 'package:safqaseller/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class AddCardViewBody extends StatefulWidget {
@@ -56,26 +57,26 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
     final sanitizedCvv = _cvvCtrl.text.trim();
 
     context.read<AddCardViewModel>().addCard(
-          AddCardRequest(
-            cardNumber: sanitizedCardNumber,
-            expiryDate: sanitizedExpiry,
-            cvv: sanitizedCvv,
-            cardholderName: _holderCtrl.text.trim(),
-            label: _labelCtrl.text.trim().isEmpty ? null : _labelCtrl.text.trim(),
-          ),
-        );
+      AddCardRequest(
+        cardNumber: sanitizedCardNumber,
+        expiryDate: sanitizedExpiry,
+        cvv: sanitizedCvv,
+        cardholderName: _holderCtrl.text.trim(),
+        label: _labelCtrl.text.trim().isEmpty ? null : _labelCtrl.text.trim(),
+      ),
+    );
   }
 
   String? _validateCardNumber(String? value) {
     final digits = value?.replaceAll(' ', '') ?? '';
-    if (digits.isEmpty) return 'Required';
+    if (digits.isEmpty) return S.of(context).fieldRequired;
     if (digits.length != 16) return 'Card number must be 16 digits';
     return null;
   }
 
   String? _validateExpiryDate(String? value) {
     final expiry = value?.trim() ?? '';
-    if (expiry.isEmpty) return 'Required';
+    if (expiry.isEmpty) return S.of(context).fieldRequired;
     if (!RegExp(r'^\d{2}/\d{2}$').hasMatch(expiry)) {
       return 'Expiry date must be in MM/YY format';
     }
@@ -90,7 +91,7 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
 
   String? _validateCvv(String? value) {
     final cvv = value?.trim() ?? '';
-    if (cvv.isEmpty) return 'Required';
+    if (cvv.isEmpty) return S.of(context).fieldRequired;
     if (cvv.length != 3) return 'CVV must be 3 digits';
     return null;
   }
@@ -105,7 +106,7 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(state.message),
-              backgroundColor: Colors.red,
+              backgroundColor: Theme.of(context).colorScheme.error,
             ),
           );
         }
@@ -124,10 +125,16 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                 automaticallyImplyLeading: false,
                 leading: IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: Icon(Icons.close_rounded, color: Colors.red, size: 28.sp),
+                  icon: Icon(
+                    Icons.close_rounded,
+                    color: Theme.of(context).colorScheme.error,
+                    size: 28.sp,
+                  ),
                 ),
                 title: Text(
-                  'Add Card',
+                  S.of(context).kAddCard,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontFamily: 'AlegreyaSC',
                     fontSize: 28.sp,
@@ -142,14 +149,18 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                   children: [
                     Expanded(
                       child: SingleChildScrollView(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 16.h,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Enter your card information',
-                              style: TextStyles.medium20(context),
+                              style: TextStyles.medium20(context).copyWith(
+                                color: Theme.of(context).colorScheme.onSurface,
+                              ),
                             ),
                             SizedBox(height: 16.h),
                             _CardField(
@@ -192,7 +203,7 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                               controller: _holderCtrl,
                               hint: 'Cardholder Name',
                               validator: (v) => v == null || v.trim().isEmpty
-                                  ? 'Required'
+                                  ? S.of(context).fieldRequired
                                   : null,
                             ),
                             SizedBox(height: 16.h),
@@ -212,7 +223,9 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                         child: ElevatedButton(
                           onPressed: isLoading ? null : _submit,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            backgroundColor: Theme.of(
+                              context,
+                            ).colorScheme.primary,
                             elevation: 0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.r),
@@ -222,16 +235,23 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
                               ? SizedBox(
                                   width: 20.w,
                                   height: 20.w,
-                                  child: const CircularProgressIndicator(
-                                    color: Colors.white,
+                                  child: CircularProgressIndicator(
+                                    color: Theme.of(
+                                      context,
+                                    ).colorScheme.onPrimary,
                                     strokeWidth: 2,
                                   ),
                                 )
                               : Text(
-                                  'Add',
-                                  style: TextStyles.semiBold16(context).copyWith(
-                                    color: Colors.white,
-                                  ),
+                                  S.of(context).kAddCard,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyles.semiBold16(context)
+                                      .copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.onPrimary,
+                                      ),
                                 ),
                         ),
                       ),
@@ -247,8 +267,7 @@ class _AddCardViewBodyState extends State<AddCardViewBody> {
   }
 }
 
-/// Styled input field matching the Figma card form field.
-/// Design: white bg, #CCC 0.5px border, shadow, 48px height, 4px radius.
+/// Styled input field matching the card form while staying theme-aware.
 class _CardField extends StatelessWidget {
   const _CardField({
     required this.controller,
@@ -270,41 +289,44 @@ class _CardField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 48.h,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(4.r),
-        border: Border.all(color: const Color(0xFFCCCCCC), width: 0.5),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0F000000),
-            blurRadius: 12,
-            spreadRadius: 2,
-            offset: Offset(0, 4),
-          ),
-        ],
+    final theme = Theme.of(context);
+
+    return TextFormField(
+      controller: controller,
+      keyboardType: keyboardType,
+      maxLength: maxLength,
+      inputFormatters: inputFormatters,
+      obscureText: obscureText,
+      validator: validator,
+      style: TextStyles.regular14(
+        context,
+      ).copyWith(color: theme.colorScheme.onSurface),
+      decoration: InputDecoration(
+        counterText: '',
+        hintText: hint,
+        hintStyle: TextStyles.semiBold13(
+          context,
+        ).copyWith(color: theme.hintColor),
+        filled: true,
+        fillColor: theme.cardColor,
+        errorMaxLines: 3,
+        constraints: BoxConstraints(minHeight: 48.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
+        border: _buildBorder(theme),
+        enabledBorder: _buildBorder(theme),
+        focusedBorder: _buildBorder(theme, color: theme.colorScheme.primary),
+        errorBorder: _buildBorder(theme, color: theme.colorScheme.error),
+        focusedErrorBorder: _buildBorder(theme, color: theme.colorScheme.error),
       ),
-      child: TextFormField(
-        controller: controller,
-        keyboardType: keyboardType,
-        maxLength: maxLength,
-        inputFormatters: inputFormatters,
-        obscureText: obscureText,
-        validator: validator,
-        style: TextStyle(fontSize: 14.sp, color: Colors.black),
-        decoration: InputDecoration(
-          counterText: '',
-          hintText: hint,
-          hintStyle: TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w600,
-            color: Theme.of(context).hintColor,
-          ),
-          border: InputBorder.none,
-          contentPadding:
-              EdgeInsets.symmetric(horizontal: 16.w, vertical: 14.h),
-        ),
+    );
+  }
+
+  OutlineInputBorder _buildBorder(ThemeData theme, {Color? color}) {
+    return OutlineInputBorder(
+      borderRadius: BorderRadius.circular(4.r),
+      borderSide: BorderSide(
+        color: color ?? theme.colorScheme.outline,
+        width: 0.5,
       ),
     );
   }

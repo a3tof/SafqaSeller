@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-
 AppBar buildAppBar({required BuildContext context, required String title}) {
   final isArabic = Localizations.localeOf(context).languageCode == 'ar';
   final theme = Theme.of(context);
@@ -27,6 +26,8 @@ AppBar buildAppBar({required BuildContext context, required String title}) {
     title: Text(
       title,
       textAlign: TextAlign.center,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: 28.sp,
         fontWeight: FontWeight.w700,
@@ -36,4 +37,3 @@ AppBar buildAppBar({required BuildContext context, required String title}) {
     ),
   );
 }
-

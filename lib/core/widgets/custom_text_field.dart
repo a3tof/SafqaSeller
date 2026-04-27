@@ -48,23 +48,26 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         suffixIcon: suffixIcon,
         hintText: hintText,
-        hintStyle: TextStyles.bold13(
-          context,
-        ).copyWith(color: theme.hintColor),
+        hintStyle: TextStyles.bold13(context).copyWith(color: theme.hintColor),
         filled: true,
         fillColor: theme.inputDecorationTheme.fillColor,
+        errorMaxLines: 3,
         border: buildBorder(theme),
         enabledBorder: buildBorder(theme),
         focusedBorder: buildBorder(theme),
+        errorBorder: buildBorder(theme, color: theme.colorScheme.error),
+        focusedErrorBorder: buildBorder(theme, color: theme.colorScheme.error),
       ),
     );
   }
 
-  OutlineInputBorder buildBorder(ThemeData theme) {
+  OutlineInputBorder buildBorder(ThemeData theme, {Color? color}) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(4.r),
-      borderSide: BorderSide(width: 1, color: theme.colorScheme.outline),
+      borderSide: BorderSide(
+        width: 1,
+        color: color ?? theme.colorScheme.outline,
+      ),
     );
   }
 }
-

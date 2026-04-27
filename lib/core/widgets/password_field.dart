@@ -25,6 +25,8 @@ class _PasswordFieldState extends State<PasswordField> {
   bool obscureText = true;
   @override
   Widget build(BuildContext context) {
+    final iconColor = Theme.of(context).hintColor;
+
     return CustomTextFormField(
       controller: widget.controller,
       enabled: widget.enabled,
@@ -39,8 +41,8 @@ class _PasswordFieldState extends State<PasswordField> {
           setState(() {});
         },
         child: obscureText
-            ? Icon(Icons.remove_red_eye, color: Color(0xFFC9CECF), size: 24.sp)
-            : Icon(Icons.visibility_off, color: Color(0xFFC9CECF), size: 24.sp),
+            ? Icon(Icons.remove_red_eye, color: iconColor, size: 24.sp)
+            : Icon(Icons.visibility_off, color: iconColor, size: 24.sp),
       ),
     );
   }

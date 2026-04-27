@@ -35,9 +35,29 @@ abstract class AppTheme {
         filled: true,
         fillColor: AppColors.lightsecondaryColor,
         hintStyle: const TextStyle(color: AppColors.lightHint),
+        errorMaxLines: 3,
+        helperMaxLines: 3,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         border: _buildInputBorder(AppColors.lightBorder),
         enabledBorder: _buildInputBorder(AppColors.lightBorder),
         focusedBorder: _buildInputBorder(AppColors.primaryColor),
+        errorBorder: _buildInputBorder(Colors.red),
+        focusedErrorBorder: _buildInputBorder(Colors.red),
+      ),
+      iconTheme: const IconThemeData(color: AppColors.lightTextPrimary),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: AppColors.primaryColor,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: AppColors.primaryColor,
+          disabledForegroundColor: Colors.white70,
+          disabledBackgroundColor: AppColors.lightHint,
+        ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.lightScaffold,
@@ -86,9 +106,29 @@ abstract class AppTheme {
         filled: true,
         fillColor: AppColors.darkSurface,
         hintStyle: const TextStyle(color: AppColors.darkHint),
+        errorMaxLines: 3,
+        helperMaxLines: 3,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 14,
+        ),
         border: _buildInputBorder(AppColors.darkBorder),
         enabledBorder: _buildInputBorder(AppColors.darkBorder),
         focusedBorder: _buildInputBorder(AppColors.darkPrimaryColor),
+        errorBorder: _buildInputBorder(Colors.red),
+        focusedErrorBorder: _buildInputBorder(Colors.red),
+      ),
+      iconTheme: const IconThemeData(color: AppColors.darkTextPrimary),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: AppColors.darkPrimaryColor,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white,
+          backgroundColor: AppColors.darkPrimaryColor,
+          disabledForegroundColor: Colors.white70,
+          disabledBackgroundColor: AppColors.darkBorder,
+        ),
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: AppColors.darkSurface,

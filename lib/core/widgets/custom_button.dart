@@ -30,6 +30,9 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         child: Text(
           text,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
           style: TextStyles.semiBold19(context).copyWith(color: textColor),
         ),
       ),

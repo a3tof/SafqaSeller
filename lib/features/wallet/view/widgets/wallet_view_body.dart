@@ -69,14 +69,15 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                     ),
                     SizedBox(height: 16.h),
                     ElevatedButton(
-                      onPressed: () => context.read<WalletViewModel>().loadWallet(),
+                      onPressed: () =>
+                          context.read<WalletViewModel>().loadWallet(),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Theme.of(context).colorScheme.primary,
                       ),
                       child: Text(
                         S.of(context).retry,
                         style: TextStyles.semiBold16(context).copyWith(
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.onPrimary,
                         ),
                       ),
                     ),
@@ -101,14 +102,19 @@ class _WalletViewBodyState extends State<WalletViewBody> {
               onRefresh: context.read<WalletViewModel>().loadWallet,
               child: LayoutBuilder(
                 builder: (context, constraints) {
-                  final locale = Localizations.localeOf(context).toLanguageTag();
-                  final maxContentWidth =
-                      constraints.maxWidth > 700 ? 520.0 : 343.w;
+                  final locale = Localizations.localeOf(
+                    context,
+                  ).toLanguageTag();
+                  final maxContentWidth = constraints.maxWidth > 700
+                      ? 520.0
+                      : 343.w;
 
                   return SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 16.w,
+                      vertical: 20.h,
+                    ),
                     child: Center(
                       child: ConstrainedBox(
                         constraints: BoxConstraints(maxWidth: maxContentWidth),
@@ -138,8 +144,11 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                   WalletActionButton(
                                     icon: Icons.arrow_upward_rounded,
                                     label: S.of(context).kDepositNmoney,
-                                    onTap: () => _openRoute(DepositView.routeName),
-                                    backgroundColor: const Color(0xFF00762E).withOpacity(0.1),
+                                    onTap: () =>
+                                        _openRoute(DepositView.routeName),
+                                    backgroundColor: const Color(
+                                      0xFF00762E,
+                                    ).withValues(alpha: 0.1),
                                     iconColor: const Color(0xFF00762E),
                                   ),
                                   WalletActionButton(
@@ -147,7 +156,9 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                     label: S.of(context).kWithdrawalNmoney,
                                     onTap: () =>
                                         _openRoute(WithdrawalView.routeName),
-                                    backgroundColor: const Color(0xFFBA1A1A).withOpacity(0.1),
+                                    backgroundColor: const Color(
+                                      0xFFBA1A1A,
+                                    ).withValues(alpha: 0.1),
                                     iconColor: const Color(0xFFBA1A1A),
                                   ),
                                   WalletActionButton(
@@ -155,8 +166,12 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                     label: S.of(context).savedCards,
                                     onTap: () =>
                                         _openRoute(SavedCardsView.routeName),
-                                    backgroundColor: Theme.of(context).colorScheme.secondary,
-                                    iconColor: Theme.of(context).colorScheme.primary,
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.secondary,
+                                    iconColor: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                   ),
                                 ],
                               ),
@@ -168,9 +183,12 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                 Expanded(
                                   child: Text(
                                     S.of(context).kTransactionHistory,
-                                    style: TextStyles.medium20(
-                                      context,
-                                    ).copyWith(color: Theme.of(context).colorScheme.onSurface),
+                                    style: TextStyles.medium20(context)
+                                        .copyWith(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.onSurface,
+                                        ),
                                   ),
                                 ),
                                 TextButton(
@@ -179,12 +197,13 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                   ),
                                   child: Text(
                                     S.of(context).seeAll,
-                                    style: TextStyles.regular14(
-                                      context,
-                                    ).copyWith(
-                                      color: Theme.of(context).colorScheme.primary,
-                                      decoration: TextDecoration.underline,
-                                    ),
+                                    style: TextStyles.regular14(context)
+                                        .copyWith(
+                                          color: Theme.of(
+                                            context,
+                                          ).colorScheme.primary,
+                                          decoration: TextDecoration.underline,
+                                        ),
                                   ),
                                 ),
                               ],
@@ -196,20 +215,22 @@ class _WalletViewBodyState extends State<WalletViewBody> {
                                 child: Center(
                                   child: Text(
                                     S.of(context).kNoTransactionsYet,
-                                    style: TextStyles.regular14(
-                                      context,
-                                    ).copyWith(color: Colors.grey),
+                                    style: TextStyles.regular14(context)
+                                        .copyWith(
+                                          color: Theme.of(context).hintColor,
+                                        ),
                                   ),
                                 ),
                               )
                             else ...[
                               Text(
-                                DateFormat('d MMMM yyyy', locale).format(
-                                  transactions.first.date,
-                                ),
-                                style: TextStyles.medium14(context).copyWith(
-                                  color: const Color(0xFFAAAAAA),
-                                ),
+                                DateFormat(
+                                  'd MMMM yyyy',
+                                  locale,
+                                ).format(transactions.first.date),
+                                style: TextStyles.medium14(
+                                  context,
+                                ).copyWith(color: Theme.of(context).hintColor),
                               ),
                               SizedBox(height: 16.h),
                               ...transactions.map(
@@ -260,11 +281,15 @@ class _BalanceSection extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              title,
-              style: TextStyles.regular16(
-                context,
-              ).copyWith(color: Theme.of(context).colorScheme.primary),
+            Flexible(
+              child: Text(
+                title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyles.regular16(
+                  context,
+                ).copyWith(color: Theme.of(context).colorScheme.primary),
+              ),
             ),
             SizedBox(width: 8.w),
             InkWell(
@@ -273,7 +298,9 @@ class _BalanceSection extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.all(4.r),
                 child: Icon(
-                  isVisible ? Icons.visibility_outlined : Icons.visibility_off_outlined,
+                  isVisible
+                      ? Icons.visibility_outlined
+                      : Icons.visibility_off_outlined,
                   size: 20.sp,
                   color: Theme.of(context).colorScheme.primary,
                 ),
@@ -285,6 +312,8 @@ class _BalanceSection extends StatelessWidget {
         Text(
           formattedBalance,
           textAlign: TextAlign.center,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           style: TextStyles.bold28(context).copyWith(
             color: Theme.of(context).colorScheme.onSurface,
             fontSize: 34.sp,
