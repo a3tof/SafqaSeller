@@ -18,7 +18,7 @@ import 'package:safqaseller/features/notifications/view/notifications_view.dart'
 import 'package:safqaseller/features/notifications/view_model/notifications/notifications_view_model.dart';
 import 'package:safqaseller/features/notifications/view_model/notifications/notifications_view_model_state.dart';
 import 'package:safqaseller/features/profile/view/profile_view.dart';
-import 'package:safqaseller/features/profile/view_model/profile_view_model.dart';
+
 import 'package:safqaseller/features/wallet/view/wallet_view.dart';
 import 'package:safqaseller/generated/l10n.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -40,7 +40,6 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _maybeShowDialog();
       getIt<NotificationsViewModel>().loadNotifications();
     });
   }
@@ -49,12 +48,18 @@ class _HomeScreenViewBodyState extends State<HomeScreenViewBody> {
   /// either because the cache says so or because the API returned "Seller not found".
   bool _isProfileIncomplete(HomeViewModelState homeState) {
     if (widget.showCompleteProfile) return true;
-    final profileVM = context.read<ProfileViewModel>();
-    if (!profileVM.isProfileCompleted) return true;
-    if (homeState is HomeFailure &&
-        homeState.error.toLowerCase().contains('seller not found')) {
-      return true;
+
+    if (homeState is HomeSuccess) {
+      return false;
     }
+
+    if (homeState is HomeFailure) {
+      final error = homeState.error.toLowerCase();
+      if (error.contains('seller not found') || error.contains('403') || error.contains('404')) {
+        return true;
+      }
+    }
+
     return false;
   }
 
