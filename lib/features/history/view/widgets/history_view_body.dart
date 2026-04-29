@@ -163,30 +163,41 @@ class _HistoryViewBodyState extends State<HistoryViewBody> {
           }
 
           if (state is HistoryFailure) {
-            return Center(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      state.message,
-                      textAlign: TextAlign.center,
-                      style: TextStyles.regular14(
-                        context,
-                      ).copyWith(color: const Color(0xFF666666)),
-                    ),
-                    SizedBox(height: 16.h),
-                    ElevatedButton(
-                      onPressed: () =>
-                          context.read<HistoryViewModel>().loadPage(1),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.primary,
-                        foregroundColor: Colors.white,
+            return RefreshIndicator(
+              onRefresh: () => context.read<HistoryViewModel>().refresh(),
+              child: LayoutBuilder(
+                builder: (context, constraints) => SingleChildScrollView(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                    child: Center(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 24.w),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              state.message,
+                              textAlign: TextAlign.center,
+                              style: TextStyles.regular14(
+                                context,
+                              ).copyWith(color: const Color(0xFF666666)),
+                            ),
+                            SizedBox(height: 16.h),
+                            ElevatedButton(
+                              onPressed: () =>
+                                  context.read<HistoryViewModel>().loadPage(1),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Theme.of(context).colorScheme.primary,
+                                foregroundColor: Colors.white,
+                              ),
+                              child: Text(s.historyRetry),
+                            ),
+                          ],
+                        ),
                       ),
-                      child: Text(s.historyRetry),
                     ),
-                  ],
+                  ),
                 ),
               ),
             );

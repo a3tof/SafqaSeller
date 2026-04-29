@@ -48,7 +48,9 @@ class HistoryItem {
     );
     final finalPrice = _asDouble(json['finalPrice'] ?? json['FinalPrice']);
     final fallbackPrice = _asDouble(
-      json['price'] ??
+      json['displayPrice'] ??
+          json['DisplayPrice'] ??
+          json['price'] ??
           json['Price'] ??
           json['amount'] ??
           json['Amount'] ??
@@ -56,11 +58,48 @@ class HistoryItem {
           json['WinningBid'],
     );
 
+    final parsedEndDate = _parseDate(
+      json['displayDate'] ??
+          json['DisplayDate'] ??
+          json['endDate'] ??
+          json['EndDate'] ??
+          json['auctionEndDate'] ??
+          json['AuctionEndDate'] ??
+          json['finishedAt'] ??
+          json['FinishedAt'] ??
+          json['createdAt'] ??
+          json['CreatedAt'],
+    );
+
+    String? parsedTimeLeft = _firstNonEmptyString([
+      json['timeLeft'],
+      json['TimeLeft'],
+      json['timeRemaining'],
+      json['TimeRemaining'],
+      json['remainingTime'],
+      json['RemainingTime'],
+      json['duration'],
+      json['Duration'],
+    ]);
+
+    // If timeLeft is not provided but we have DisplayDate and it's active/upcoming, calculate it
+    if (parsedTimeLeft == null && parsedEndDate != null) {
+      if (status == AuctionStatus.active ||
+          status == AuctionStatus.endingSoon ||
+          status == AuctionStatus.upcoming) {
+        final diff = parsedEndDate.difference(DateTime.now());
+        if (diff.isNegative) {
+          parsedTimeLeft = '0d : 0h';
+        } else {
+          final days = diff.inDays;
+          final hours = diff.inHours.remainder(24);
+          parsedTimeLeft = '${days}d : ${hours}h';
+        }
+      }
+    }
+
     return HistoryItem(
-      id: rawId ?? rawLotId ?? rawAuctionId ?? 0,
-      // The Get-History response uses 'id' as the auction id (same value that
-      // Auction/View/{id} and Auction/Delete/{id} expect).
-      // 'auctionId' is kept as an alias but 'id' is the primary source.
+      id: rawId ?? rawAuctionId ?? rawLotId ?? 0,
       auctionId: rawAuctionId ?? rawId ?? rawLotId ?? 0,
       lotNumber:
           _firstNonEmptyString([
@@ -73,7 +112,7 @@ class HistoryItem {
             json['tag'],
             json['Tag'],
           ]) ??
-          '#${_asInt(json['id'] ?? json['Id']) ?? 0}',
+          '#${_asInt(json['id'] ?? json['Id'] ?? json['auctionId'] ?? json['AuctionId']) ?? 0}',
       title:
           _firstNonEmptyString([
             json['title'],
@@ -91,7 +130,9 @@ class HistoryItem {
       status: status,
       bidsCount:
           _asInt(
-            json['bidsCount'] ??
+            json['totalBids'] ??
+                json['TotalBids'] ??
+                json['bidsCount'] ??
                 json['BidsCount'] ??
                 json['bidCount'] ??
                 json['BidCount'] ??
@@ -99,26 +140,8 @@ class HistoryItem {
                 json['Bids'],
           ) ??
           0,
-      timeLeft: _firstNonEmptyString([
-        json['timeLeft'],
-        json['TimeLeft'],
-        json['timeRemaining'],
-        json['TimeRemaining'],
-        json['remainingTime'],
-        json['RemainingTime'],
-        json['duration'],
-        json['Duration'],
-      ]),
-      endDate: _parseDate(
-        json['endDate'] ??
-            json['EndDate'] ??
-            json['auctionEndDate'] ??
-            json['AuctionEndDate'] ??
-            json['finishedAt'] ??
-            json['FinishedAt'] ??
-            json['createdAt'] ??
-            json['CreatedAt'],
-      ),
+      timeLeft: parsedTimeLeft,
+      endDate: parsedEndDate,
       price: _selectPrice(
         status: status,
         startingPrice: startingPrice,
@@ -126,7 +149,7 @@ class HistoryItem {
         finalPrice: finalPrice,
         fallbackPrice: fallbackPrice,
       ),
-      imageUrl: _extractImageUrl(json),
+      imageUrl: _extractImageUrl(json) ?? _firstNonEmptyString([json['image'], json['Image']]),
       mileage: _formatMileage(
         json['mileage'] ??
             json['Mileage'] ??
